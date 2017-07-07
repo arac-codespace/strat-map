@@ -1,0 +1,32 @@
+// .stratChart rect {
+//   fill: steelblue;
+// }
+
+.stratChart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+.stratChart {
+  margin: 20px;
+  padding: 25px;  
+  padding-left: 55px;
+}
+
+.axis {
+  stroke: black;
+}
+
+// Centers the x labels after calling the wrap function
+.axis--x > g > text {
+  text-anchor: inherit;  
+}
+
+.axis--x2 > g > text {
+  text-anchor: inherit;  
+}
+
+.bar:hover {
+  fill: brown;
+}

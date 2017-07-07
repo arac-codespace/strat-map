@@ -1,0 +1,61 @@
+[
+	
+	{
+		"Formation": "Ponce Limestone",
+		"unit_id": 26,
+		"Thickness": 4.0,
+		"Rock_Type": "Clay"
+
+	},
+	{
+		"Formation": "Ponce Limestone",		
+		"unit_id": 2,
+		"Thickness": 3.0,
+		"Rock_Type": "Fine Sandstone"
+	},
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 3,
+		"Thickness": 15.0,
+		"Rock_Type": "Cobble"
+	},
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 4,
+		"Thickness": 20.0,
+		"Rock_Type": "Medium Sandstone"
+	},
+	
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 6,
+		"Thickness": 17.0,
+		"Rock_Type": "Boulder"
+	},	
+
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 5,
+		"Thickness": 15.0,
+		"Rock_Type": "Very Coarse Sandstone"
+	},	
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 8,
+		"Thickness": 25.0,
+		"Rock_Type": "Grainstone"
+	},
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 9,
+		"Thickness": 35.0,
+		"Rock_Type": "Granule"
+	},
+	{
+		"Formation": "Ponce Limestone",			
+		"unit_id": 8,
+		"Thickness": 35.0,
+		"Rock_Type": "Grainstone"
+	}
+	
+]

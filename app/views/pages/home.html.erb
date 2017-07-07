@@ -1,0 +1,205 @@
+<%= render "svg/conglo" %>
+
+<h1 class='text-center'> Creating a stratigraphic column using D3</h1>
+</br>
+
+<svg class='stratChart'></svg>
+
+<script>
+
+var margin = {top: 40, right: 50, bottom: 125, left: 60},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+    
+
+// x-axis scale!
+var x = d3.scaleBand()
+    .rangeRound([0, width])
+    .padding(1.0);
+    var domain_array = ["Clay", "Silt", "Very Fine Sandstone", "Fine Sandstone", "Medium Sandstone", "Coarse Sandstone", "Very Coarse Sandstone", "Granule", "Pebble", "Cobble","Boulder"]
+    x.domain(domain_array);
+
+
+// x-axis scale!
+var x2 = d3.scaleBand()
+    .rangeRound([0, width])
+    .padding(1.0);
+    var domain_array2 = ["Mudstone", "Wacke", "Packstone", "Grainstone", "Rudstone & Boundstone"]
+    x2.domain(domain_array2);
+
+
+
+// y-axis scale!    
+var y = d3.scaleLinear()
+  .range([height, 0])
+  
+// Selects the svg container and sets width attribute.  
+var stratChart = d3.select(".stratChart")
+    .attr("width", width + margin.left + margin.right)
+    
+// Sets the height for the svg/chart container.
+stratChart.attr('height', height + margin.top + margin.bottom);
+// .append('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");;    
+
+// For use inside the function.  This allows for the sum of successive thickness.
+var sumPrevThickness = 0;
+
+function drawchart(data){
+  
+  // Just sums the thickness of all the datasets in the JSON.
+  var totalThickness = d3.sum(data, function(d) { return d.Thickness} );
+  
+  // Sets upper domain to the max thickness.
+  y.domain([0, totalThickness]);
+
+  // Defines the previous function to store previous thickness value up next
+  for(var i = 0; i < data.length; i++) { data[i].previous = data[i-1]; }
+
+  // Bar data bind and transformation
+  var bar = stratChart.selectAll("g")
+    .data(data)
+    .enter().append("g")
+    .attr("transform", function(d, i) { 
+      
+      // Empty var to store previous thickness
+      var prevThickness;
+      // To avoid NaN error, make the var 0 when the index is greater than 0
+      // ie.  No previous index exist before index 0/ first data array
+      if (i > 0) { prevThickness = d.previous.Thickness}
+      else { prevThickness = 0};
+
+      // Var defined outside of function allows for the addition of the 
+      // prevThickness value due to how the function loop works.
+      sumPrevThickness += prevThickness;
+      var transSum = y(0) - y(sumPrevThickness);
+      // This is the value that will translate-y the bars right to the top of
+      // the bar located below.  IE: Stack bars.
+      return "translate(0," + transSum + ")"; 
+    });
+    
+  // Bar drawing 
+  
+
+  bar.append("rect")
+      .attr("class", "bar")
+      .attr("fill",function(d){
+        if (d.Rock_Type == "Grainstone")
+        {
+          return "url(#sed602)";
+        }
+        else
+        {
+          return "black";
+        }
+      ;})
+      .attr("width", function(d) {
+        // Checks to which array the Rock Type belongs to and uses the
+        // corresponding x scale.
+        var found = domain_array.includes(d.Rock_Type);
+        
+        if (found === true) {
+          return x(d.Rock_Type)
+        } else {
+          return x2(d.Rock_Type)
+        };
+        ;})
+      .attr("height", function(d) { return  y(0) - y(d.Thickness) ; });
+      
+  // x-axis line and ticks
+  d3.select('.stratChart').append('g').attr("class", "axis axis--x")
+  .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text")
+  .call(wrap, x.bandwidth());
+  
+  
+  // x2-axis line and ticks
+  d3.select('.stratChart').append('g').attr("class", "axis axis--x2")
+  .attr("transform", "translate(0," + (height + 100)  + ")").call(d3.axisTop(x2))
+  .append("text")
+      .attr("y", 30)
+      .attr("x", '52%')
+      .attr("dy", "0.71em")
+      .text("ROCK TYPE");;
+
+  // y-axis line and ticks
+  d3.select('.stratChart').append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10, "s"))
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -45)
+      .attr("x", '-15%')
+      .attr("dy", "0.71em")
+      .text("THICKNESS (m)");
+
+  // Wrap function provided by Mike Bostock.  The function measures the width of 
+  // each band which is provided by x.bandwidth when the function is called above
+  // to determine whether a line break is required or not.
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
+      }
+    });
+  }
+  
+  // Custom x2-axis label transformation depending on length
+  d3.selectAll('.axis--x2 > g > text')
+    .filter(function(d){ return d.length <= 5;} )
+    .attr("y", 15);
+    
+  d3.selectAll('.axis--x2 > g > text')
+    .filter(function(d){ return d.length >= 6;} )
+    .attr("y", 15);
+    
+  d3.selectAll('.axis--x2 > g > text')
+    .filter(function(d){ return d.length >= 11;} )
+    .attr("y", 15);    
+    
+
+
+  // Tooltip D3 settings
+  var tooltip = d3.select("body")
+  	.append("div")
+  	.attr('class','tool')
+  	.style("background-color","white")
+  	.style("border", "1px solid black")
+  	.style("padding", "12px")
+    .style("border-radius", "8px")
+  	.style("position", "absolute")
+  	.style("z-index", "10")
+  	.style("visibility", "hidden");
+
+  // Tooltip action
+  d3.selectAll('.bar')
+  	.on("mouseover", function(d) { 
+  	  return tooltip.style("visibility", "visible").html(
+  	    "Unit " + d.unit_id + "</br>" + "Thickness: " + d.Thickness + "</br>" +
+  	    "Rock Type: " + d.Rock_Type
+  	    )
+  	  ;})
+  	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+  	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+};
+  
+stratdata = d3.json('/data/stratdata.json', drawchart);
+
+	
+	
+</script>
