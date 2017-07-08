@@ -61,7 +61,7 @@
 	},
 	{
 		"Formation": "Ponce Limestone",	
-		"lithology": "cherty limestone",
+		"lithology": "conglomerate",
 		"unit_id": 8,
 		"Thickness": 20.0,
 		"Rock_Type": "Other"
