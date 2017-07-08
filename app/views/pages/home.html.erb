@@ -11,34 +11,44 @@
 
 <script>
 
-var margin = {top: 40, right: 50, bottom: 125, left: 60},
-    width = 960 - margin.left - margin.right, //960
-    height = 500 - margin.top - margin.bottom; //500
-    
-
-// x-axis scale!
-var x = d3.scaleBand()
-    .rangeRound([0, width])
-    .padding(1.0);
-    var domain_array = ["Other", "Sedimentary", "Metamorphic", "Igneous"]
-    x.domain(domain_array);
-
-// y-axis scale!    
-var y = d3.scaleLinear()
-  .range([height, 0])
-  
-// Selects the svg container and sets width attribute.  
-var stratChart = d3.select(".stratChart")
-    .attr("width", width + margin.left + margin.right)
-    
-// Sets the height for the svg/chart container.
-stratChart.attr('height', height + margin.top + margin.bottom);
-// .append('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");;    
-
-// For use inside the function.  This allows for the sum of successive thickness.
-var sumPrevThickness = 0;
 
 function drawchart(data){
+
+  var thickness_h = d3.sum(data,function(d){
+	                  return d.Thickness
+                  });
+  
+  var object_num = data.length
+  alert(object_num);
+  
+  var margin = {top: 40, right: 50, bottom: 125, left: 60},
+      width = 800 - margin.left - margin.right, //960
+      height = 100*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
+      
+  
+  
+  // x-axis scale!
+  var x = d3.scaleBand()
+      .rangeRound([0, width])
+      .padding(1.0);
+      var domain_array = ["Other", "Sedimentary", "Metamorphic", "Igneous"]
+      x.domain(domain_array);
+  
+  // y-axis scale!    
+  var y = d3.scaleLinear()
+    .range([height, 0])
+    
+  // Selects the svg container and sets width attribute.  
+  var stratChart = d3.select(".stratChart")
+      .attr("width", width + margin.left + margin.right)
+      
+  // Sets the height for the svg/chart container.
+  stratChart.attr('height', height + margin.top + margin.bottom);
+  // .append('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");;    
+  
+  // For use inside the function.  This allows for the sum of successive thickness.
+  var sumPrevThickness = 0;
+
   
   // Just sums the thickness of all the datasets in the JSON.
   var totalThickness = d3.sum(data, function(d) { return d.Thickness} );

@@ -4,7 +4,7 @@
 		"Formation": "Ponce Limestone",
 		"lithology": "peat",
 		"unit_id": 26,
-		"Thickness": 14.0,
+		"Thickness": 1.0,
 		"Rock_Type": "Sedimentary"
 
 	},
@@ -63,7 +63,7 @@
 		"Formation": "Ponce Limestone",	
 		"lithology": "cherty limestone",
 		"unit_id": 8,
-		"Thickness": 35.0,
+		"Thickness": 20.0,
 		"Rock_Type": "Other"
 	}
 	
