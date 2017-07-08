@@ -1,0 +1,2 @@
+module StratColumnsHelper
+end
