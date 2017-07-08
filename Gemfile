@@ -47,3 +47,6 @@ ruby '2.3.4'
 
 # Use Twitter Bootstrap library for front-end UI and layout
 gem 'bootstrap-sass', '3.3.7'
+
+# For User Authentication
+gem 'devise'
