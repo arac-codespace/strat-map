@@ -1,4 +1,4 @@
-<%= render "svg/conglo" %>
+<%= render "svg/limestone" %>
 
 <h1 class='text-center'> Creating a stratigraphic column using D3</h1>
 </br>
@@ -8,8 +8,8 @@
 <script>
 
 var margin = {top: 40, right: 50, bottom: 125, left: 60},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 960 - margin.left - margin.right, //960
+    height = 500 - margin.top - margin.bottom; //500
     
 
 // x-axis scale!
@@ -85,7 +85,7 @@ function drawchart(data){
       .attr("fill",function(d){
         if (d.Rock_Type == "Grainstone")
         {
-          return "url(#sed602)";
+          return "url(#sed650)";
         }
         else
         {
