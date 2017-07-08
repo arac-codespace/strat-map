@@ -1,4 +1,8 @@
-<%= render "svg/other" %>
+<%= render "svg/sandstone" %>
+<%= render "svg/gravel"%>
+<%= render "svg/limestone"%>
+<%= render "svg/silt_shale"%>
+<%= render "svg/other"%>
 
 <h1 class='text-center'> Creating a stratigraphic column using D3</h1>
 </br>
@@ -16,18 +20,8 @@ var margin = {top: 40, right: 50, bottom: 125, left: 60},
 var x = d3.scaleBand()
     .rangeRound([0, width])
     .padding(1.0);
-    var domain_array = ["Clay", "Silt", "Very Fine Sandstone", "Fine Sandstone", "Medium Sandstone", "Coarse Sandstone", "Very Coarse Sandstone", "Granule", "Pebble", "Cobble","Boulder"]
+    var domain_array = ["Other", "Sedimentary", "Metamorphic", "Igneous"]
     x.domain(domain_array);
-
-
-// x-axis scale!
-var x2 = d3.scaleBand()
-    .rangeRound([0, width])
-    .padding(1.0);
-    var domain_array2 = ["Mudstone", "Wacke", "Packstone", "Grainstone", "Rudstone & Boundstone"]
-    x2.domain(domain_array2);
-
-
 
 // y-axis scale!    
 var y = d3.scaleLinear()
@@ -58,9 +52,9 @@ function drawchart(data){
   // Bar data bind and transformation
   var bar = stratChart.selectAll("g")
     .data(data)
-    .enter().append("g")
+    .enter().append("g") 
     .attr("transform", function(d, i) { 
-      
+      // Note that i refers to the number of objects!
       // Empty var to store previous thickness
       var prevThickness;
       // To avoid NaN error, make the var 0 when the index is greater than 0
@@ -83,13 +77,148 @@ function drawchart(data){
   bar.append("rect")
       .attr("class", "bar")
       .attr("fill",function(d){
-        if (d.Rock_Type == "Grainstone")
+        if (d.lithology)
         {
-          return "url(#sed668)";
+          var lithology = d.lithology;
         }
         else
         {
-          return "black";
+          var lithology = "Undefined";
+        }
+        
+        switch (lithology.toLowerCase())
+        {
+          // Gravel
+          case "conglomerate":
+            return "url(#sed602)";
+            break;
+          case "crossbedded gravel":
+            return "url(#sed603)";
+            break;
+          case "crossbedded conglomerate":
+            return "url(#sed603)";
+            break;
+          case "breccia":
+            return "url(#sed605)";
+            break;
+            
+          // Sandstone 
+          case "sandstone":
+            return "url(#sed607)";
+            break;
+          case "bedded sandstone":
+            return "url(#sed608)";
+            break;
+          case "ripple-bedded sandstone":
+            return "url(#sed611)";
+            break;
+          case "shaly sandstone":
+            return "url(#sed612)";
+            break;
+          case "argillaceous sandstone":
+            return "url(#sed612)";
+            break;
+          case "calcareous sandstone":
+            return "url(#sed613)";
+            break;
+          case "subgraywacke":
+            return "url(#sed654)";
+            break;
+          case "crossbedded subgraywacke":
+            return "url(#sed655)";
+            break;
+          case "ripple-bedded subgraywacke":
+            return "url(#sed656)";
+            break;
+            
+          // Silt/Shale
+          case "siltstone":
+            return "url(#sed616)";
+            break;
+          case "calcareous siltstone":
+            return "url(#sed617)";
+            break;
+          case "clay":
+            return "url(#sed620)";
+            break;
+          case "calcareous shale":
+            return "url(#sed623)";
+            break;
+          case "marl":
+            return "url(#sed623)";
+            break;
+          case "carbonaceous shale":
+            return "url(#sed624)";
+            break;
+          case "oil shale":
+            return "url(#sed625)";
+            break;
+          case "chalk":
+            return "url(#sed626)";
+            break;
+            
+          // Limestone
+          case "limestone":
+            return "url(#sed627)";
+            break;
+          case "clastic limestone":
+            return "url(#sed628)";
+            break;
+          case "fossiliferous clastic limestone":
+            return "url(#sed629)";
+            break;
+          case "crossbedded limestone":
+            return "url(#sed632)";
+            break;
+          case "oolitic limestone":
+            return "url(#sed635)";
+            break;
+          case "sandy limestone":
+            return "url(#sed636)";
+            break;
+          case "silty limestone":
+            return "url(#sed637)";
+            break;
+          case "argillaceous limestone":
+            return "url(#sed638)";
+            break;
+          case "shaly limestone":
+            return "url(#sed638)";
+            break;
+          case "cherty limestone":
+            return "url(#sed640)";
+            break;
+          case "bedded chert":
+            return "url(#sed650)";
+            break;
+          case "fossiliferous bedded chert":
+            return "url(#sed651)";
+            break;
+          
+          // Other
+          case "peat":
+            return "url(#sed657)";
+            break;
+          case "coal":
+            return "url(#sed658)";
+            break;
+          case "bony coal":
+            return "url(#sed659)";
+            break;
+          case "impure coal":
+            return "url(#sed659)";
+            break;
+          case "gypsum":
+            return "url(#sed667)";
+            break;
+          case "salt":
+            return "url(#sed668)";
+            break;
+          
+          
+          default:
+            return "black";
+          
         }
       ;})
       .attr("width", function(d) {
@@ -99,8 +228,6 @@ function drawchart(data){
          
         if (found === true) {
           return x(d.Rock_Type)
-        } else {
-          return x2(d.Rock_Type)
         };
         ;})
       .attr("height", function(d) { return  y(0) - y(d.Thickness) ; });
@@ -109,16 +236,6 @@ function drawchart(data){
   d3.select('.stratChart').append('g').attr("class", "axis axis--x")
   .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text")
   .call(wrap, x.bandwidth());
-  
-  
-  // x2-axis line and ticks
-  d3.select('.stratChart').append('g').attr("class", "axis axis--x2")
-  .attr("transform", "translate(0," + (height + 100)  + ")").call(d3.axisTop(x2))
-  .append("text")
-      .attr("y", 30)
-      .attr("x", '52%')
-      .attr("dy", "0.71em")
-      .text("ROCK TYPE");;
 
   // y-axis line and ticks
   d3.select('.stratChart').append("g")
@@ -158,21 +275,6 @@ function drawchart(data){
     });
   }
   
-  // Custom x2-axis label transformation depending on length
-  d3.selectAll('.axis--x2 > g > text')
-    .filter(function(d){ return d.length <= 5;} )
-    .attr("y", 15);
-    
-  d3.selectAll('.axis--x2 > g > text')
-    .filter(function(d){ return d.length >= 6;} )
-    .attr("y", 15);
-    
-  d3.selectAll('.axis--x2 > g > text')
-    .filter(function(d){ return d.length >= 11;} )
-    .attr("y", 15);    
-    
-
-
   // Tooltip D3 settings
   var tooltip = d3.select("body")
   	.append("div")
@@ -190,7 +292,7 @@ function drawchart(data){
   	.on("mouseover", function(d) { 
   	  return tooltip.style("visibility", "visible").html(
   	    "Unit " + d.unit_id + "</br>" + "Thickness: " + d.Thickness + "</br>" +
-  	    "Rock Type: " + d.Rock_Type
+  	    "Rock Type: " + d.Rock_Type + "</br>" + "Lithology: " + d.lithology
   	    )
   	  ;})
   	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})

@@ -2,60 +2,69 @@
 	
 	{
 		"Formation": "Ponce Limestone",
+		"lithology": "peat",
 		"unit_id": 26,
-		"Thickness": 4.0,
-		"Rock_Type": "Clay"
+		"Thickness": 14.0,
+		"Rock_Type": "Sedimentary"
 
 	},
 	{
-		"Formation": "Ponce Limestone",		
+		"Formation": "Ponce Limestone",
+		"lithology": "coal",
 		"unit_id": 2,
-		"Thickness": 3.0,
-		"Rock_Type": "Fine Sandstone"
+		"Thickness": 13.0,
+		"Rock_Type": "Sedimentary"
 	},
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",
+		"lithology": "bony coal",
 		"unit_id": 3,
 		"Thickness": 15.0,
-		"Rock_Type": "Cobble"
+		"Rock_Type": "Metamorphic"
 	},
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",
+		"lithology": "impure coal",
 		"unit_id": 4,
 		"Thickness": 20.0,
-		"Rock_Type": "Medium Sandstone"
+		"Rock_Type": "Metamorphic"
 	},
 	
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",		
+		"lithology": "gypsum",
 		"unit_id": 6,
 		"Thickness": 17.0,
-		"Rock_Type": "Boulder"
+		"Rock_Type": "Igneous"
 	},	
 
 	{
 		"Formation": "Ponce Limestone",			
+		"lithology": "salt",
 		"unit_id": 5,
 		"Thickness": 15.0,
-		"Rock_Type": "Very Coarse Sandstone"
+		"Rock_Type": "Sedimentary"
 	},	
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",
+		"lithology": "fossiliferous bedded chert",
 		"unit_id": 8,
 		"Thickness": 25.0,
-		"Rock_Type": "Grainstone"
+		"Rock_Type": "Sedimentary"
 	},
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",		
+		"lithology": "bedded chert",
 		"unit_id": 9,
 		"Thickness": 35.0,
-		"Rock_Type": "Granule"
+		"Rock_Type": "Sedimentary"
 	},
 	{
-		"Formation": "Ponce Limestone",			
+		"Formation": "Ponce Limestone",	
+		"lithology": "cherty limestone",
 		"unit_id": 8,
 		"Thickness": 35.0,
-		"Rock_Type": "Grainstone"
+		"Rock_Type": "Other"
 	}
 	
 ]
