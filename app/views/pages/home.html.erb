@@ -96,7 +96,7 @@ function drawchart(data){
         // Checks to which array the Rock Type belongs to and uses the
         // corresponding x scale.
         var found = domain_array.includes(d.Rock_Type);
-        
+         
         if (found === true) {
           return x(d.Rock_Type)
         } else {
