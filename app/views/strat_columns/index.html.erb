@@ -1,1 +1,11 @@
 Hello index
+
+
+
+<% @strats.each do |x| %>
+  <div class ='a-well'>
+    <%= link_to strat_column_path(x.id) do%>
+      <h4><%= x.name %></h4>
+    <% end %>  
+  </div>    
+<% end %>

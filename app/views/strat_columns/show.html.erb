@@ -1,0 +1,27 @@
+<h3> Show Page</h3>
+
+
+
+<h3>Strata info </h3>
+<p><%= @strat.name %> </p>
+<p><%= @strat.lat %> </p>
+<p><%= @strat.lng %> </p>
+<p><%= @strat.description %> </p>
+
+
+
+
+<h3> Strat.layers info</h3>
+<% @layers.each_with_index do |layer, i| %>
+  <h3>Layer <%= i+=1 %></h3>
+  <p><%= layer.name %> </p>
+  <p><%= layer.formation %> </p>
+  <p><%= layer.thickness %> </p>
+  <p><%= layer.description %> </p>
+  
+  <h3>Lithology</h3>
+  <p><%= layer.lithology.name %> </p>
+  <p><%= layer.lithology.rock_type %> </p>
+  <p><%= layer.lithology.url %> </p>
+  
+<% end %>
