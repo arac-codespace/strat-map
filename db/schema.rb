@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709221012) do
+ActiveRecord::Schema.define(version: 20170710153703) do
 
   create_table "layers", force: :cascade do |t|
     t.integer "lithology_id"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170709221012) do
     t.string "formation"
     t.decimal "thickness", precision: 8, scale: 2
     t.text "description"
-    t.integer "strat_id"
+    t.integer "strat_column_id"
   end
 
   create_table "lithologies", force: :cascade do |t|
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170709221012) do
     t.string "name3"
   end
 
-  create_table "strats", force: :cascade do |t|
+  create_table "strat_columns", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
     t.decimal "lat", precision: 10, scale: 6

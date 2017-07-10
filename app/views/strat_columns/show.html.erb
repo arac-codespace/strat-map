@@ -1,18 +1,18 @@
 <h3> Show Page</h3>
 
-<%= link_to edit_strat_column_path(id: @strat.id), class: "btn btn-default" do %>
+<%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default" do %>
   Edit Column Details
 <% end%>
 
-<%= link_to strat_column_path(@strat.id), method: :delete, confirm: "Delete this Stratigraphic Column?", class: 'btn btn-default' do %>
+<%= link_to strat_column_path(@strat_column.id), method: :delete, confirm: "Delete this Stratigraphic Column?", class: 'btn btn-default' do %>
   <i>Delete Column</i>
 <% end %>
 
 <h3>Strata info </h3>
-<p><%= @strat.name %> </p>
-<p><%= @strat.lat %> </p>
-<p><%= @strat.lng %> </p>
-<p><%= @strat.description %> </p>
+<p><%= @strat_column.name %> </p>
+<p><%= @strat_column.lat %> </p>
+<p><%= @strat_column.lng %> </p>
+<p><%= @strat_column.description %> </p>
 
 
 

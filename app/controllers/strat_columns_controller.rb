@@ -2,24 +2,24 @@ class StratColumnsController < ApplicationController
   
   def index
   @current_user = current_user
-  @strats = Strat.where(user_id: @current_user.id)
+  @strat_columns = StratColumn.where(user_id: @current_user.id)
   end
   
   def show
     # find general info of strat table
-    # note that the id above is strat_id
+    # note that the id above is strat_column_id
     @id = params[:id]
-    @strat = Strat.find(@id)
+    @strat_column = StratColumn.find(@id)
     
     # find layers of the strat table with id params
-    @layers = Layer.where(strat_id: @id)
+    @layers = Layer.where(strat_column_id: @id)
     
   end
   
   
   def new
-    @strat = Strat.new
-    @strat.layers.build
+    @strat_column = StratColumn.new
+    @strat_column.layers.build
     @current_user = current_user
     # Just a whim.
     @id = @current_user.id
@@ -27,24 +27,24 @@ class StratColumnsController < ApplicationController
 
   def create
 
-    @strat = Strat.new(strat_params)
-    if @strat.save
+    @strat_column = StratColumn.new(strat_params)
+    if @strat_column.save
         flash[:notice] = "Column created succesfully"
         redirect_to root_path
     else
         @id = current_user.id
-        flash[:error] = @strat.errors.full_messages
+        flash[:error] = @strat_column.errors.full_messages
         render action: :new
     end    
   end
   
   def edit
-    @strat = Strat.find(params[:id])
+    @strat_column = StratColumn.find(params[:id])
   end
   
   def update
-    @strat = Strat.find(params[:id])
-    if @strat.update_attributes(strat_params)
+    @strat_column = StratColumn.find(params[:id])
+    if @strat_column.update_attributes(strat_params)
       # Redirect to the strat's profile
       redirect_to strat_column_path(id: params[:id])
     else
@@ -53,8 +53,8 @@ class StratColumnsController < ApplicationController
   end
 
   def destroy
-    @strat = Strat.find(params[:id])
-    @strat.destroy
+    @strat_column = StratColumn.find(params[:id])
+    @strat_column.destroy
     # Redirect to strats index
     redirect_to strat_columns_path
   end  
@@ -66,7 +66,7 @@ class StratColumnsController < ApplicationController
   # create new entries for update instead of actually updating the entries!
   # Also, must allow_destroy in model and allow :_destroy param here to actually enable the function.
   # in main model and nested attributes alike.
-    params.require(:strat).permit(:_destroy, :user_id, :name, :lat, :lng, :description, layers_attributes: [:id, :strat_id, :lithology_id,:_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
+    params.require(:strat_column).permit(:_destroy, :user_id, :name, :lat, :lng, :description, layers_attributes: [:id, :strat_column_id, :lithology_id,:_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
   end    
   
   

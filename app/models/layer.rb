@@ -1,5 +1,5 @@
 class Layer < ApplicationRecord
-  belongs_to :strat
+  belongs_to :strat_column
   belongs_to :lithology
   
   validates :name, presence: true

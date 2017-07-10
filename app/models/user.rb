@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :strats
+  has_many :strat_columns
   
   
   

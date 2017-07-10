@@ -1,0 +1,63 @@
+<%= form_for @strat_column do |f| %>
+
+  <h3>Stratigraphic Column Information</h3>
+
+  <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
+
+  <div class = "form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  
+  <div class = "form-group">
+    <%= f.label :lat, "Latitude" %>
+    <%= f.text_field :lat, class: "form-control" %>
+  </div>
+  
+  <div class = "form-group">
+    <%= f.label :lng, "Longitude" %>
+    <%= f.text_field :lng, class: "form-control" %>
+  </div>
+  
+  <div class = "form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+  
+  <!--Nested attributes-->
+  <%= f.fields_for :layers do |layer| %>
+  
+    <h3> Layer Section #<%= layer.options[:child_index] + 1 %> </h3>
+  
+    <div class = "form-group">
+      <%= layer.label :lithology_id %>
+      <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, include_blank: "Choose Lithology")%>    
+    </div> 
+      
+      <div class = "form-group">
+      <%= layer.label :name %>
+        <%= layer.text_field :name, class: "form-control" %>
+      </div>
+      
+      <div class = "form-group">
+      <%= layer.label :formation %>
+        <%= layer.text_field :formation, class: "form-control" %>
+      </div>
+      
+      <div class = "form-group">
+      <%= layer.label :thickness, "Thickness(m)" %>
+        <%= layer.text_field :thickness, class: "form-control" %>
+      </div>
+      
+      <div class = "form-group">
+      <%= layer.label :description %>
+        <%= layer.text_area :description, class: "form-control" %>
+      </div>  
+    
+  <% end %> 
+  
+  <div class = "form-group">
+    <%= f.submit "Submit", class: "btn btn-default" %>
+  </div>
+  
+<% end %>
