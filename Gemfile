@@ -50,3 +50,6 @@ gem 'bootstrap-sass', '3.3.7'
 
 # For User Authentication
 gem 'devise'
+
+# Console GUI
+gem 'hirb'
