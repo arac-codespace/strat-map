@@ -1,35 +1,38 @@
-<h3> Show Page</h3>
-
-<%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default" do %>
-  Edit Column Details
-<% end%>
-
-<%= link_to strat_column_path(@strat_column.id), method: :delete, data: { confirm: 'Are you sure you want to delete this column?'}, class: 'btn btn-default' do %>
-  <i>Delete Column</i>
-<% end %>
-
-<h3>Strata info </h3>
-<p><%= @strat_column.name %> </p>
-<p><%= @strat_column.lat %> </p>
-<p><%= @strat_column.lng %> </p>
-<p><%= @strat_column.description %> </p>
-
-
-
-
-<h3> Strat.layers info</h3>
-<% @layers.each_with_index do |layer, i| %>
-  <h3>Layer <%= i+=1 %></h3>
-  <p><%= layer.name %> </p>
-  <p><%= layer.formation %> </p>
-  <p><%= layer.thickness %> </p>
-  <p><%= layer.description %> </p>
+<h3>Stratigraphic Column General Information </h3>
+<div class="general_info">
+  <p><%= @strat_column.name %> </p>
+  <p><%= @strat_column.lat %> </p>
+  <p><%= @strat_column.lng %> </p>
+  <p><%= @strat_column.description %> </p>
   
-  <h3>Lithology</h3>
-  <p><%= layer.lithology.name %> </p>
-  <p><%= layer.lithology.rock_type %> </p>
-  <p><%= layer.lithology.url %> </p>
+  <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
+    Edit Column Details
+  <% end%>
   
-<% end %>
+  <%= link_to strat_column_path(@strat_column.id), method: :delete, data: { confirm: 'Are you sure you want to delete this column?'}, class: 'btn btn-default btn-xs' do %>
+    <i>Delete Column</i>
+  <% end %>
+</div>
 
-<%= render "d3js" %>
+<h3> Stratigraphic Column Visualization</h3>
+<div class="d3js_container">
+  <%= render "d3js" %>
+</div>
+
+
+<h3> Layer Info</h3>
+<div class="layer_info">
+  <% @layers.each_with_index do |layer, i| %>
+    <h3>Layer <%= i+=1 %></h3>
+    <p><%= layer.name %> </p>
+    <p><%= layer.formation %> </p>
+    <p><%= layer.thickness %> </p>
+    <p><%= layer.description %> </p>
+    
+    <h3>Lithology</h3>
+    <p><%= layer.lithology.name %> </p>
+    <p><%= layer.lithology.rock_type %> </p>
+    <p><%= layer.lithology.url %> </p>
+    
+  <% end %>
+</div>
