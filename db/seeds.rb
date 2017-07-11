@@ -21,7 +21,7 @@ gravel_list = [
 ]  
 
 gravel_list.each do |x|
-  Lithology.where(x).first_or_create
+  Lithology.where(url: x[:url]).first_or_create.update(x)
 end
 
 # Lithology table - sandstone
@@ -38,7 +38,7 @@ sandstone_list = [
 ]  
 
 sandstone_list.each do |x|
-  Lithology.where(x).first_or_create
+  Lithology.where(url: x[:url]).first_or_create.update(x)
 end
 
 # Lithology table - limestone
@@ -58,14 +58,14 @@ limestone_list = [
 ] 
 
 limestone_list.each do |x|
-  Lithology.where(x).first_or_create
+  Lithology.where(url: x[:url]).first_or_create.update(x)
 end
 
 
 # Lithology table - silt/shale
 
 silt_list = [
-{name:"Siltstone,", name2: "Silt", name3: "Shaly silt", rock_type: "Sedimentary", url: "#sed616" }, 
+{name:"Siltstone", name2: "Silt", name3: "Shaly silt", rock_type: "Sedimentary", url: "#sed616" }, 
 {name:"Calcareous siltstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed617" }, 
 {name:"Clay shale", name2: "Clay", name3: "", rock_type: "Sedimentary", url: "#sed620" },
 {name:"Calcareous shale", name2: "Marl", name3: "", rock_type: "Sedimentary", url: "#sed623" },
@@ -75,19 +75,21 @@ silt_list = [
 ]
 
 silt_list.each do |x|
-  Lithology.where(x).first_or_create
+  Lithology.where(url: x[:url]).first_or_create.update(x)
 end
 
 
 # Lithology table - other
 other_list = [
-{name:"Peat,", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed657" }, 
-{name:"Coal", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed658" }, 
-{name:"Bony coal", name2: "Impure coal", name3: "", rock_type: "Sedimentary", url: "#sed659" },
-{name:"Gypsum", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed667" },
-{name:"Salt", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed668" }
+{name:"Peat", name2: "", name3: "", rock_type: "Other", url: "#sed657" }, 
+{name:"Coal", name2: "", name3: "", rock_type: "Other", url: "#sed658" }, 
+{name:"Bony coal", name2: "Impure coal", name3: "", rock_type: "Other", url: "#sed659" },
+{name:"Gypsum", name2: "", name3: "", rock_type: "Other", url: "#sed667" },
+{name:"Salt", name2: "", name3: "", rock_type: "Other", url: "#sed668" }
 ]
 
 other_list.each do |x|
-  Lithology.where(x).first_or_create
+  Lithology.where(url: x[:url]).first_or_create.update(x)
 end
+
+# 37 entries so far...
