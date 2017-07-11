@@ -1,6 +1,7 @@
 class StratColumn < ApplicationRecord
   belongs_to :user
-  has_many :layers
+  has_many :layers, dependent: :destroy
+  
   accepts_nested_attributes_for :layers, allow_destroy: true
   
   validates :name, presence: true
