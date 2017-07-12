@@ -13,7 +13,16 @@ class StratColumnsController < ApplicationController
     
     # find layers of the strat table with id params
     @layers = Layer.where(strat_column_id: @id)
-    
+
+    @textures_to_render = []
+    @layers.each do |layer, i|
+      @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
+    end
+  
+
+
+
+
   end
   
   

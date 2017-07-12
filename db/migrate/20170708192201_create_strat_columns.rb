@@ -1,7 +1,7 @@
-class CreateStrats < ActiveRecord::Migration[5.1]
+class CreateStratColumns < ActiveRecord::Migration[5.1]
   def change
-    create_table :strats do |t|
-      t.string :user_id
+    create_table :strat_columns do |t|
+      t.integer :user_id
       t.string :name
       t.decimal :lat, precision: 10, scale: 6
       t.decimal :lng, precision: 10, scale: 6

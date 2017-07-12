@@ -1,9 +1,7 @@
+<% @textures_to_render.each do |i| %>
+  <%= render i %>
+<% end %>
 
-<%= render "svg/sandstone" %>
-<%= render "svg/gravel"%>
-<%= render "svg/limestone"%>
-<%= render "svg/silt_shale"%>
-<%= render "svg/other"%>
 
 <svg class='stratChart'></svg>
 
@@ -80,155 +78,12 @@ function drawchart(data){
     });
     
   // Bar drawing 
-  
 
   bar.append("rect")
       .attr("class", "bar")
       .attr("fill",function(d){
         // Here I can just return the url stored in the lithology json object!
-        if (d.lithology.name)
-        {
-          var lithology = d.lithology.name;
-        }
-        else
-        {
-          var lithology = "Undefined";
-        }
-        
-        switch (lithology.toLowerCase())
-        {
-          // Gravel
-          case "conglomerate":
-            return "url(#sed602)";
-            break;
-          case "crossbedded gravel":
-            return "url(#sed603)";
-            break;
-          case "crossbedded conglomerate":
-            return "url(#sed603)";
-            break;
-          case "breccia":
-            return "url(#sed605)";
-            break;
-            
-          // Sandstone 
-          case "sandstone":
-            return "url(#sed607)";
-            break;
-          case "bedded sandstone":
-            return "url(#sed608)";
-            break;
-          case "ripple-bedded sandstone":
-            return "url(#sed611)";
-            break;
-          case "shaly sandstone":
-            return "url(#sed612)";
-            break;
-          case "argillaceous sandstone":
-            return "url(#sed612)";
-            break;
-          case "calcareous sandstone":
-            return "url(#sed613)";
-            break;
-          case "subgraywacke":
-            return "url(#sed654)";
-            break;
-          case "crossbedded subgraywacke":
-            return "url(#sed655)";
-            break;
-          case "ripple-bedded subgraywacke":
-            return "url(#sed656)";
-            break;
-            
-          // Silt/Shale
-          case "siltstone":
-            return "url(#sed616)";
-            break;
-          case "calcareous siltstone":
-            return "url(#sed617)";
-            break;
-          case "clay":
-            return "url(#sed620)";
-            break;
-          case "calcareous shale":
-            return "url(#sed623)";
-            break;
-          case "marl":
-            return "url(#sed623)";
-            break;
-          case "carbonaceous shale":
-            return "url(#sed624)";
-            break;
-          case "oil shale":
-            return "url(#sed625)";
-            break;
-          case "chalk":
-            return "url(#sed626)";
-            break;
-            
-          // Limestone
-          case "limestone":
-            return "url(#sed627)";
-            break;
-          case "clastic limestone":
-            return "url(#sed628)";
-            break;
-          case "fossiliferous clastic limestone":
-            return "url(#sed629)";
-            break;
-          case "crossbedded limestone":
-            return "url(#sed632)";
-            break;
-          case "oolitic limestone":
-            return "url(#sed635)";
-            break;
-          case "sandy limestone":
-            return "url(#sed636)";
-            break;
-          case "silty limestone":
-            return "url(#sed637)";
-            break;
-          case "argillaceous limestone":
-            return "url(#sed638)";
-            break;
-          case "shaly limestone":
-            return "url(#sed638)";
-            break;
-          case "cherty limestone":
-            return "url(#sed640)";
-            break;
-          case "bedded chert":
-            return "url(#sed650)";
-            break;
-          case "fossiliferous bedded chert":
-            return "url(#sed651)";
-            break;
-          
-          // Other
-          case "peat":
-            return "url(#sed657)";
-            break;
-          case "coal":
-            return "url(#sed658)";
-            break;
-          case "bony coal":
-            return "url(#sed659)";
-            break;
-          case "impure coal":
-            return "url(#sed659)";
-            break;
-          case "gypsum":
-            return "url(#sed667)";
-            break;
-          case "salt":
-            return "url(#sed668)";
-            break;
-          
-          
-          default:
-            return "black";
-          
-        }
+        return "url(" + d.lithology.url + ")";
       ;})
       .attr("width", function(d) {
         // Checks to which array the Rock Type belongs to and uses the
@@ -309,6 +164,11 @@ function drawchart(data){
 
 };
   
+  
+// It broke and then i was able to pass the url
+// with just data.json. 
+// And then it broke again? \_(--)_/
+
 var url_id =	<%= @id %>;
 var data_url = url_id + "/data.json"
 stratdata = d3.json(data_url, drawchart);
