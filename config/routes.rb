@@ -4,9 +4,12 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   # get 'data/stratdata', to: 'data#stratdata'
   
+  get '/data', to: 'data#all_data'
   resources :strat_columns do
     get '/data', to: 'data#data'
     # resources :data, only: [:index]
   end
+  
+  resources :maps, only: [:index]
 
 end

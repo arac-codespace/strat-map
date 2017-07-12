@@ -1,0 +1,19 @@
+// Place all the styles related to the maps controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// MAP CSS
+
+
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 400px;
+  width: 60%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
