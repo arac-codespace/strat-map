@@ -1,3 +1,19 @@
 // Place all the styles related to the strat_columns controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+// SHOW PAGE CSS
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-column {
+  flex-grow: 2;
+}
+
+.right-column {
+  flex-grow: 1
+}
