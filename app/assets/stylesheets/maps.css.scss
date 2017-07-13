@@ -11,6 +11,7 @@
   height: 100%;
   width: 100%;
   margin: 0 auto;
+  position: absolute;
 }
 
 html, body {
@@ -19,3 +20,19 @@ html, body {
   padding: 0;
 }
 
+.flex-container-map {
+  height: 100%;
+  width: 45%;
+  display: flex;
+  background-color: blue;
+  position: absolute;
+  top: 51px;
+  left: 0;
+}
+
+.flex-map-child {
+  flex-grow: 1;
+  > h2 {
+    position: absolute;
+  }
+}

@@ -4,186 +4,24 @@
   <%= render i %>
 <% end %>
 
-<script>
-  
-  var map;
-  // var info = new google.maps.InfoWindow();
-  
-  function initMap() {
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 18.2208, lng: -66.5901},
-        zoom: 9
-      });
-      
-    $.getJSON("data.json").done(function(data){
-      
-      for (var i=0, dataLen = data.length; i < dataLen; i++)
-      {
-        addMarker(data[i]);
-      }
-    
-    });
-  } // iniMap end
+<div class="flex-container-map">
+  <div class= "flex-map-1 flex-map-child">
+    <h2> Column 1</h2>
+  </div>
+  <div class= "flex-map-2 flex-map-child">
+    <h2> Column 2</h2>
+  </div>
+  <div class= "flex-map-3 flex-map-child">
+    <h2> Column 3</h2>
+  </div>
+</div>
 
-  function addMarker(place) {
-    
-    var myLatLng = new google.maps.LatLng(place.lat, place.lng);
-    
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map
-      });
-    
 
-    var contentString = "<div id = column_" + place.id + "></div>";
-    
-    // FEED INFO
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-    
-    
-    // INFOWINDOW LISTENER
-    var placeId = "#column_" + place.id
-    
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      
-      var checkExist = $(placeId).find("*")
-      // if the svg doesn't exist within the div with id placeId...
-      if (!checkExist.hasClass("stratChart"))
-      {      
-        // drawchart(place, placeId)
-        var data_url = "strat_columns/" + place.id + "/data.json";
-        stratdata = d3.json(data_url, drawchart);
-      } 
-      
-    }); // listener end
-        
-  } //addMarker end
-  
-  
-  
-  function drawchart(data){
 
-    // append svg to column_id
-    var stratColumnId = data[0].strat_column_id   
-    
-    var divId = "#column_" + stratColumnId;
-    
-    d3.select(divId).append("svg").attr("class","stratChart");
-    
-    var thickness_h = d3.sum(data,function(d){
-  	                  return parseFloat(d.thickness)
-                    });
-    
-    var object_num = data.length
-    // alert(object_num);
-    
-    var margin = {top: 40, right: 50, bottom: 125, left: 60},
-        width = 300 - margin.left - margin.right, //960
-        height = 50*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
 
-    // x-axis scale!
-    var x = d3.scaleOrdinal().range([0, width]);
-    
-      // y-axis scale!    
-      var y = d3.scaleLinear()
-        .range([height, 0]);
 
-      var stratChart = d3.select(".stratChart")
-          .attr("width", width + margin.left + margin.right);
-          
-      // Sets the height for the svg/chart container.
-      stratChart.attr('height', height + margin.top + margin.bottom);
 
-      // For use inside the function.  This allows for the sum of successive thickness.
-      var sumPrevThickness = 0;
+<%= render "d3js_script"%>
 
-      // Just sums the thickness of all the datasets in the JSON.
-      var totalThickness = d3.sum(data, function(d) { return parseFloat(d.thickness)} );
-      
-      // Sets upper domain to the max thickness.
-      y.domain([0, totalThickness]);
-    
-      // Defines the previous function to store previous thickness value up next
-      for(var i = 0; i < data.length; i++) { data[i].previous = data[i-1]; }      
-      
-      
-    // Bar data bind and transformation
-    var bar = stratChart.selectAll("g")
-      .data(data)
-      .enter().append("g") 
-      .attr("transform", function(d, i) { 
-        // Note that i refers to the number of objects!
-        // Empty var to store previous thickness
-        var prevThickness;
-        // To avoid NaN error, make the var 0 when the index is greater than 0
-        // ie.  No previous index exist before index 0/ first data array
-        if (i > 0) { prevThickness = parseFloat(d.previous.thickness)}
-        else { prevThickness = 0};
-  
-        // Var defined outside of function allows for the addition of the 
-        // prevThickness value due to how the function loop works.
-        sumPrevThickness += prevThickness;
-        var transSum = y(0) - y(sumPrevThickness);
-        // This is the value that will translate-y the bars right to the top of
-        // the bar located below.  IE: Stack bars.
-        return "translate(0," + transSum + ")"; 
-      });      
-      
-      // Bar drawing 
-      bar.append("rect")
-          .attr("class", "bar")
-          .attr("fill",function(d){
-            // Here I can just return the url stored in the lithology json object!
-            return "url(" + d.lithology.url + ")";
-          ;})
-          .attr("width", width)
-          .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
-      
-      // x-axis line and ticks
-      d3.select('.stratChart').append('g').attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text");
-
-      // y-axis line and ticks
-      d3.select('.stratChart').append("g")
-          .attr("class", "axis axis--y")
-          .call(d3.axisLeft(y).ticks(10, "s"))
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", -45)
-          .attr("x", '-15%')
-          .attr("dy", "0.71em")
-          .text("THICKNESS (m)");      
-      
-      // Tooltip D3 settings
-      var tooltip = d3.select("body")
-      	.append("div")
-      	.attr('class','tool')
-      	.style("background-color","white")
-      	.style("border", "1px solid black")
-      	.style("padding", "12px")
-        .style("border-radius", "8px")
-      	.style("position", "absolute")
-      	.style("z-index", "10")
-      	.style("visibility", "hidden");
-    
-      // Tooltip action
-      d3.selectAll('.bar')
-      	.on("mouseover", function(d) { 
-      	  return tooltip.style("visibility", "visible").html(
-      	    "Name: " + d.name + "</br>" + "Thickness: " + d.thickness + "</br>" +
-      	    "Rock Type: " + d.lithology.rock_type + "</br>" + "Lithology: " + d.lithology.name
-      	    )
-      	  ;})
-      	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-      	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});      
-                    
-                    
-  }
-  
-  
-</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5c68eeIBYe5SRVb-eZJpFWQELi1tXKzI&callback=initMap"async defer></script>
