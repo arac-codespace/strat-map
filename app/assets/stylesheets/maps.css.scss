@@ -8,8 +8,9 @@
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 400px;
-  width: 60%;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
 }
 
 html, body {
@@ -17,3 +18,4 @@ html, body {
   margin: 0;
   padding: 0;
 }
+

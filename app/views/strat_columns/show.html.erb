@@ -3,6 +3,14 @@
   <div class= "left-column">
     <h3> Stratigraphic Column Visualization</h3>
     <div class="d3js_container">
+    
+      <% @textures_to_render.each do |i| %>
+        <%= render i %>
+      <% end %>
+      
+      
+      <svg class='stratChart'></svg>
+
       <%= render "d3js" %>
     </div>
   </div>

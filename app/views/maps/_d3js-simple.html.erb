@@ -1,70 +1,4 @@
-<div id="map"></div>
-
-<% @textures_to_render.each do |i| %>
-  <%= render i %>
-<% end %>
-
 <script>
-  
-  var map;
-  // var info = new google.maps.InfoWindow();
-  
-  function initMap() {
-
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 18.2208, lng: -66.5901},
-        zoom: 9
-      });
-      
-    $.getJSON("data.json").done(function(data){
-      
-      for (var i=0, dataLen = data.length; i < dataLen; i++)
-      {
-        addMarker(data[i]);
-      }
-    
-    });
-  } // iniMap end
-
-  function addMarker(place) {
-    
-    var myLatLng = new google.maps.LatLng(place.lat, place.lng);
-    
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map
-      });
-    
-
-    var contentString = "<div id = column_" + place.id + "></div>";
-    
-    // FEED INFO
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-    
-    
-    // INFOWINDOW LISTENER
-    var placeId = "#column_" + place.id
-    
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      
-      var checkExist = $(placeId).find("*")
-      // if the svg doesn't exist within the div with id placeId...
-      if (!checkExist.hasClass("stratChart"))
-      {      
-        // drawchart(place, placeId)
-        var data_url = "strat_columns/" + place.id + "/data.json";
-        stratdata = d3.json(data_url, drawchart);
-      } 
-      
-    }); // listener end
-        
-  } //addMarker end
-  
-  
-  
   function drawchart(data){
 
     // append svg to column_id
@@ -183,7 +117,4 @@
                     
                     
   }
-  
-  
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5c68eeIBYe5SRVb-eZJpFWQELi1tXKzI&callback=initMap"async defer></script>
+</script>  
