@@ -2,9 +2,24 @@
   
   var map;
   // var info = new google.maps.InfoWindow();
+  $(".flex-container-map").hide();
+  
+  
+  $(".close-map").click(function(){
+    var closeData = $(this).attr("data-close");
+    var dataToClose = $(".flex-container-map").find("[data-toclose='" + closeData + "']");
+    
+    dataToClose.hide();
+    dataToClose.removeAttr("id");
+    dataToClose.find(".stratChart").remove();
+    dataToClose.find(".title").text("");
+    
+  });
+  
+  
   
   function initMap() {
-
+    
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 18.2208, lng: -66.5901},
         zoom: 9
@@ -30,25 +45,38 @@
       });
     
 
-    var contentString = "<div id = column_" + place.id + "></div>";
+    // var contentString = "<div id = column_" + place.id + "></div>";
     
-    // FEED INFO
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
+    // // FEED INFO
+    // var infowindow = new google.maps.InfoWindow({
+    //     content: contentString
+    // });
     
     
     // INFOWINDOW LISTENER
-    var placeId = "#column_" + place.id
+    var idName = "column_" + place.id
+    var idSelect = "#column_" + place.id
     
     marker.addListener('click', function() {
-      infowindow.open(map, marker);
+      // Checks if any of the three side columns is occupied
+      // Attachs the svg anchor to the unoccupied column
+      for (var i = 0; i<3; i++)
+      {
+        if ($(".flex-map-" + i).attr("id") == null && $(".flex-container-map").find(idSelect).length == 0)
+        {
+          $(".flex-map-" + i).attr("id", idName);
+          $(".title-"+i).text(place.name);
+          $(".flex-container-map").show();
+          $(".flex-map-"+i).show();
+          break;
+        }
+      }
       
-      var checkExist = $(placeId).find("*")
-      // if the svg doesn't exist within the div with id placeId...
+      var checkExist = $(idSelect).find("*")
+      // if the svg doesn't exist within the div with id idSelect...
       if (!checkExist.hasClass("stratChart"))
       {      
-        // drawchart(place, placeId)
+        // drawchart(place, idSelect)
         var data_url = "strat_columns/" + place.id + "/data.json";
         stratdata = d3.json(data_url, drawchart);
       } 
@@ -65,8 +93,10 @@
     var stratColumnId = data[0].strat_column_id   
     
     var divId = "#column_" + stratColumnId;
+    var stratId= "strat_" + stratColumnId;
+    var stratIdSelect = "#" + stratId;
     
-    d3.select(divId).append("svg").attr("class","stratChart");
+    d3.select(divId).append("svg").attr("class","stratChart").attr("id", stratId);
     
     var thickness_h = d3.sum(data,function(d){
   	                  return parseFloat(d.thickness)
@@ -75,8 +105,8 @@
     var object_num = data.length
     // alert(object_num);
     
-    var margin = {top: 40, right: 50, bottom: 125, left: 60},
-        width = 300 - margin.left - margin.right, //960
+    var margin = {top: 20, right: 80, bottom: 20, left: 20},
+        width = 250 - margin.left - margin.right, //960
         height = 50*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
 
     // x-axis scale!
@@ -86,7 +116,7 @@
       var y = d3.scaleLinear()
         .range([height, 0]);
 
-      var stratChart = d3.select(".stratChart")
+      var stratChart = d3.select(stratIdSelect)
           .attr("width", width + margin.left + margin.right);
           
       // Sets the height for the svg/chart container.
@@ -138,11 +168,11 @@
           .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
       
       // x-axis line and ticks
-      d3.select('.stratChart').append('g').attr("class", "axis axis--x")
+      d3.select(stratIdSelect).append('g').attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text");
 
       // y-axis line and ticks
-      d3.select('.stratChart').append("g")
+      d3.select(stratIdSelect).append("g")
           .attr("class", "axis axis--y")
           .call(d3.axisLeft(y).ticks(10, "s"))
         .append("text")

@@ -21,18 +21,26 @@ html, body {
 }
 
 .flex-container-map {
+  // Note, with display flex the parent container's width will grow proportional
+  // to the svg's width!
+  
   height: 100%;
-  width: 45%;
+  // width: 60%;
   display: flex;
-  background-color: blue;
+  // background-color: blue;
   position: absolute;
   top: 51px;
   left: 0;
+  // z-index: -9999; // value when hidden
 }
 
-.flex-map-child {
+.flex-child {
   flex-grow: 1;
-  > h2 {
-    position: absolute;
-  }
+  overflow: auto;
+  background-color: blue;
+  display: none; // value when hidden
+}
+
+.chart-header-group {
+  padding: 10px;
 }
