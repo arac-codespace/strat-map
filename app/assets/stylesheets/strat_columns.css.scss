@@ -8,12 +8,57 @@
 .flex-container {
   display: flex;
   flex-direction: row;
+  // height: 100%;
+  // background-color: #dedede;  
 }
 
 .left-column {
-  flex-grow: 2;
+  flex: 1;
+  background-color: white;
+  margin: 10px 5px 10px 10px;
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);
+
 }
 
 .right-column {
-  flex-grow: 1
+  flex: 1;
+  background-color: white;
+  margin: 10px 10px 10px 5px;
+  // box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);
+
 }
+
+.layer-info-wrapper, .left-column-title {
+  padding: 20px;
+}
+
+.layer-info-sub {
+  padding: 0 20px;
+}
+
+.layer-info {
+  padding: 5px 10px 5px 20px;
+  border-top: 1px solid #dedede;  
+}
+
+.general-info-wrapper {
+  background-color: #4aaecc;
+  color: white;
+  padding: 10px 20px;  
+}
+
+.general-info {
+  border-top: 1px solid white;  
+  padding: 10px 20px;
+}
+
+.left-column-title {
+  background-color: var(--navBlack);
+  color: white;
+  padding: 10px 20px;
+}
+
+.info-btns {
+  padding: 0 20px 10px 20px;
+}
+

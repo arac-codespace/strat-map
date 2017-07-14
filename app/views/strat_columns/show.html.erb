@@ -1,8 +1,10 @@
 <div class="flex-container">
   
   <div class= "left-column">
-    <h3> Stratigraphic Column Visualization</h3>
-    <div class="d3js_container">
+    <div class="left-column-title">
+      <h3><b>Stratigraphic Column Visualization</b></h3>
+    </div>
+    <div class="d3js-container">
     
       <% @textures_to_render.each do |i| %>
         <%= render i %>
@@ -16,32 +18,42 @@
   </div>
   
   <div class="right-column">
-    <div class="general_info">
-      <h3>Stratigraphic Column General Information </h3>
-      <p><%= @strat_column.name %> </p>
-      <p>Latitude: <%= @strat_column.lat %> </p>
-      <p>Longitude: <%= @strat_column.lng %> </p>
-      <p>Brief Description: <%= @strat_column.description %> </p>
+    <div class="general-info-wrapper">
+      <h3><b>Stratigraphic Column General Information</b></h3>
+      <div class="general-info">
+        <p><b><%= @strat_column.name %></b></p>
+        <p>Latitude: <%= @strat_column.lat %> </p>
+        <p>Longitude: <%= @strat_column.lng %> </p>
+        <p>Brief Description: <%= @strat_column.description %> </p>
+      </div> 
       
-      <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
-        Edit Column Details
-      <% end%>
-      
-      <%= link_to strat_column_path(@strat_column.id), method: :delete, data: { confirm: 'Are you sure you want to delete this column?'}, class: 'btn btn-default btn-xs' do %>
-        <i>Delete Column</i>
-      <% end %>
+      <div class="info-btns">
+        <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
+          Edit Column Details
+        <% end%>
+        
+        <%= link_to strat_column_path(@strat_column.id), method: :delete, data: { confirm: 'Are you sure you want to delete this column?'}, class: 'btn btn-default btn-xs' do %>
+          <i>Delete Column</i>
+        <% end %>
+      </div>  
     </div> <!--general info-->
     
-    <div class="layer_info">
-      <h3> Strata Characteristics and Information</h3>
+    <div class="layer-info-wrapper">
+      <h3><b>Strata Characteristics and Information</b></h3>
       <% @layers.each_with_index do |layer, i| %>
-        <h3>Stratum #<%= i+=1 %></h3>
-        <p>Unit name: <%= layer.name %> </p>
-        <p>Formation: <%= layer.formation %> </p>
-        <p>Lithology: <%= layer.lithology.name %> </p>
-        <p>Rock Type: <%= layer.lithology.rock_type %> </p>
-        <p>Thickness(m): <%= layer.thickness %> </p>
-        <p>Characteristics: <%= layer.description %> </p>
+        <div class="layer-info">
+          <h4><b>Stratum #<%= i+=1 %></b></h4>
+          
+          <div class="layer-info-sub">
+            <p>Unit name: <%= layer.name %> </p>
+            <p>Formation: <%= layer.formation %> </p>
+            <p>Lithology: <%= layer.lithology.name %> </p>
+            <p>Rock Type: <%= layer.lithology.rock_type %> </p>
+            <p>Thickness(m): <%= layer.thickness %> </p>
+            <p>Characteristics: <%= layer.description %> </p>
+          </div>
+          
+        </div>  
       <% end %>
     </div>
     

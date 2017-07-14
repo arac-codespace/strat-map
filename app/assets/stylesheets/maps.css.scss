@@ -14,12 +14,6 @@
   position: absolute;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 .flex-container-map {
   // Note, with display flex the parent container's width will grow proportional
   // to the svg's width!
@@ -40,13 +34,19 @@ html, body {
   background-color: white;
   display: none; // value when hidden
   border-right: 5px solid var(--navBlack);
+  // width: 100%;
+  max-width: 340px;
 }
 
 .chart-header-group {
-  padding: 10px;
-  background-color: white;
+  padding: 10px 20px;
+  background-color: #4aaecc;
+  color: white;
+  
 }
 
 .title {
   margin-top: 10px;
+  font-weight: bold;
+  text-decoration: underline;
 }

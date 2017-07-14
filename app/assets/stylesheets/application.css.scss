@@ -21,8 +21,27 @@
   --navBlack: #222222;
 }
 
+// for debugging...
+// *{ border: 1px solid red; }
+
+// required by maps btw
+html, body {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
 .navbar-default {
   margin-bottom: 0;
   background-color: var(--navBlack);
   border: none;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: white;
 }
