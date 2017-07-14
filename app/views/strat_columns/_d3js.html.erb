@@ -69,8 +69,22 @@ $(function() {
         return "translate(0," + transSum + ")"; 
       });
       
-    // Bar drawing 
-  
+    // Append bar for color    
+    bar.append("rect")
+        .attr("class", "bar-overlay")
+        .attr("fill","white")
+        .attr("width", function(d) {
+          // Checks to which array the Rock Type belongs to and uses the
+          // corresponding x scale.
+          var found = domain_array.includes(d.lithology.rock_type);
+           
+          if (found === true) {
+            return x(d.lithology.rock_type)
+          };
+          ;})
+        .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });        
+    
+    // Append bar for texture 
     bar.append("rect")
         .attr("class", "bar")
         .attr("fill",function(d){
@@ -87,6 +101,10 @@ $(function() {
           };
           ;})
         .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
+        
+        
+        
+        
         
     // x-axis line and ticks
     d3.select('.stratChart').append('g').attr("class", "axis axis--x")
