@@ -29,7 +29,7 @@ html, body {
   display: flex;
   // background-color: blue;
   position: absolute;
-  top: 51px;
+  top: 50px;
   left: 0;
   // z-index: -9999; // value when hidden
 }
@@ -37,10 +37,16 @@ html, body {
 .flex-child {
   flex-grow: 1;
   overflow: auto;
-  background-color: blue;
+  background-color: white;
   display: none; // value when hidden
+  border-right: 5px solid var(--navBlack);
 }
 
 .chart-header-group {
   padding: 10px;
+  background-color: white;
+}
+
+.title {
+  margin-top: 10px;
 }

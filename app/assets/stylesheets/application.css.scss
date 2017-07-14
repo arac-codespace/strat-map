@@ -17,7 +17,12 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
+:root{
+  --navBlack: #222222;
+}
 
 .navbar-default {
   margin-bottom: 0;
+  background-color: var(--navBlack);
+  border: none;
 }
