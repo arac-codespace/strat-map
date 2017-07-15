@@ -95,6 +95,7 @@ $(function() {
           ;})
         .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });        
     
+    
     // Append bar for texture 
     bar.append("rect")
         .attr("class", "bar")
@@ -112,6 +113,17 @@ $(function() {
           };
           ;})
         .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
+      
+      // If user indicates an unconformity...  
+      bar.append("rect")
+        .attr("class","unconformity")
+        .attr("fill", "url(#pattern1)")
+        .attr("width", function(d){
+          return x(d.lithology.rock_type);
+        })
+        .attr("height", function(d){
+          return y(0) - y(parseFloat(d.thickness));
+        })    
         
     // x-axis line and ticks
     d3.select('.stratChart').append('g').attr("class", "axis axis--x")
@@ -170,7 +182,7 @@ $(function() {
     	.style("font-size","12px");
   
     // Tooltip action
-    d3.selectAll('.bar')
+    d3.selectAll('.bar, .bar-overlay, .unconformity')
     	.on("mouseover", function(d) { 
     	  return tooltip.style("visibility", "visible").html(
     	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714231414) do
+ActiveRecord::Schema.define(version: 20170715221027) do
 
   create_table "layers", force: :cascade do |t|
     t.integer "lithology_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170714231414) do
     t.datetime "updated_at", null: false
     t.integer "timescale_id"
     t.string "epoch_age"
+    t.string "contact"
   end
 
   create_table "lithologies", force: :cascade do |t|

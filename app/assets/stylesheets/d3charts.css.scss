@@ -25,7 +25,7 @@
   text-anchor: inherit;  
 }
 
-.bar:hover {
+.bar:hover, .bar-overlay:hover, .unconformity:hover {
   fill: brown;
 }
 

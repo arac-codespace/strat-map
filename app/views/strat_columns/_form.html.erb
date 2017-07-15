@@ -38,6 +38,11 @@
             <%= layer.hidden_field :_destroy, class: 'delete_member', :id => layer %>   
           </div>
         <% end %>
+        
+        <div class = "form-group name">
+        <%= layer.label :name %>
+          <%= layer.text_field :name, class: "form-control" %>
+        </div>
       
         <div class = "form-group lithology">
           <%= layer.label :lithology_id %>
@@ -54,15 +59,15 @@
           <%= layer.text_field :epoch_age, class: "form-control" %>
         </div>
         
-        <div class = "form-group name">
-        <%= layer.label :name %>
-          <%= layer.text_field :name, class: "form-control" %>
-        </div>
-        
         <div class = "form-group formation">
         <%= layer.label :formation %>
           <%= layer.text_field :formation, class: "form-control" %>
         </div>
+        
+        <div class = "form-group name">
+        <%= layer.label :contact %>
+          <%= layer.text_field :contact, class: "form-control" %>
+        </div>        
         
         <div class = "form-group thickness">
         <%= layer.label :thickness %>
