@@ -44,6 +44,16 @@
           <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Choose Lithology"}, {class: "form-control"})%>    
         </div> 
         
+        <div class = "form-group timescale">
+          <%= layer.label :timescale_id,"Geologic Period" %>
+          <%= layer.collection_select(:timescale_id, @timescale_collection.order(:early_age), :id, :interval_name, {include_blank: "Geologic Period"}, {class: "form-control"})%>    
+        </div> 
+        
+        <div class = "form-group epoch_age">
+        <%= layer.label :epoch_age, "Specify Epoch and/or Age" %>
+          <%= layer.text_field :epoch_age, class: "form-control" %>
+        </div>
+        
         <div class = "form-group name">
         <%= layer.label :name %>
           <%= layer.text_field :name, class: "form-control" %>
@@ -113,6 +123,10 @@ $( document ).ready(function() {
             if (fieldName == "lithology")
             {
               fieldName = "lithology_id";
+            }
+            else if (fieldName == "geologic period")
+            {
+              fieldName = "timescale_id"
             }
             
             var idOrLabel = "strat_column_layers_attributes_" + cloneIndex + "_" + fieldName;

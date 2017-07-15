@@ -72,7 +72,18 @@ $(function() {
     // Append bar for color    
     bar.append("rect")
         .attr("class", "bar-overlay")
-        .attr("fill","white")
+        .attr("fill", function(d) {
+          var spelCol = d.timescale.color;
+          if (d.lithology.url == "#sed659")
+          {
+            $(".inFill").css("fill",spelCol);
+          }
+          else
+          {
+            return d.timescale.color;
+            
+          }
+        })
         .attr("width", function(d) {
           // Checks to which array the Rock Type belongs to and uses the
           // corresponding x scale.
@@ -101,10 +112,6 @@ $(function() {
           };
           ;})
         .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
-        
-        
-        
-        
         
     // x-axis line and ticks
     d3.select('.stratChart').append('g').attr("class", "axis axis--x")
@@ -166,8 +173,10 @@ $(function() {
     d3.selectAll('.bar')
     	.on("mouseover", function(d) { 
     	  return tooltip.style("visibility", "visible").html(
-    	    "Name: " + d.name + "</br>" + "Thickness: " + d.thickness + "</br>" +
-    	    "Rock Type: " + d.lithology.rock_type + "</br>" + "Lithology: " + d.lithology.name
+    	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
+    	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
+    	    "Thickness: " + d.thickness + "</br>" + "Rock Type: " + d.lithology.rock_type + "</br>" + 
+    	    "Lithology: " + d.lithology.name
     	    )
     	  ;})
     	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})

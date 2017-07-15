@@ -313,6 +313,15 @@ function drawchart(data){
       // the bar located below.  IE: Stack bars.
       return "translate(0," + transSum + ")"; 
     });      
+    // Append bar for color    
+    bar.append("rect")
+        .attr("class", "bar-overlay")
+        .attr("fill", function(d) {
+          return d.timescale.color;
+        })
+        .attr("width", width)
+        .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });    
+    
     
   // Bar drawing 
   bar.append("rect")
@@ -323,7 +332,7 @@ function drawchart(data){
       ;})
       .attr("width", width)
       .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
-    
+
   // x-axis line and ticks
   d3.select(stratIdSelect).append('g').attr("class", "axis axis--x")
   .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text");
@@ -355,9 +364,11 @@ function drawchart(data){
   d3.selectAll('.bar')
   	.on("mouseover", function(d) { 
   	  return tooltip.style("visibility", "visible").html(
-  	    "Name: " + d.name + "</br>" + "Thickness: " + d.thickness + "</br>" +
-  	    "Rock Type: " + d.lithology.rock_type + "</br>" + "Lithology: " + d.lithology.name
-  	    )
+    	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
+    	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
+    	    "Thickness: " + d.thickness + "</br>" + "Rock Type: " + d.lithology.rock_type + "</br>" + 
+    	    "Lithology: " + d.lithology.name
+    	    )
   	  ;})
   	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
   	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});      

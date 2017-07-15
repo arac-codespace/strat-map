@@ -47,8 +47,9 @@
           <div class="layer-info-sub">
             <p>Unit name: <%= layer.name %> </p>
             <p>Formation: <%= layer.formation %> </p>
+            <p>Period: <%= layer.timescale.interval_name%></p>
+            <p>Epoch or Age: <%= layer.epoch_age%></p>
             <p>Lithology: <%= layer.lithology.name %> </p>
-            <p>Rock Type: <%= layer.lithology.rock_type %> </p>
             <p>Thickness(m): <%= layer.thickness %> </p>
             <p>Characteristics: <%= layer.description %> </p>
           </div>
