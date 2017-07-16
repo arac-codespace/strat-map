@@ -12,11 +12,11 @@ class MapsController < ApplicationController
     # Loop to find urls to render
     @strat.each do |column|
       @layers = Layer.joins(:strat_column).where(strat_columns: {id: column.id}).each do |layer|
-        temp = "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
+        @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
         
-        if !@textures_to_render.include?(temp)
-          @textures_to_render << temp
-        end # if end
+        unless layer.contact.contact_type == "Conformity"
+          @textures_to_render << "svg/contacts/#{layer.contact.contact_type.downcase}"
+        end        
         
       end #layer inner loop ned
     end #strat outer loop end

@@ -64,10 +64,10 @@
           <%= layer.text_field :formation, class: "form-control" %>
         </div>
         
-        <div class = "form-group name">
-        <%= layer.label :contact %>
-          <%= layer.text_field :contact, class: "form-control" %>
-        </div>        
+        <div class = "form-group timescale">
+          <%= layer.label :contact_id,"Contact Type" %>
+          <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Contact Type"}, {class: "form-control"})%>    
+        </div>      
         
         <div class = "form-group thickness">
         <%= layer.label :thickness %>
@@ -132,6 +132,10 @@ $( document ).ready(function() {
             else if (fieldName == "geologic period")
             {
               fieldName = "timescale_id"
+            }
+            else if (fieldName == "contact type")
+            {
+              fieldName = "contact_id"
             }
             
             var idOrLabel = "strat_column_layers_attributes_" + cloneIndex + "_" + fieldName;

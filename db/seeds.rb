@@ -93,3 +93,21 @@ other_list.each do |x|
 end
 
 # 37 entries so far...
+
+# CONTACTS POPULATION
+contact_list = [
+{name:"Bedding Plane", contact_type: "Depositional"},  
+{name:"Diastem", contact_type: "Depositional"},  
+{name:"Angular Unconformity", contact_type: "Depositional"},  
+{name:"Disconformity", contact_type: "Depositional"},  
+{name:"Paraconformity", contact_type: "Depositional"},  
+{name:"Nonconformity", contact_type: "Depositional"},  
+{name:"Pedologic Contact", contact_type: "Depositional"},  
+{name:"Fault", contact_type: "Tectonic"},  
+{name:"Intrusive Contact", contact_type: "Intrusion"},  
+{name:"Extrusive Contact", contact_type: "Intrusion"},  
+]
+
+contact_list.each do |x|
+  Contact.where(name: x[:name]).first_or_create.update(x)
+end

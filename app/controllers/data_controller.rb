@@ -7,7 +7,7 @@ class DataController < ApplicationController
     @layers = Layer.where(strat_column_id: @strat_column_id).order("created_at DESC")
         
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
-    render(json: @layers, include: [{lithology: {except: [:created_at, :updated_at]}}, {timescale: {only: [:interval_name, :color, :abbrev]}}] )
+    render(json: @layers, include: [{lithology: {except: [:created_at, :updated_at]}}, {timescale: {only: [:interval_name, :color, :abbrev]}}, {contact: {except: [:created_at, :updated_at]}}] )
     
     # render :json => @layers, :include => {:lithology => {:except => [:created_at, :updated_at]}}
     

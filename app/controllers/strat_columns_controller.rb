@@ -15,13 +15,12 @@ class StratColumnsController < ApplicationController
     @layers = Layer.where(strat_column_id: @id)
 
     @textures_to_render = []
-    @layers.each do |layer, i|
+    @layers.each do |layer|
       @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
+      unless layer.contact.contact_type == "Conformity"
+        @textures_to_render << "svg/contacts/#{layer.contact.contact_type.downcase}"
+      end
     end
-  
-
-
-
 
   end
   
@@ -78,7 +77,7 @@ class StratColumnsController < ApplicationController
   # create new entries for update instead of actually updating the entries!
   # Also, must allow_destroy in model and allow :_destroy param here to actually enable the function.
   # in main model and nested attributes alike.
-    params.require(:strat_column).permit(:_destroy, :user_id, :name, :lat, :lng, :description, layers_attributes: [:id, :strat_column_id, :lithology_id, :timescale_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
+    params.require(:strat_column).permit(:_destroy, :user_id, :name, :lat, :lng, :description, layers_attributes: [:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
   end    
   
   

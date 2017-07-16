@@ -317,13 +317,24 @@ function drawchart(data){
     bar.append("rect")
         .attr("class", "bar-overlay")
         .attr("fill", function(d) {
-          return d.timescale.color;
+          var spelCol = d.timescale.color;
+
+          if (d.lithology.url == "#sed659")
+          {
+            $(".inFill").css("fill",spelCol);
+          }
+          else
+          {
+            return d.timescale.color;
+            
+          }
+
         })
         .attr("width", width)
         .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });    
     
     
-  // Bar drawing 
+  // Bar texture 
   bar.append("rect")
       .attr("class", "bar")
       .attr("fill",function(d){
@@ -332,6 +343,34 @@ function drawchart(data){
       ;})
       .attr("width", width)
       .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
+
+  // Append for unconformity
+  bar.append("rect")
+    .attr("class","unconformity")
+    .attr("fill", function(d){
+      var contact_type = d.contact.contact_type;
+      if (contact_type == "Depositional")
+      {
+        return "url(#unconformity)";
+      }
+      else if (contact_type == "Tectonic")
+      {
+        return "url(#tectonic)";
+      }
+      else if (contact_type == "Intrusion")
+      {
+        return "url(#intrusion)";
+      }
+      else
+      {
+        return "None";
+      }
+    })
+    .attr("width", width)
+    .attr("height", function(d){
+      return y(0) - y(parseFloat(d.thickness));
+    })    
+
 
   // x-axis line and ticks
   d3.select(stratIdSelect).append('g').attr("class", "axis axis--x")
@@ -361,13 +400,13 @@ function drawchart(data){
   	.style("visibility", "hidden");
 
   // Tooltip action
-  d3.selectAll('.bar')
+  d3.selectAll('.bar, .bar-overlay, .unconformity')
   	.on("mouseover", function(d) { 
   	  return tooltip.style("visibility", "visible").html(
     	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
     	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
     	    "Thickness: " + d.thickness + "</br>" + "Rock Type: " + d.lithology.rock_type + "</br>" + 
-    	    "Lithology: " + d.lithology.name
+    	    "Geologic Contact: " + d.contact.name + "</br>" + "Lithology: " + d.lithology.name
     	    )
   	  ;})
   	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})

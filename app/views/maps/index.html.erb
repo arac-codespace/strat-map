@@ -1,6 +1,6 @@
 <div id="map"></div>
 
-<% @textures_to_render.each do |i| %>
+<% @textures_to_render.uniq.each do |i| %>
   <%= render i %>
 <% end %>
 
