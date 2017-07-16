@@ -42,6 +42,7 @@ class StratColumnsController < ApplicationController
         redirect_to root_path
     else
         @id = current_user.id
+        @timescale_collection = Timescale.where(level: 3)
         flash[:error] = @strat_column.errors.full_messages
         render action: :new
     end    
@@ -59,6 +60,7 @@ class StratColumnsController < ApplicationController
       # Redirect to the strat's profile
       redirect_to strat_column_path(id: params[:id])
     else
+      @timescale_collection = Timescale.where(level: 3)
       render action: :edit #Don't send, go back to edit action.
     end
   end

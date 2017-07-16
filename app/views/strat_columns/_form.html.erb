@@ -1,99 +1,104 @@
-<%= form_for @strat_column do |f| %>
-
-  <h3>Stratigraphic Column Information</h3>
-
-  <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
-
-  <div class = "form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+<div class= "formContainer">
+  <%= form_for @strat_column do |f| %>
   
-  <div class = "form-group">
-    <%= f.label :lat, "Latitude" %>
-    <%= f.text_field :lat, class: "form-control" %>
-  </div>
-  
-  <div class = "form-group">
-    <%= f.label :lng, "Longitude" %>
-    <%= f.text_field :lng, class: "form-control" %>
-  </div>
-  
-  <div class = "form-group">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control" %>
-  </div>
-  
-  <!--Nested attributes-->
-  <div id="layer_container">
-    <%= f.fields_for :layers do |layer| %>
-      <div class="layer layer_fields_<%= layer.options[:child_index] %>">
-        
-        <div class= "header">
-          <h3 class="section_label section_label_<%= layer.options[:child_index] %>"> Layer Section </h3>
-        </div>
-        
-        <% if !@strat_column.new_record? && layer.options[:child_index] != 0%>
-          <div class="checkbox">
-            <%= layer.hidden_field :_destroy, class: 'delete_member', :id => layer %>   
-          </div>
-        <% end %>
-        
-        <div class = "form-group name">
-        <%= layer.label :name %>
-          <%= layer.text_field :name, class: "form-control" %>
-        </div>
-      
-        <div class = "form-group lithology">
-          <%= layer.label :lithology_id %>
-          <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Choose Lithology"}, {class: "form-control"})%>    
-        </div> 
-        
-        <div class = "form-group timescale">
-          <%= layer.label :timescale_id,"Geologic Period" %>
-          <%= layer.collection_select(:timescale_id, @timescale_collection.order(:early_age), :id, :interval_name, {include_blank: "Geologic Period"}, {class: "form-control"})%>    
-        </div> 
-        
-        <div class = "form-group epoch_age">
-        <%= layer.label :epoch_age, "Specify Epoch and/or Age" %>
-          <%= layer.text_field :epoch_age, class: "form-control" %>
-        </div>
-        
-        <div class = "form-group formation">
-        <%= layer.label :formation %>
-          <%= layer.text_field :formation, class: "form-control" %>
-        </div>
-        
-        <div class = "form-group timescale">
-          <%= layer.label :contact_id,"Contact Type" %>
-          <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Contact Type"}, {class: "form-control"})%>    
-        </div>      
-        
-        <div class = "form-group thickness">
-        <%= layer.label :thickness %>
-          <%= layer.text_field :thickness, placeholder: "Must be in meters", class: "form-control" %>
-        </div>
-        
-        <div class = "form-group description">
-        <%= layer.label :description %>
-          <%= layer.text_area :description, class: "form-control" %>
-        </div>
-        
+    <h3>Stratigraphic Column Information</h3>
+    <div class="infoFormFields">
+      <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
+    
+      <div class = "form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control" %>
       </div>
-    <% end %> 
-  </div> <!-- layer_section div end -->
-  
-  <div class = "form-group">
-    <%= f.submit "Submit", class: "btn btn-default" %>
-    <span class = "btn btn-xs btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new layer </span>
-  </div>
-  
-<% end %>
+      
+      <div class = "form-group">
+        <%= f.label :lat, "Latitude" %>
+        <%= f.text_field :lat, class: "form-control" %>
+      </div>
+      
+      <div class = "form-group">
+        <%= f.label :lng, "Longitude" %>
+        <%= f.text_field :lng, class: "form-control" %>
+      </div>
+      
+      <div class = "form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+    </div>  
+    
+    <!--Nested attributes-->
+    <div id="layer-container">
+      <%= f.fields_for :layers do |layer| %>
+        <div class="layer layer-fields_<%= layer.options[:child_index] %>" data-index="<%= layer.options[:child_index] %>">
+          
+          <div class= "header">
+            <h3 class="section-label section-label_<%= layer.options[:child_index] %>"> Layer Section </h3>
+          </div>
+          
+          <div class="infoFormFields">
+            <% if !@strat_column.new_record? && layer.options[:child_index] != 0%>
+              <div class="checkbox">
+                <%= layer.hidden_field :_destroy, class: 'delete_member', :id => layer %>   
+              </div>
+            <% end %>
+            
+            <div class = "form-group" data-fieldname="name">
+            <%= layer.label :name %>
+              <%= layer.text_field :name, class: "form-control" %>
+            </div>
+          
+            <div class = "form-group" data-fieldname="lithology_id">
+              <%= layer.label :lithology_id %>
+              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Choose Lithology"}, {class: "form-control"})%>    
+            </div> 
+            
+            <div class = "form-group" data-fieldname="timescale_id">
+              <%= layer.label :timescale_id,"Geologic Period" %>
+              <%= layer.collection_select(:timescale_id, @timescale_collection.order(:early_age), :id, :interval_name, {include_blank: "Geologic Period"}, {class: "form-control"})%>    
+            </div> 
+            
+            <div class = "form-group" data-fieldname="epoch_age">
+            <%= layer.label :epoch_age, "Specify Epoch and/or Age" %>
+              <%= layer.text_field :epoch_age, class: "form-control" %>
+            </div>
+            
+            <div class = "form-group" data-fieldname="formation">
+            <%= layer.label :formation %>
+              <%= layer.text_field :formation, class: "form-control" %>
+            </div>
+            
+            <div class = "form-group" data-fieldname="contact_id">
+              <%= layer.label :contact_id,"Contact Type" %>
+              <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Contact Type"}, {class: "form-control"})%>    
+            </div>      
+            
+            <div class = "form-group" data-fieldname="thickness">
+            <%= layer.label :thickness %>
+              <%= layer.text_field :thickness, placeholder: "Must be in meters", class: "form-control" %>
+            </div>
+            
+            <div class = "form-group" data-fieldname="description">
+            <%= layer.label :description %>
+              <%= layer.text_area :description, class: "form-control" %>
+            </div>
+          </div> <!--infoFormFields-->
+          
+        </div>
+      <% end %> 
+    </div> <!-- layer_section div end -->
+    
+    <div class = "form-group">
+      <%= f.submit "Submit", class: "btn btn-default" %>
+      <span class = "btn btn-xs btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new layer </span>
+    </div>
+    
+  <% end %>
+</div>
 
 <script>
 $( document ).ready(function() {
   
-  var cloneIndex = $(".layer_fields_0").length;
+  // var cloneIndex = $(".layer-fields_0").length;
   var layerNum = $(".layer").length; 
   var removeBtn = "<span class = 'btn btn-xs btn-default remove_btn'><i class='glyphicon glyphicon-minus'></i> Remove section </span>";
 
@@ -101,48 +106,39 @@ $( document ).ready(function() {
   //Critical for edit form.
   if (layerNum > 1) //We're on an edit form.
   {
-    var lastChildren = $('.section_label').slice(-layerNum+1);
+    var lastChildren = $('.layer').slice(-layerNum+1);
     
     
     lastChildren.each(function(){
-    	$(this).append(removeBtn);
+      var dataIndex = $(this).attr("data-index");
+      var removeBtn = "<span class = 'btn btn-xs btn-default remove_btn' data-removeindex=" + dataIndex +"><i class='glyphicon glyphicon-minus'></i> Remove section </span>";
+
+    	$(this).find(".section-label").append(removeBtn);
     });    
     
-    cloneIndex = layerNum;
+    // cloneIndex = layerNum;
   }
   function clone(){
     // https://stackoverflow.com/questions/10308621/jquery-change-clone-inputs-to-empty
     // Here we actually modify the cloned object and not the current object!
-      var source = $(".layer_fields_0");
+      var source = $(".layer-fields_0");
       var cloned= source.clone();
       cloned.find('input,textarea,select').val(''); // Clears values
 
       cloned.val("")
-          .appendTo("#layer_container")
-          .attr("class", "layer_fields_" +  cloneIndex)
+          .appendTo("#layer-container")
+          .attr("class", "xtra-layer layer-fields_" +  layerNum)
+          .attr("data-index", layerNum)
           .find("*") // returns all descendants
           .each(function() {
 
-            var fieldName = $(this).find("label").text().toLowerCase();
-            // Label for lithology lacks _id, so...
-            if (fieldName == "lithology")
-            {
-              fieldName = "lithology_id";
-            }
-            else if (fieldName == "geologic period")
-            {
-              fieldName = "timescale_id"
-            }
-            else if (fieldName == "contact type")
-            {
-              fieldName = "contact_id"
-            }
-            
-            var idOrLabel = "strat_column_layers_attributes_" + cloneIndex + "_" + fieldName;
-            var name = "strat_column[layers_attributes][" + cloneIndex + "]" + "[" + fieldName + "]";
+            var fieldName = $(this).attr("data-fieldname");
+
+            var idOrLabel = "strat_column_layers_attributes_" + layerNum + "_" + fieldName;
+            var name = "strat_column[layers_attributes][" + layerNum + "]" + "[" + fieldName + "]";
             
             // For label fields
-            $(this).find("label").attr({for: idOrLabel, name: name });
+            $(this).find("label").attr({for: idOrLabel});
             
             // For select fields
             $(this).find("select").attr({id: idOrLabel, name: name });
@@ -154,23 +150,26 @@ $( document ).ready(function() {
             $(this).find("textarea").attr({id: idOrLabel, name: name });
             
             
-            var headerName = "section_label_" + cloneIndex;
-            // if the object has a section_label class...
-            if ($(this).attr("class") == "section_label section_label_0")
+            var headerName = "section-label_" + layerNum;
+            // if the object has a section-label class...
+            if ($(this).attr("class") == "section-label section-label_0")
             {
               
               // For Section header
               $(this).text("New Layer Section ");
             
-              // change the object's class to section_label_index
+              // change the object's class to section-label_index
               $(this).attr("class", headerName);
               
-              // Select that section_label_index and append html
+              // Add data attribute to remove btn
+              removeBtn = "<span class = 'btn btn-xs btn-default remove_btn' data-removeindex=" + layerNum +"><i class='glyphicon glyphicon-minus'></i> Remove section </span>";
+              
+              // Select that section-label_index and append html
               $(this).append(removeBtn);
             }
             
           })
-      cloneIndex++;
+      layerNum++;
   }
   
   $(".add_btn").on("click", clone);
@@ -178,11 +177,18 @@ $( document ).ready(function() {
   // NOTE: Event handlers are bound only to the currently selected elements; 
   // they must exist at the time your code makes the call to .on()
   // http://api.jquery.com/on/
+ 
+ $("#layer-container").on("click",".remove_btn", function(){
+   var dataIndexRemove = $(this).attr("data-removeindex");
+  // var toSearch = data-index=
+   $("html").find('[data-index="' + dataIndexRemove + '"]').find(".checkbox > input.delete_member").val("true").appendTo("#layer-container");
+   $("html").find('[data-index="' + dataIndexRemove + '"]').remove();
+ })
   
-  $("#layer_container").on("click", ".remove_btn", function() {
-    $(this).parent().parent().parent().find(".checkbox > input.delete_member").val("true").appendTo("#layer_container");
-    $(this).parent().parent().parent().remove();
-  });
+  // $("#layer-container").on("click", ".remove_btn", function() {
+  //   $(this).parent().parent().parent().find(".checkbox > input.delete_member").val("true").appendTo("#layer-container");
+  //   $(this).parent().parent().parent().remove();
+  // });
   
 });  
 </script>
