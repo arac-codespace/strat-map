@@ -34,7 +34,7 @@
     <!--Nested attributes-->
     <div id="layer-container">
       <%= f.fields_for :layers do |layer| %>
-        <div class="layer layer-fields_<%= layer.options[:child_index] %>" data-index="<%= layer.options[:child_index] %>">
+        <div class="bg layer layer-fields_<%= layer.options[:child_index] %>" data-index="<%= layer.options[:child_index] %>">
           
           <div class= "header">
             <h3 class="section-label section-label_<%= layer.options[:child_index] %>"> Layer Section </h3>
@@ -92,7 +92,7 @@
       <% end %> 
     </div> <!-- layer_section div end -->
     
-    <div class = "form-group">
+    <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-default" %>
       <span class = "btn btn-xs btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new layer </span>
     </div>
@@ -132,7 +132,7 @@ $( document ).ready(function() {
 
       cloned.val("")
           .appendTo("#layer-container")
-          .attr("class", "xtra-layer layer-fields_" +  layerNum)
+          .attr("class", "bg xtra-layer layer-fields_" +  layerNum)
           .attr("data-index", layerNum)
           .find("*") // returns all descendants
           .each(function() {
