@@ -7,11 +7,12 @@
     
     <% @strat_columns.each do |x| %>
       <div class ='info-wrapper'>
-        <%= link_to strat_column_path(x.id) do%>
-          <div class="index-title">
+        <div class="index-title">
+          <%= link_to strat_column_path(x.id) do%>
             <h4><%= x.name %></h4>
-          </div>  
-        <% end %>
+          <% end %>
+          <p> Location: <%= x.location %> </p>
+        </div>  
       
         <div class ="index-description">
           <p><%= x.description%></p>
