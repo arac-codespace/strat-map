@@ -191,30 +191,40 @@ function initMap() {
        					
     });
     
+  // For overlapping markers...  
+  var oms = new OverlappingMarkerSpiderfier(map, { 
+    markersWontMove: true, 
+    markersWontHide: true,
+    basicFormatEvents: true
+  });  
+    
   $.getJSON("data.json").done(function(data){
     
     for (var i=0, dataLen = data.length; i < dataLen; i++)
     {
-      addMarker(data[i]);
+      // addMarkerCustom(data[i]);
+      oms.addMarker(addMarkerCustom(data[i]));
     }
   
   });
 } // iniMap end
 
-function addMarker(place) {
+function addMarkerCustom(place) {
   
   var myLatLng = new google.maps.LatLng(place.lat, place.lng);
   
   var marker = new google.maps.Marker({
     position: myLatLng,
-    map: map
+    map: map,
+    title: place.name
     });
   
-  // INFOWINDOW LISTENER
+  // Custom INFOWINDOW LISTENER
   var idName = "column_" + place.id
   var idSelect = "#column_" + place.id
   
-  marker.addListener('click', function() {
+  // spider_click will only open marker infowindows on spiderfied markers!
+  marker.addListener('spider_click', function() {
     // Checks if any of the three side columns is occupied
     // Attachs the svg anchor to the unoccupied column
     for (var i = 0; i<3; i++)
@@ -237,10 +247,10 @@ function addMarker(place) {
       var data_url = "strat_columns/" + place.id + "/data.json";
       stratdata = d3.json(data_url, drawchart);
     } 
-    
   }); // listener end
-      
-} //addMarker end
+  // This will return the marker which will feedit to OMS's addMarker function
+  return marker;
+} //addMarkerCustom end
 
 
 
