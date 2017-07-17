@@ -1,5 +1,5 @@
 class DataController < ApplicationController
-  
+before_action :authenticate_user!
   
   # /strat_column/:strat_column_id/data
   def data
