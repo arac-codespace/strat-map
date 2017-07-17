@@ -8,5 +8,6 @@ class Layer < ApplicationRecord
   validates :lithology_id, presence: true
   validates :timescale_id, presence: true
   validates :contact_id, presence: true
+  validates :thickness, presence: true
   
 end

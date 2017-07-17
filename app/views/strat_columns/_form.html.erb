@@ -1,31 +1,31 @@
 <div class= "formContainer">
   <%= form_for @strat_column do |f| %>
-  
-    <h3>Stratigraphic Column Information</h3>
-    <div class="infoFormFields">
-      <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
-    
-      <div class = "form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
+    <div class="generalInfoForm">
+      <h3>Stratigraphic Column Information</h3>
+      <div class="infoFormFields">
+        <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
       
-      <div class = "form-group">
-        <%= f.label :lat, "Latitude" %>
-        <%= f.text_field :lat, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :lng, "Longitude" %>
-        <%= f.text_field :lng, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :description %>
-        <%= f.text_area :description, class: "form-control" %>
-      </div>
-    </div>  
-    
+        <div class = "form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        
+        <div class = "form-group">
+          <%= f.label :lat, "Latitude" %>
+          <%= f.text_field :lat, class: "form-control" %>
+        </div>
+        
+        <div class = "form-group">
+          <%= f.label :lng, "Longitude" %>
+          <%= f.text_field :lng, class: "form-control" %>
+        </div>
+        
+        <div class = "form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: "form-control" %>
+        </div>
+      </div>  
+    </div>
     <!--Nested attributes-->
     <div id="layer-container">
       <%= f.fields_for :layers do |layer| %>

@@ -1,9 +1,23 @@
-Hello index
-
-<% @strat_columns.each do |x| %>
-  <div class ='a-well'>
-    <%= link_to strat_column_path(x.id) do%>
-      <h4><%= x.name %></h4>
-    <% end %>  
-  </div>    
-<% end %>
+<div class="index-container">
+  <div class="info-container">
+    
+    <div class="index-header">
+      <h3 class="text-center">Stratigraphic Column Index</h3>
+    </div>
+    
+    <% @strat_columns.each do |x| %>
+      <div class ='info-wrapper'>
+        <%= link_to strat_column_path(x.id) do%>
+          <div class="index-title">
+            <h4><%= x.name %></h4>
+          </div>  
+        <% end %>
+      
+        <div class ="index-description">
+          <p><%= x.description%></p>
+        </div>
+      </div>  
+    <% end %>
+    
+  </div>
+</div>

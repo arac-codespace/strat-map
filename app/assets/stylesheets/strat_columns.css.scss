@@ -62,7 +62,98 @@
   padding: 0 20px 10px 20px;
 }
 
+
+// Index CSS
+.index-container {
+  margin: 10px 20px;
+
+}
+
+.info-container {
+  width: 60%;
+  margin: 10px auto;
+}
+
+.index-title {
+  background-color: #4aaecc;
+  padding: 10px 20px;  
+  > h4 {
+    color: white;
+  }
+}
+
+.index-description {
+  padding: 20px 40px;  
+}
+
+.info-wrapper {
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);
+  margin: 10px auto;
+}
+
+.index-header {
+  background-color: var(--navBlack);
+  color: white;
+  padding: 10px 20px;  
+  >h3 {
+    font-weight: bold;
+  }
+}
+
+// New CSS
+.new-container {
+  margin: 10px 20px;
+}
+
+.new-wrapper {
+  width: 60%;
+  margin: 10px auto;  
+}
+
+.new-header {
+  background-color: var(--navBlack);
+  color: white;
+  padding: 10px 20px;  
+  >h3 {
+    font-weight: bold;
+  }  
+}
+
+// Edit CSS
+.edit-container {
+  margin: 10px 20px;
+}
+
+.edit-wrapper {
+  width: 60%;
+  margin: 10px auto;  
+}
+
+.edit-header {
+  background-color: var(--navBlack);
+  color: white;
+  padding: 10px 20px;  
+  >h3 {
+    font-weight: bold;
+  }  
+}
 // Form CSS
-.formContainer, .infoFormFields, #layer-container {
+.formContainer, .infoFormFields {
   padding: 10px 20px;
+}
+
+.generalInfoForm {
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);
+  background-color: #4aaecc;
+  padding: 10px 20px;
+  color: white;  
+  > h3 {
+    font-weight: bold;
+  }
+}
+
+#layer-container > div {
+  margin: 10px auto;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);  
 }
