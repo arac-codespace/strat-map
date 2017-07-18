@@ -205,8 +205,8 @@ $(function() {
     	  return tooltip.style("visibility", "visible").html(
     	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
     	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
-    	    "Thickness: " + d.thickness + "</br>" + "Rock Type: " + d.lithology.rock_type + "</br>" + 
-    	    "Geologic Contact: " + d.contact.name + "</br>" + "Lithology: " + d.lithology.name
+    	    "Lithology: " + d.lithology.name + "</br>" + "Geologic Contact: " + d.contact.name + "</br>" + 
+    	    "Thickness: " + d.thickness 
     	    )
     	  ;})
     	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
@@ -219,7 +219,7 @@ $(function() {
   // with just data.json. 
   // And then it broke again? \_(--)_/
   
-  var url_id =	<%= @id %>;
+  var url_id =	$(".general-info").data("stratid");
   var data_url = url_id + "/data.json"
   stratdata = d3.json(data_url, drawchart);
 

@@ -7,7 +7,7 @@
       
         <div class = "form-group">
           <%= f.label :name %>
-          <%= f.text_field :name, class: "form-control" %>
+          <%= f.text_field :name, required: :true, class: "form-control" %>
         </div>
         
         <div class = "form-group">
@@ -49,22 +49,7 @@
             
             <div class = "form-group" data-fieldname="name">
             <%= layer.label :name %>
-              <%= layer.text_field :name, class: "form-control" %>
-            </div>
-          
-            <div class = "form-group" data-fieldname="lithology_id">
-              <%= layer.label :lithology_id %>
-              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Choose Lithology"}, {class: "form-control"})%>    
-            </div> 
-            
-            <div class = "form-group" data-fieldname="timescale_id">
-              <%= layer.label :timescale_id,"Geologic Period" %>
-              <%= layer.collection_select(:timescale_id, @timescale_collection.order(:early_age), :id, :interval_name, {include_blank: "Geologic Period"}, {class: "form-control"})%>    
-            </div> 
-            
-            <div class = "form-group" data-fieldname="epoch_age">
-            <%= layer.label :epoch_age, "Specify Epoch and/or Age" %>
-              <%= layer.text_field :epoch_age, class: "form-control" %>
+              <%= layer.text_field :name, required: :true, class: "form-control" %>
             </div>
             
             <div class = "form-group" data-fieldname="formation">
@@ -72,14 +57,29 @@
               <%= layer.text_field :formation, class: "form-control" %>
             </div>
             
+            <div class = "form-group" data-fieldname="timescale_id">
+              <%= layer.label :timescale_id,"Geologic Period" %>
+              <%= layer.collection_select(:timescale_id, @timescale_collection.order(:early_age), :id, :interval_name, {include_blank: "Select Geologic Period"}, {required: true, class: "form-control"})%>    
+            </div>
+            
+            <div class = "form-group" data-fieldname="epoch_age">
+            <%= layer.label :epoch_age, "Specify Epoch and/or Age" %>
+              <%= layer.text_field :epoch_age, class: "form-control" %>
+            </div>
+          
+            <div class = "form-group" data-fieldname="lithology_id">
+              <%= layer.label :lithology_id %>
+              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
+            </div> 
+            
             <div class = "form-group" data-fieldname="contact_id">
-              <%= layer.label :contact_id,"Contact Type" %>
-              <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Contact Type"}, {class: "form-control"})%>    
+              <%= layer.label :contact_id,"Contact Type (Upper Boundary)" %>
+              <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Select Contact Type"}, {required: true, class: "form-control"})%>    
             </div>      
             
             <div class = "form-group" data-fieldname="thickness">
             <%= layer.label :thickness %>
-              <%= layer.text_field :thickness, placeholder: "Must be in meters", class: "form-control" %>
+              <%= layer.text_field :thickness, required: :true, placeholder: "Must be in meters", class: "form-control" %>
             </div>
             
             <div class = "form-group" data-fieldname="description">
