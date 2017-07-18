@@ -9,8 +9,6 @@ before_action :authenticate_user!
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
     render(json: @layers, include: [{lithology: {except: [:created_at, :updated_at]}}, {timescale: {only: [:interval_name, :color, :abbrev]}}, {contact: {except: [:created_at, :updated_at]}}] )
     
-    # render :json => @layers, :include => {:lithology => {:except => [:created_at, :updated_at]}}
-    
   end
   
   def all_data
