@@ -16,7 +16,7 @@ $(document).on "turbolinks:load", ->
     cloned = source.clone()
     cloned.find('input,textarea,select').val ''
     # Clears values
-    cloned.val('').appendTo('#layer-container').attr('class', 'bg xtra-layer layer-fields_' + layerNum).attr('data-index', layerNum).find('*').each ->
+    cloned.val('').appendTo('#layer-container').attr('class', 'xtra-layer layer-fields_' + layerNum).attr('data-index', layerNum).find('*').each ->
       fieldName = $(this).attr('data-fieldname')
       idOrLabel = 'strat_column_layers_attributes_' + layerNum + '_' + fieldName
       name = 'strat_column[layers_attributes][' + layerNum + ']' + '[' + fieldName + ']'

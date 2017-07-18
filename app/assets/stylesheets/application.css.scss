@@ -19,19 +19,27 @@
 
 :root{
   --navBlack: #222222;
+  --headBlue: #4aaecc;
+  --siteBGBlue: #144c7d;
 }
 
 // for debugging...
 // *{ border: 1px solid red; }
 
 // required by maps btw
+
+// GENERAL
 html, body {
   height: 100%;
   margin: 0 !important;
   padding: 0 !important;
 }
 
+body {
+  background-color: var(--siteBGBlue);
+}
 
+// NAVBAR
 .navbar-default {
   margin-bottom: 0;
   background-color: var(--navBlack);
@@ -44,12 +52,4 @@ html, body {
 
 .navbar-default .navbar-nav > li > a:hover {
   color: white;
-}
-
-body {
-  background-color: #144c7d;
-}
-
-.bg {
-  background-color: white;
 }
