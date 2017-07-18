@@ -6,11 +6,13 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <!--D3JS-->
+    
     <script src="https://d3js.org/d3.v4.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>   
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5c68eeIBYe5SRVb-eZJpFWQELi1tXKzI"></script>
   </head>
 
-  <body>
+  <body class= "<%= controller_name %> <%= action_name %>">
     <!-- NAVBAR-->
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class='container'>
@@ -44,8 +46,8 @@
         </div><!-- /.navbar-collapse -->
       </div>
     </nav>  <!-- NAVBAR end -->
-    <!--<div class="container">-->
       <%= yield %>
-    <!--</div>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>   -->
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5c68eeIBYe5SRVb-eZJpFWQELi1tXKzI&callback=initMap"></script>-->
   </body>
 </html>

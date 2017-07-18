@@ -1,25 +1,17 @@
-<script>
+$( document ).on('turbolinks:load', function() {
+  if ($('.maps.index').length == 1)
+  {
+    var map;
+    console.log("It works on each visit!")
+    google.maps.event.addDomListener(window, 'turbolinks:load', initMap);
+  }
+  else
+  {
+    return false;
+  }
 
-$(function() {
-
-  $(".flex-container-map").hide();
   
-  
-  $(".close-map").click(function(){
-    var closeData = $(this).attr("data-close");
-    var dataToClose = $(".flex-container-map").find("[data-toclose='" + closeData + "']");
-    
-    dataToClose.hide();
-    dataToClose.removeAttr("id");
-    dataToClose.find(".stratChart").remove();
-    dataToClose.find(".title").text("");
-    
-  });
-});
-
-
-
-var map;
+})
 
 function initMap() {
   
@@ -207,7 +199,24 @@ function initMap() {
     }
   
   });
+  
+  // Bind btns to markers...
+  $(".flex-container-map").hide();
+    
+    
+    $(".close-map").click(function(){
+      var closeData = $(this).attr("data-close");
+      var dataToClose = $(".flex-container-map").find("[data-toclose='" + closeData + "']");
+      
+      dataToClose.hide();
+      dataToClose.removeAttr("id");
+      dataToClose.find(".stratChart").remove();
+      dataToClose.find(".title").text("");
+      
+    });  
+  
 } // iniMap end
+
 
 function addMarkerCustom(place) {
   
@@ -424,4 +433,3 @@ function drawchart(data){
 } // draw chart end
 
 
-</script>
