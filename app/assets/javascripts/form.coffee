@@ -68,10 +68,6 @@ $(document).on "turbolinks:load", ->
     $('html').find('[data-index="' + dataIndexRemove + '"]').find('.checkbox > input.delete_member').val('true').appendTo '#layer-container'
     $('html').find('[data-index="' + dataIndexRemove + '"]').remove()
     return
-  # $("#layer-container").on("click", ".remove_btn", function() {
-  #   $(this).parent().parent().parent().find(".checkbox > input.delete_member").val("true").appendTo("#layer-container");
-  #   $(this).parent().parent().parent().remove();
-  # });
   return
 
 # ---

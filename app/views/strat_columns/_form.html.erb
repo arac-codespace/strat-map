@@ -68,8 +68,8 @@
             </div>
           
             <div class = "form-group" data-fieldname="lithology_id">
-              <%= layer.label :lithology_id %>
-              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
+              <%= layer.label :lithology_id %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
+              <%= layer.collection_select(:lithology_id, Lithology.order(:url), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
             </div> 
             
             <div class = "form-group" data-fieldname="contact_id">
