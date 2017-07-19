@@ -51,11 +51,10 @@
             
             <div id="collapse<%=i%>" class="layer-info-sub panel-collapse collapse">
               <div class="panel-body">
-                <p>Unit name: <%= layer.name %> </p>
+                <p>Lithology: <%= layer.name %> </p>
                 <p>Formation: <%= layer.formation %> </p>
                 <p>Period: <%= layer.timescale.interval_name%></p>
                 <p>Epoch or Age: <%= layer.epoch_age%></p>
-                <p>Lithology: <%= layer.lithology.name %> </p>
                 <p>Geologic Contact: <%= layer.contact.name %></p>
                 <p>Thickness(m): <%= layer.thickness %> </p>
                 <p>Characteristics: <%= layer.description %> </p>
@@ -70,17 +69,3 @@
     
   </div> <!--right-column end-->
 </div> <!--flex container-->
-
-<!--<div class="panel-group">-->
-<!--  <div class="panel panel-default">-->
-<!--    <div class="panel-heading">-->
-<!--      <h4 class="panel-title">-->
-<!--        <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>-->
-<!--      </h4>-->
-<!--    </div>-->
-<!--    <div id="collapse1" class="panel-collapse collapse">-->
-<!--      <div class="panel-body">Panel Body</div>-->
-<!--      <div class="panel-footer">Panel Footer</div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

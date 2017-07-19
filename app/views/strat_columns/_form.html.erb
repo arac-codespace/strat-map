@@ -48,9 +48,14 @@
             <% end %>
             
             <div class = "form-group" data-fieldname="name">
-            <%= layer.label :name %>
+            <%= layer.label :name, "Lithology" %>
               <%= layer.text_field :name, required: :true, class: "form-control" %>
             </div>
+            
+            <div class = "form-group" data-fieldname="lithology_id">
+              <%= layer.label :lithology_id, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
+              <%= layer.collection_select(:lithology_id, Lithology.order(:url), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
+            </div> 
             
             <div class = "form-group" data-fieldname="formation">
             <%= layer.label :formation %>
@@ -67,10 +72,6 @@
               <%= layer.text_field :epoch_age, class: "form-control" %>
             </div>
           
-            <div class = "form-group" data-fieldname="lithology_id">
-              <%= layer.label :lithology_id %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-              <%= layer.collection_select(:lithology_id, Lithology.order(:url), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
-            </div> 
             
             <div class = "form-group" data-fieldname="contact_id">
               <%= layer.label :contact_id,"Contact Type (Upper Boundary)" %>

@@ -422,10 +422,10 @@ function drawchart(data){
   d3.selectAll('.bar, .bar-overlay, .unconformity')
   	.on("mouseover", function(d) { 
   	  return tooltip.style("visibility", "visible").html(
-    	    "Name: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
+    	    "Lithology: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
     	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
-    	    "Lithology: " + d.lithology.name + "</br>" + "Geologic Contact: " + d.contact.name + "</br>" + 
-    	    "Thickness: " + d.thickness 
+    	    "Geologic Contact: " + d.contact.name + "</br>" + "Thickness: " + d.thickness + "</br>" +
+    	    "Lithology Pattern: " + d.lithology.name
     	    )
   	  ;})
   	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
