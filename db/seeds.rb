@@ -11,21 +11,14 @@
 # First create an array holding the entries and then pass the array to
 # an each loop...
 
-# Lithology table - gravel
-gravel_list = [
+
+# Lithology table - sedimentary
+sedimentary_list = [
 {name:"Conglomerate", name2: "Conglomerate - Low matrix %", name3: "Gravel", rock_type: "Sedimentary", url: "#sed601" }, 
 {name:"Conglomerate", name2: "Conglomerate - High matrix %", name3: "Gravel", rock_type: "Sedimentary", url: "#sed602" }, 
 {name:"Crossbedded conglomerate", name2: "Crossbedded gravel", name3: "", rock_type: "Sedimentary", url: "#sed603" },
 {name:"Breccia", name2: "Breccia - High matrix %", name3: "", rock_type: "Sedimentary", url: "#sed605" },
-{name:"Breccia", name2: "Breccia - Low matrix %", name3: "", rock_type: "Sedimentary", url: "#sed606" }
-]  
-
-gravel_list.each do |x|
-  Lithology.where(url: x[:url]).first_or_create.update(x)
-end
-
-# Lithology table - sandstone
-sandstone_list = [
+{name:"Breccia", name2: "Breccia - Low matrix %", name3: "", rock_type: "Sedimentary", url: "#sed606" },  
 {name:"Massive sandstone", name2: "Massive sand", name3: "", rock_type: "Sedimentary", url: "#sed607" }, 
 {name:"Bedded sandstone", name2: "Bedded sand", name3: "", rock_type: "Sedimentary", url: "#sed608" }, 
 {name:"Crossbedded sandstone", name2: "Crossbedded sand", name3: "", rock_type: "Sedimentary", url: "#sed609" },
@@ -34,22 +27,17 @@ sandstone_list = [
 {name:"Argillaceous sandstone", name2: "Shaly sandstone", name3: "", rock_type: "Sedimentary", url: "#sed612" },
 {name:"Calcareous sandstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed613" },
 {name:"Dolomitic sandstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed614" },
+{name:"Siltstone", name2: "Silt", name3: "Shaly silt", rock_type: "Sedimentary", url: "#sed616" }, 
+{name:"Calcareous siltstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed617" }, 
 {name:"Dolomitic siltstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed618" },
 {name:"Sandy or Silty Shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed619" },
+{name:"Clay shale", name2: "Clay", name3: "", rock_type: "Sedimentary", url: "#sed620" },
 {name:"Cherty Shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed621" },
 {name:"Dolomitic Shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed622" },
-{name:"Subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed654" },
-{name:"Crossbedded Subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed655" },
-{name:"Ripple-bedded subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed656" }
-]  
-
-sandstone_list.each do |x|
-  Lithology.where(url: x[:url]).first_or_create.update(x)
-end
-
-# Lithology table - limestone
-
-limestone_list = [
+{name:"Calcareous shale", name2: "Marl", name3: "", rock_type: "Sedimentary", url: "#sed623" },
+{name:"Carbonaceous shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed624" },
+{name:"Oil shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed625" },
+{name:"Salt", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed626" },
 {name:"Limestone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed627" }, 
 {name:"Clastic limestone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed628" }, 
 {name:"Fossiliferous clastic limestone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed629" },
@@ -76,83 +64,87 @@ limestone_list = [
 {name:"Bedded chert", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed650" },
 {name:"Fossiliferous bedded chert", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed651" },
 {name:"Fossiliferous rock", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed652" },
-{name:"Diatomaceous rock", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed653" }
-] 
+{name:"Diatomaceous rock", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed653" },
+{name:"Subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed654" },
+{name:"Crossbedded Subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed655" },
+{name:"Ripple-bedded subgraywacke", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed656" },
+{name:"Peat", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed657" }, 
+{name:"Coal", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed658" }, 
+{name:"Bony coal", name2: "Impure coal", name3: "", rock_type: "Sedimentary", url: "#sed659" },
+{name:"Underclay", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed660" },
+{name:"Flint clay", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed661" },
+{name:"Bentonite", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed662" },
+{name:"Glauconite", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed663" },
+{name:"Limonite", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed664" },
+{name:"Siderite", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed665" },
+{name:"Phosphatic-nodular rock", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed666" },
+{name:"Gypsum", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed667" },
+{name:"Salt", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed668" },
+{name:"Interbedded sandstone and siltstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed669" },
+{name:"Interbedded sandstone and shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed670" },
+{name:"Interbedded ripplebedded sandstone and shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed671" },
+{name:"Interbedded shale and silty limestone (shale dominant)", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed672" },
+{name:"Interbedded shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed673" },
+{name:"Interbedded shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed674" },
+{name:"Interbedded calcareous shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed675" },
+{name:"Interbedded silty limestone and shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed676" },
+{name:"Interbedded limestone and shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed677" },
+{name:"Interbedded limestone and shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed678" },
+{name:"Interbedded limestone and shale (limestone dominant)", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed679" },
+{name:"Interbedded limestone and calcareous shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed680" },
+{name:"Till", name2: "Diamicton", name3: "", rock_type: "Sedimentary", url: "#sed681" },
+{name:"Till", name2: "Diamicton", name3: "", rock_type: "Sedimentary", url: "#sed682" },
+{name:"Till", name2: "Diamicton", name3: "", rock_type: "Sedimentary", url: "#sed683" },
+{name:"Loess", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed684" },
+{name:"Loess", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed685" },
+{name:"Loess", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed686" }
+]  
 
-limestone_list.each do |x|
-  Lithology.where(url: x[:url]).first_or_create.update(x)
-end
-
-
-# Lithology table - silt/shale
-
-silt_list = [
-{name:"Siltstone", name2: "Silt", name3: "Shaly silt", rock_type: "Sedimentary", url: "#sed616" }, 
-{name:"Calcareous siltstone", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed617" }, 
-{name:"Clay shale", name2: "Clay", name3: "", rock_type: "Sedimentary", url: "#sed620" },
-{name:"Calcareous shale", name2: "Marl", name3: "", rock_type: "Sedimentary", url: "#sed623" },
-{name:"Carbonaceous shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed624" },
-{name:"Oil shale", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed625" },
-{name:"Salt", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed626" }
-]
-
-silt_list.each do |x|
+sedimentary_list.each do |x|
   Lithology.where(url: x[:url]).first_or_create.update(x)
 end
 
 # Lithology table - igm
 
 igm_list = [
-{name:"Metamorphism", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm701" }
+{name:"Metamorphism", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm701" },
+{name:"Quartzite", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm702" },
+{name:"Slate", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm703" },
+{name:"Schistose granite", name2: "Gneissoid granite", name3: "", rock_type: "Metamorphic", url: "#igm704" },
+{name:"Schist", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm705" },
+{name:"Contorted schist", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm706" },
+{name:"Schist and gneiss", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm707" },
+{name:"Gneiss", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm708" },
+{name:"Contorted gneiss", name2: "", name3: "", rock_type: "Metamorphic", url: "#igm709" },
+{name:"Soapstone", name2: "Serpentinite", name3: "Talc", rock_type: "Metamorphic", url: "#igm710" },
+{name:"Tuffaceous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm711" },
+{name:"Crystal tuff", name2: "", name3: "", rock_type: "Igneous", url: "#igm712" },
+{name:"Devitrified tuff", name2: "", name3: "", rock_type: "Igneous", url: "#igm713" },
+{name:"Volcanic breccia and tuff", name2: "", name3: "", rock_type: "Igneous", url: "#igm714" },
+{name:"Volcanic breccia or agglomerate", name2: "", name3: "", rock_type: "Sedimentary", url: "#igm715" },
+{name:"Zeolitic rock", name2: "", name3: "", rock_type: "Other", url: "#igm716" },
+{name:"Basaltic flows", name2: "", name3: "", rock_type: "Igneous", url: "#igm717" },
+{name:"Granite", name2: "", name3: "", rock_type: "Igneous", url: "#igm718" },
+{name:"Granite", name2: "", name3: "", rock_type: "Igneous", url: "#igm719" },
+{name:"Banded igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm720" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm721" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm722" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm723" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm724" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm725" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm726" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm727" },
+{name:"Igneous rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm728" },
+{name:"Porphyritic rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm729" },
+{name:"Porphyritic rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm730" },
+{name:"Vitrophyre", name2: "", name3: "", rock_type: "Igneous", url: "#igm731" },
+{name:"Quartz", name2: "", name3: "", rock_type: "Other", url: "#igm732" },
+{name:"Ore", name2: "", name3: "", rock_type: "Other", url: "#igm733" }
 ]
 
 igm_list.each do |x|
   Lithology.where(url: x[:url]).first_or_create.update(x)
 end
-
-
-# Lithology table - other
-other_list = [
-{name:"Peat", name2: "", name3: "", rock_type: "Other", url: "#sed657" }, 
-{name:"Coal", name2: "", name3: "", rock_type: "Other", url: "#sed658" }, 
-{name:"Bony coal", name2: "Impure coal", name3: "", rock_type: "Other", url: "#sed659" },
-{name:"Underclay", name2: "", name3: "", rock_type: "Other", url: "#sed660" },
-{name:"Flint clay", name2: "", name3: "", rock_type: "Other", url: "#sed661" },
-{name:"Bentonite", name2: "", name3: "", rock_type: "Other", url: "#sed662" },
-{name:"Glauconite", name2: "", name3: "", rock_type: "Other", url: "#sed663" },
-{name:"Limonite", name2: "", name3: "", rock_type: "Other", url: "#sed664" },
-{name:"Siderite", name2: "", name3: "", rock_type: "Other", url: "#sed665" },
-{name:"Phosphatic-nodular rock", name2: "", name3: "", rock_type: "Other", url: "#sed666" },
-{name:"Gypsum", name2: "", name3: "", rock_type: "Other", url: "#sed667" },
-{name:"Salt", name2: "", name3: "", rock_type: "Other", url: "#sed668" },
-{name:"Interbedded sandstone and siltstone", name2: "", name3: "", rock_type: "Other", url: "#sed669" },
-{name:"Interbedded sandstone and shale", name2: "", name3: "", rock_type: "Other", url: "#sed670" },
-{name:"Interbedded ripplebedded sandstone and shale", name2: "", name3: "", rock_type: "Other", url: "#sed671" },
-{name:"Interbedded shale and silty limestone (shale dominant)", name2: "", name3: "", rock_type: "Other", url: "#sed672" },
-{name:"Interbedded shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Other", url: "#sed673" },
-{name:"Interbedded shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Other", url: "#sed674" },
-{name:"Interbedded calcareous shale and limestone (shale dominant)", name2: "", name3: "", rock_type: "Other", url: "#sed675" },
-{name:"Interbedded silty limestone and shale", name2: "", name3: "", rock_type: "Other", url: "#sed676" },
-{name:"Interbedded limestone and shale", name2: "", name3: "", rock_type: "Other", url: "#sed677" },
-{name:"Interbedded limestone and shale", name2: "", name3: "", rock_type: "Other", url: "#sed678" },
-{name:"Interbedded limestone and shale (limestone dominant)", name2: "", name3: "", rock_type: "Other", url: "#sed679" },
-{name:"Interbedded limestone and calcareous shale", name2: "", name3: "", rock_type: "Other", url: "#sed680" },
-{name:"Till", name2: "Diamicton", name3: "", rock_type: "Other", url: "#sed681" },
-{name:"Till", name2: "Diamicton", name3: "", rock_type: "Other", url: "#sed682" },
-{name:"Till", name2: "Diamicton", name3: "", rock_type: "Other", url: "#sed683" },
-{name:"Loess", name2: "", name3: "", rock_type: "Other", url: "#sed684" },
-{name:"Loess", name2: "", name3: "", rock_type: "Other", url: "#sed685" },
-{name:"Loess", name2: "", name3: "", rock_type: "Other", url: "#sed686" }
-]
-
-other_list.each do |x|
-  Lithology.where(url: x[:url]).first_or_create.update(x)
-end
-
-
-
-
-
 
 # CONTACTS POPULATION
 contact_list = [
