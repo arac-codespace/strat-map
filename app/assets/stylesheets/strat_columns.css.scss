@@ -202,3 +202,12 @@ div.panel-heading {
     width: 200px;
   }
 }
+
+.help-prompt {
+  padding: 20px 10px;
+
+  > p > a {
+    color: #ffffff;
+    font-weight: bold;
+  }
+}
