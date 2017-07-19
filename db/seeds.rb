@@ -14,11 +14,11 @@
 
 # Lithology table - sedimentary
 sedimentary_list = [
-{name:"Conglomerate", name2: "Conglomerate - Low matrix %", name3: "Gravel", rock_type: "Sedimentary", url: "#sed601" }, 
-{name:"Conglomerate", name2: "Conglomerate - High matrix %", name3: "Gravel", rock_type: "Sedimentary", url: "#sed602" }, 
+{name:"Conglomerate", name2: "Gravel", name3: "", rock_type: "Sedimentary", url: "#sed601" }, 
+{name:"Conglomerate", name2: "Gravel", name3: "", rock_type: "Sedimentary", url: "#sed602" }, 
 {name:"Crossbedded conglomerate", name2: "Crossbedded gravel", name3: "", rock_type: "Sedimentary", url: "#sed603" },
-{name:"Breccia", name2: "Breccia - High matrix %", name3: "", rock_type: "Sedimentary", url: "#sed605" },
-{name:"Breccia", name2: "Breccia - Low matrix %", name3: "", rock_type: "Sedimentary", url: "#sed606" },  
+{name:"Breccia", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed605" },
+{name:"Breccia", name2: "", name3: "", rock_type: "Sedimentary", url: "#sed606" },  
 {name:"Massive sandstone", name2: "Massive sand", name3: "", rock_type: "Sedimentary", url: "#sed607" }, 
 {name:"Bedded sandstone", name2: "Bedded sand", name3: "", rock_type: "Sedimentary", url: "#sed608" }, 
 {name:"Crossbedded sandstone", name2: "Crossbedded sand", name3: "", rock_type: "Sedimentary", url: "#sed609" },

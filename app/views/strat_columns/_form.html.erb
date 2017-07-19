@@ -41,11 +41,11 @@
               <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>Stratum #<%= layer.options[:child_index]+1 %></b></a> 
             </h3> 
             <% if layer.options[:child_index] == 0 %>
-              <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to expand!</span></span>
+              <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
             <% end %>
           </div>
           
-          <div id="form-collapse<%=layer.options[:child_index]%>" class="infoFormFields panel-collapse collapse">
+          <div id="form-collapse<%=layer.options[:child_index]%>" class="infoFormFields panel-collapse collapse in">
             <% if !@strat_column.new_record? && layer.options[:child_index] != 0%>
               <div class="checkbox">
                 <%= layer.hidden_field :_destroy, class: 'delete_member', :id => layer %>   
@@ -59,7 +59,7 @@
             
             <div class = "form-group" data-fieldname="lithology_id">
               <%= layer.label :lithology_id, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-              <%= layer.collection_select(:lithology_id, Lithology.order(:url), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
+              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
             </div> 
             
             <div class = "form-group" data-fieldname="formation">
