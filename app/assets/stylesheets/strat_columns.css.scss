@@ -62,6 +62,15 @@
   background-color: white !important; 
 }
 
+div.panel-heading {
+  > .panel-title {
+    display: inline-block;
+  }
+  > span > span {
+    width: 150px;
+  }
+}
+
 
 // INDEX CSS
 .index-container {
@@ -167,11 +176,29 @@
 
 .footer {
   background-color: white;
-  margin-top: -10px;
-  padding: 0px 40px 40px 40px;
+  margin-top: -25px;
+  padding: 20px 40px 40px 40px;
 }
 
 .error-wrapper {
   padding: 10px 20px;
   color: white;
+}
+
+.remove_btn {
+  margin-left: 20px;
+}
+
+#layer-container > div.panel.panel-default> div.header.panel-heading > h3 > a {
+  color: var(--navBlack);
+}
+
+#layer-container > div.panel.panel-default > div.header.panel-heading {
+  border-bottom: 1px solid var(--navBlack);  
+  > h3 {
+    display: inline-block;
+  }
+  > span > span {
+    width: 150px;
+  }
 }

@@ -46,7 +46,10 @@
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" href="#collapse<%=i%>"> <b>Stratum #<%= i+1 %></b> </a>
-              </h4>  
+              </h4>
+              <% if i == 0 %>
+                <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to expand!</span></span>
+              <% end %>
             </div> <!-- panel heading end-->
             
             <div id="collapse<%=i%>" class="layer-info-sub panel-collapse collapse">

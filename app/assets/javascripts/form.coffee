@@ -5,7 +5,9 @@ $(document).on "turbolinks:load", ->
   console.log "form js loading?"
   # var cloneIndex = $(".layer-fields_0").length;
   layerNum = $('.layer').length
+  indexNum = (layerNum) + (-1)
   removeBtn = '<span class = \'btn btn-xs btn-default remove_btn\'><i class=\'glyphicon glyphicon-minus\'></i> Remove section </span>'
+  # collapseAnchor = '<a data-toggle="collapse" href="#form-collapse' + indexNum + '"> <b>Stratum #' + indexNum+1 +'</b> </a>'
   #to check for current number of fields. 
   #Critical for edit form.
 
@@ -16,7 +18,7 @@ $(document).on "turbolinks:load", ->
     cloned = source.clone()
     cloned.find('input,textarea,select').val ''
     # Clears values
-    cloned.val('').appendTo('#layer-container').attr('class', 'xtra-layer layer-fields_' + layerNum).attr('data-index', layerNum).find('*').each ->
+    cloned.val('').appendTo('#layer-container').attr('class', 'panel panel-default xtra-layer layer-fields_' + layerNum).attr('data-index', layerNum).find('*').each ->
       fieldName = $(this).attr('data-fieldname')
       idOrLabel = 'strat_column_layers_attributes_' + layerNum + '_' + fieldName
       name = 'strat_column[layers_attributes][' + layerNum + ']' + '[' + fieldName + ']'
@@ -38,13 +40,26 @@ $(document).on "turbolinks:load", ->
       # if the object has a section-label class...
       if $(this).attr('class') == 'section-label section-label_0'
         # For Section header
-        $(this).text 'New Layer Section '
+        $(this).text ''
         # change the object's class to section-label_index
         $(this).attr 'class', headerName
+        # Append collapse anchor
+        collapseAnchor = '<a data-toggle="collapse" href="#form-collapse' + (layerNum) + '"> <b>Stratum #' + (layerNum+1) + '</b> </a>'
+        $(this).append collapseAnchor
+        
         # Add data attribute to remove btn
         removeBtn = '<span class = \'btn btn-xs btn-default remove_btn\' data-removeindex=' + layerNum + '><i class=\'glyphicon glyphicon-minus\'></i> Remove section </span>'
         # Select that section-label_index and append html
         $(this).append removeBtn
+        
+      collapseId = 'form-collapse' + layerNum   
+      if $(this).attr('id') == 'form-collapse0'
+        $(this).attr 'id', collapseId
+        
+      # Remove tooltip...
+      if $(this).hasClass('tooltips')
+        $(this).remove()
+        
       return
     layerNum++
     return
