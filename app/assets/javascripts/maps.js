@@ -4,6 +4,9 @@ $( document ).on('turbolinks:load', function() {
     var map;
     console.log("It works on each visit!")
     google.maps.event.addDomListener(window, 'turbolinks:load', initMap);
+    google.maps.event.addDomListener(window, 'turbolinks:load', fadingIn);
+
+    
   }
   else
   {
@@ -13,8 +16,13 @@ $( document ).on('turbolinks:load', function() {
   
 })
 
+
+function fadingIn(){
+  $("#pac-input").fadeIn(5000);
+}
+
 function initMap() {
-  
+
   map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 18.2208, lng: -66.5901},
       zoom: 9,
@@ -183,6 +191,39 @@ function initMap() {
        					
     });
     
+  // SEARCH BAR 
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);  
+    
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });    
+  
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }    
+
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+    
   // For overlapping markers...  
   var oms = new OverlappingMarkerSpiderfier(map, { 
     markersWontMove: true, 
@@ -190,6 +231,7 @@ function initMap() {
     basicFormatEvents: true
   });  
     
+  // FEEDS json to marker function 
   $.getJSON("data.json").done(function(data){
     
     for (var i=0, dataLen = data.length; i < dataLen; i++)
@@ -214,7 +256,7 @@ function initMap() {
       dataToClose.find(".title").text("");
       
     });  
-  
+    
 } // iniMap end
 
 
@@ -293,7 +335,7 @@ function drawchart(data){
     .range([height, 0]);
 
   var stratChart = d3.select(stratIdSelect)
-      .attr("width", width + margin.left + margin.right);
+      .attr("width", '100%');
       
   // Sets the height for the svg/chart container.
   stratChart.attr('height', height + margin.top + margin.bottom);
