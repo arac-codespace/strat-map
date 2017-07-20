@@ -32,7 +32,7 @@ class StratColumnsController < ApplicationController
     @current_user = current_user
     # Just a whim.
     @id = @current_user.id
-    @timescale_collection = Timescale.where(level: 3)
+    @timescale_collection = Timescale.all.order(:late_age)
   end
 
   def create
@@ -43,7 +43,7 @@ class StratColumnsController < ApplicationController
         redirect_to root_path
     else
         @id = current_user.id
-        @timescale_collection = Timescale.where(level: 3)
+        @timescale_collection = Timescale.all.order(:late_age)
         flash[:error] = @strat_column.errors.full_messages
         render action: :new
     end    
@@ -51,7 +51,7 @@ class StratColumnsController < ApplicationController
   
   def edit
     @strat_column = StratColumn.find(params[:id])
-    @timescale_collection = Timescale.all
+    @timescale_collection = Timescale.all.order(:late_age)
     
   end
   
@@ -61,7 +61,7 @@ class StratColumnsController < ApplicationController
       # Redirect to the strat's profile
       redirect_to strat_column_path(id: params[:id])
     else
-      @timescale_collection = Timescale.where(level: 3)
+      @timescale_collection = Timescale.all.order(:late_age)
       render action: :edit #Don't send, go back to edit action.
     end
   end

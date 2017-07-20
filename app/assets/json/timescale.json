@@ -6,7 +6,6 @@
 {"oid":1,"typ":"int","sca":1,"lvl":2,"nam":"Cenozoic","abr":"Cz","pid":751,"col":"#F2F91D","lag":0.00000,"eag":66.00000,"rid":[47900]},
 {"oid":12,"typ":"int","sca":1,"lvl":3,"nam":"Quaternary","pid":1,"col":"#F9F97F","lag":0.00000,"eag":2.58800,"rid":[47900]},
 {"oid":32,"typ":"int","sca":1,"lvl":4,"nam":"Holocene","pid":12,"col":"#FEF2E0","lag":0.00000,"eag":0.01170,"rid":[47900]},
-{"oid":3002,"typ":"int","sca":1,"lvl":5,"nam":"Holocene","pid":32,"col":"#FEF2E0","lag":0.00000,"eag":0.01170,"rid":[47900]},
 {"oid":33,"typ":"int","sca":1,"lvl":4,"nam":"Pleistocene","pid":12,"col":"#FFF2AE","lag":0.01170,"eag":2.58800,"rid":[47900]},
 {"oid":922,"typ":"int","sca":1,"lvl":5,"nam":"Late Pleistocene","pid":33,"col":"#FFF2D3","lag":0.01170,"eag":0.12600,"rid":[15443]},
 {"oid":923,"typ":"int","sca":1,"lvl":5,"nam":"Middle Pleistocene","pid":33,"col":"#FFF2C7","lag":0.12600,"eag":0.78100,"rid":[15443]},
@@ -171,6 +170,7 @@
 {"oid":758,"typ":"int","sca":1,"lvl":2,"nam":"Mesoarchean","pid":753,"col":"#F768A9","lag":2800.00000,"eag":3200.00000,"rid":[15443]},
 {"oid":759,"typ":"int","sca":1,"lvl":2,"nam":"Paleoarchean","pid":753,"col":"#F444A9","lag":3200.00000,"eag":3600.00000,"rid":[15443]},
 {"oid":760,"typ":"int","sca":1,"lvl":2,"nam":"Eoarchean","pid":753,"col":"#DA037F","lag":3600.00000,"eag":4000.00000,"rid":[15443]},
-{"oid":11,"typ":"int","sca":1,"lvl":1,"nam":"Hadean","pid":0,"col":"#AE027E","lag":4000.00000,"eag":4600.00000,"rid":[5954]}
+{"oid":11,"typ":"int","sca":1,"lvl":1,"nam":"Hadean","pid":0,"col":"#AE027E","lag":4000.00000,"eag":4600.00000,"rid":[5954]},
+{"oid":null,"typ":null,"sca":null,"lvl":null,"nam":null,"pid":null,"col":"#FFF","lag":null,"eag":null,"rid":null}
 ]
 }

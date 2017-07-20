@@ -6,11 +6,11 @@ class Lithology < ApplicationRecord
     # gsub regex will remove all non-numerical chars
     
     if !self.name3.blank?
-      "##{url.gsub!(/[^0-9,.]/, "")}: #{name} or #{name2} or #{name3}"
+      "#{name} or #{name2} or #{name3}: ##{url.gsub!(/[^0-9,.]/, "")}"
     elsif !self.name2.blank?
-      "##{url.gsub!(/[^0-9,.]/, "")}: #{name} or #{name2}"
+      "#{name} or #{name2}: ##{url.gsub!(/[^0-9,.]/, "")}"
     else
-      "##{url.gsub!(/[^0-9,.]/, "")}: #{name}"
+      "#{name}: ##{url.gsub!(/[^0-9,.]/, "")}"
     end
     
   end

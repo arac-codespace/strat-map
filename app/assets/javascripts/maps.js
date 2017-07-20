@@ -423,8 +423,8 @@ function drawchart(data){
   	.on("mouseover", function(d) { 
   	  return tooltip.style("visibility", "visible").html(
     	    "Lithology: " + d.name + "</br>" + "Formation: " +d.formation + "</br>" +
-    	    "Period: " + d.timescale.interval_name + "</br>" + "Epoch or Age: " + d.epoch_age + "</br>" +
-    	    "Geologic Contact: " + d.contact.name + "</br>" + "Thickness: " + d.thickness + "</br>" +
+    	    "Geologic Age: " + d.timescale.interval_name + "</br>" +
+    	    "Upper Contact: " + d.contact.name + "</br>" + "Thickness (m): " + d.thickness + "</br>" +
     	    "Lithology Pattern: " + d.lithology.name
     	    )
   	  ;})

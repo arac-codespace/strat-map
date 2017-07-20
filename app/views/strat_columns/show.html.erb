@@ -76,9 +76,8 @@
               <div class="panel-body">
                 <p>Lithology: <%= layer.name %> </p>
                 <p>Formation: <%= layer.formation %> </p>
-                <p>Period: <%= layer.timescale.interval_name%></p>
-                <p>Epoch or Age: <%= layer.epoch_age%></p>
-                <p>Geologic Contact: <%= layer.contact.name %></p>
+                <p>Geologic Age: <%= layer.timescale.interval_name%></p>
+                <p>Upper Contact: <%= layer.contact.name %></p>
                 <p>Thickness(m): <%= layer.thickness %> </p>
                 <p>Characteristics: <%= layer.description %> </p>
               </div>

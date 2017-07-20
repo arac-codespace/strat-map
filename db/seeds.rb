@@ -140,7 +140,7 @@ igm_list = [
 {name:"Vitrophyre", name2: "", name3: "", rock_type: "Igneous", url: "#igm731" },
 {name:"Quartz", name2: "", name3: "", rock_type: "Other", url: "#igm732" },
 {name:"Ore", name2: "", name3: "", rock_type: "Other", url: "#igm733" },
-{name:"Blank or Unknown", name2: "", name3: "", rock_type: "Other", url: "#nil000" }
+{name:"None or Unknown", name2: "", name3: "", rock_type: "Other", url: "#nil000" }
 
 ]
 
@@ -150,7 +150,7 @@ end
 
 # CONTACTS POPULATION
 contact_list = [
-{name:"Bedding Plane", contact_type: "Depositional"},  
+{name:"Bedding Plane", contact_type: "Conformity"},  
 {name:"Diastem", contact_type: "Depositional"},  
 {name:"Angular Unconformity", contact_type: "Depositional"},  
 {name:"Disconformity", contact_type: "Depositional"},  

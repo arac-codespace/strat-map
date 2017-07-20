@@ -71,6 +71,19 @@ div.panel-heading {
   }
 }
 
+.help-prompt {
+  padding: 20px 10px;
+
+  > p > a {
+    color: #ffffff;
+    font-weight: bold;
+  }
+}
+
+div.info-btns > button {
+  margin: 5px auto;
+}
+
 
 // INDEX CSS
 .index-container {
@@ -200,14 +213,5 @@ div.panel-heading {
   }
   > span > span {
     width: 200px;
-  }
-}
-
-.help-prompt {
-  padding: 20px 10px;
-
-  > p > a {
-    color: #ffffff;
-    font-weight: bold;
   }
 }
