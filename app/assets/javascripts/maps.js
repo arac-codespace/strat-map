@@ -281,9 +281,9 @@ function drawchart(data){
   var object_num = data.length;
   // alert(object_num);
   
-  var margin = {top: 20, right: 80, bottom: 20, left: 20},
+  var margin = {top: 20, right: 80, bottom: 40, left: 20},
       width = 300 - margin.left - margin.right, //960
-      height = 50*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
+      height = 60*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
 
   // x-axis scale!
   var x = d3.scaleOrdinal().range([0, width]);
@@ -428,7 +428,7 @@ function drawchart(data){
     	    "Lithology Pattern: " + d.lithology.name
     	    )
   	  ;})
-  	.on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+  	.on("mousemove", function(){return tooltip.style("top", (event.pageY-170)+"px").style("left",(event.pageX+20)+"px");})
   	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});      
 } // draw chart end
 

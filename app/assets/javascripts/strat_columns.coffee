@@ -153,9 +153,17 @@ $(document).on "turbolinks:load", ->
     tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px')
     # Tooltip action
     d3.selectAll('.bar, .bar-overlay, .unconformity').on('mouseover', (d) ->
-      tooltip.style('visibility', 'visible').html 'Lithology: ' + d.name + '</br>' + 'Formation: ' + d.formation + '</br>' + 'Period: ' + d.timescale.interval_name + '</br>' + 'Epoch or Age: ' + d.epoch_age + '</br>' + 'Geologic Contact: ' + d.contact.name + '</br>' + 'Thickness: ' + d.thickness + "</br>" + "Lithology Pattern: " + d.lithology.name
+      tooltip.style('visibility', 'visible').html 'Lithology: ' + d.name + '</br>' + 'Formation: ' + d.formation + '</br>' + 'Period: ' + d.timescale.interval_name + '</br>' + 'Epoch or Age: ' + d.epoch_age + '</br>' + 'Geologic Contact: ' + d.contact.name + '</br>' + 'Thickness: ' + d.thickness + "</br>" + "Lithology Pattern: " +
+      
+      if d.lithology.name3 != "" 
+        d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3
+      else if d.lithology.name2 != ""
+        (d.lithology.name + ' / ' +  d.lithology.name2)
+      else
+        d.lithology.name
+        
     ).on('mousemove', ->
-      tooltip.style('top', event.pageY - 10 + 'px').style 'left', event.pageX + 10 + 'px'
+      tooltip.style('top', event.pageY - 120 + 'px').style 'left', event.pageX + 15 + 'px'
     ).on 'mouseout', ->
       tooltip.style 'visibility', 'hidden'
     

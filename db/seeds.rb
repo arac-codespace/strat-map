@@ -139,7 +139,9 @@ igm_list = [
 {name:"Porphyritic rock", name2: "", name3: "", rock_type: "Igneous", url: "#igm730" },
 {name:"Vitrophyre", name2: "", name3: "", rock_type: "Igneous", url: "#igm731" },
 {name:"Quartz", name2: "", name3: "", rock_type: "Other", url: "#igm732" },
-{name:"Ore", name2: "", name3: "", rock_type: "Other", url: "#igm733" }
+{name:"Ore", name2: "", name3: "", rock_type: "Other", url: "#igm733" },
+{name:"Blank or Unknown", name2: "", name3: "", rock_type: "Other", url: "#nil000" }
+
 ]
 
 igm_list.each do |x|
