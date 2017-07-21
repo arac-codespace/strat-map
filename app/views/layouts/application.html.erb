@@ -4,12 +4,14 @@
     <title>stratMap</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     
     <script src="https://d3js.org/d3.v4.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>   
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5c68eeIBYe5SRVb-eZJpFWQELi1tXKzI&libraries=places"></script>
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body class= "<%= controller_name %> <%= action_name %>">
