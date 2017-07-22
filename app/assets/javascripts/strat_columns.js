@@ -20,51 +20,14 @@ $(document).on("turbolinks:load", function() {
     let height = (100 * Math.sqrt(thickness_h)) - (margin.top) - (margin.bottom);
     //500
     // x-axis scale!
-    let x = d3.scaleBand().rangeRound([
-      0,
-      width
-    ]).padding(1.0);
-    let domain_array = [
-      'Other',
-      'Sedimentary',
-      'Metamorphic',
-      'Igneous'
-    ];
-    // Wrap function provided by Mike Bostock.  The function measures the width of 
-    // each band which is provided by x.bandwidth when the function is called above
-    // to determine whether a line break is required or not.
-
-    let wrap = function(text, width) {
-      text.each(function() {
-        let text;
-        text = d3.select(this);
-        let words = text.text().split(/\s+/).reverse();
-        let word = undefined;
-        let line = [];
-        let lineNumber = 0;
-        let lineHeight = 1.1;
-        let y = text.attr('y');
-        let dy = parseFloat(text.attr('dy'));
-        let tspan = text.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
-        while (word = words.pop()) {
-          line.push(word);
-          tspan.text(line.join(' '));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(' '));
-            line = [ word ];
-            tspan = text.append('tspan').attr('x', 0).attr('y', y).attr('dy', (++lineNumber * lineHeight) + dy + 'em').text(word);
-          }
-        }
-      });
-    };
-
-    x.domain(domain_array);
+    let x = d3.scaleBand();
+    // let domain_array = ['Geologic Age'];
+    
+    // x.domain(domain_array);
     // y-axis scale!    
-    let y = d3.scaleLinear().range([
-      height,
-      0
-    ]);
+    let y = d3.scaleLinear().range([height,0]);
+    
+
     // Selects the svg container and sets width attribute.  
     // NOTE: I'm using 100% to allow the svg to occupy the container's
     // full width.  For a more static approach you can use
@@ -113,60 +76,51 @@ $(document).on("turbolinks:load", function() {
       return `translate(0,${transSum})`;
     }
     );
-    // Append bar for color    
-    bar.append('rect').attr('class', 'bar-overlay').attr('fill', function(d) {
-      let spelCol = d.timescale.color;
-      if (d.lithology.url === '#sed659') {
-        $('.inFill').css('fill', spelCol);
-      } else {
-        return d.timescale.color;
-      }
-    }
-    ).attr('width', function(d) {
-      // Checks to which array the Rock Type belongs to and uses the
-      // corresponding x scale.
-      let found = domain_array.includes(d.lithology.rock_type);
-      if (found === true) {
-        return x(d.lithology.rock_type);
-      }
-    }
-    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
-    );
+    
+    // LITHOLOGY
+    var x2 = x.copy();
+    x2.rangeRound([0, width]).domain(["Lithology"]).padding(0.5).align(0.25);
     // Append bar for texture 
     bar.append('rect').attr('class', 'bar').attr('fill', d =>
       // Here I can just return the url stored in the lithology json object!
       `url(${d.lithology.url})`
     
     ).attr('width', function(d) {
-      // Checks to which array the Rock Type belongs to and uses the
-      // corresponding x scale.
-      let found = domain_array.includes(d.lithology.rock_type);
-      if (found === true) {
-        return x(d.lithology.rock_type);
-      }
+        return x2.bandwidth();
     }
     ).attr('height', d => y(0) - y(parseFloat(d.thickness))
-    );
-    // If user indicates an unconformity...  
-    bar.append('rect').attr('class', 'unconformity').attr('fill', function(d) {
-      let { contact_type } = d.contact;
-      if (contact_type === 'Depositional') {
-        return 'url(#unconformity)';
-      } else if (contact_type === 'Tectonic') {
-        return 'url(#tectonic)';
-      } else if (contact_type === 'Intrusion') {
-        return 'url(#intrusion)';
-      } else {
-        return 'None';
-      }
+    ).attr("x", function(d){
+      return x2("Lithology");
     }
-    ).attr('width', d => x(d.lithology.rock_type)
-    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
     );
-    // x-axis line and ticks
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x)).selectAll('.tick text').call(wrap, x.bandwidth());
+    
+    // GEOLOGIC AGE
+    var x3 = x.copy();
+    x3.rangeRound([0,width/2]).domain(["Geologic Age"]).padding(0.5).align(0);
+    
+    // Append bar for age 
+    bar.append('rect').attr('class', 'bar').attr('fill', function(d){
+      return d.timescale.color;
+    }
+    
+    ).attr('width', function(d) {
+        return x3.bandwidth();
+    }
+    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
+    ).attr("x", function(d){
+      return x3("Geologic Age");
+    }
+    );  
+    
+    
+    // x3-axis line and ticks
+    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
+    // x2-axis line and ticks
+    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x2)).selectAll('.tick text');
+    
     // y-axis line and ticks
     d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(10, 's')).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', '-15%').attr('dy', '0.71em').text('THICKNESS (m)');
+    
     // Tooltip D3 settings
     let tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px');
     // Tooltip action
@@ -218,10 +172,7 @@ $(document).on("turbolinks:load", function() {
       .attr('y', (legendRectSize - legendSpacing) -2)
       .text(function(d) { return d.timescale.interval_name; });    
     
-    
-    
-    
-    
+
     return $("svg").appendTo(".stratChart");
   };
 

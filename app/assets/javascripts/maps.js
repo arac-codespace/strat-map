@@ -190,17 +190,6 @@ function initMap() {
     ]
        					
     }); //List end
-
-  // https://github.com/beaugrantham/wmsmaptype
-  var wxRadar = new WmsMapType(
-    "PuertoRico_Geology",
-    "https://mrdata.usgs.gov/services/pr?",
-    {layers: "PuertoRico_Geology"},
-    {opacity: 1.0});
-  
-  wxRadar.addToMap(map);
-  wxRadar.removeFromMap(map)
-
   
   // SEARCH BAR 
   var input = document.getElementById('pac-input');
@@ -445,8 +434,8 @@ function drawchart(data){
 
 
   // x-axis line and ticks
-  d3.select(stratIdSelect).append('g').attr("class", "axis axis--x")
-  .attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x)).selectAll(".tick text");
+  d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x)).selectAll('.tick text').call(wrap, x.bandwidth());
+
 
   // y-axis line and ticks
   d3.select(stratIdSelect).append("g")
