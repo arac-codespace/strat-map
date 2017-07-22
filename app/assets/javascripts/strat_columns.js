@@ -81,10 +81,25 @@ $(document).on("turbolinks:load", function() {
     var x2 = x.copy();
     x2.rangeRound([0, width]).domain(["Lithology"]).padding(0.5).align(0.25);
     // Append bar for texture 
-    bar.append('rect').attr('class', 'bar').attr('fill', d =>
+    bar.append('rect').attr('class', 'bar').attr('fill', function(d){
       // Here I can just return the url stored in the lithology json object!
-      `url(${d.lithology.url})`
-    
+      var patternSelect = d.lithology.url;
+      
+      // To prevent the pattern scaling operation from being done more than once...
+      if (!$(patternSelect + "> g").hasClass(patternSelect))
+      {
+        var patternWidth = $(patternSelect).attr("width");
+        var patternHeight = $(patternSelect).attr("height");
+        
+        $(patternSelect + '> g').addClass(patternSelect);
+        $(patternSelect + '> g').attr("transform", "scale(4)");
+        $(patternSelect).attr("width", patternWidth*4);
+        $(patternSelect).attr("height", patternHeight*4);
+      }
+      
+      
+      return `url(${patternSelect})`;
+    }
     ).attr('width', function(d) {
         return x2.bandwidth();
     }
@@ -140,21 +155,37 @@ $(document).on("turbolinks:load", function() {
     ).on('mouseout', () => tooltip.style('visibility', 'hidden')
     );
     
-    // Icorporate LEGEND
     
+    // Icorporate LEGEND
     
     var legendRectSize = 18;
     var legendSpacing = 4;
-
-    var legend = stratChart.selectAll('.legend')
-    .data(data)
+    
+    
+    
+    // AGE LEGEND
+    
+    // sorted by late_age name
+    var sortedData = data.sort(function(b,a){
+      return b.timescale.interval_name.localeCompare(a.timescale.interval_name);
+    });  
+    
+    
+    // Gets rid of duplicates by grouping... 
+    var filteredData = d3.nest()
+        .key(function(d) { return d.timescale.interval_name; })
+        .key(function(d) { return d.timescale.color; })
+        .entries(sortedData);    
+    
+    
+    var legend = stratChart.selectAll('.legend-age')
+    .data(filteredData)
     .enter()
     .append('g')
-    .attr('class', 'legend')
+    .attr('class', 'legend-age')
     .attr('transform', function(d, i) {
       var lHeight = legendRectSize + legendSpacing;
-      var offset =  lHeight * data.length / 2;
-      var horz = width + 80;
+      var horz = width + 200;
       var vert = i * lHeight;
       return 'translate(' + horz + ',' + vert + ')';
     });
@@ -162,15 +193,58 @@ $(document).on("turbolinks:load", function() {
     legend.append('rect')
       .attr('width', legendRectSize)
       .attr('height', legendRectSize)
-      .style('fill', function(d){
-        return d.timescale.color;
+      .style('fill', function(d,i){
+        return d.values[0].key;
       })
       .style('stroke', "black:");    
     
     legend.append('text')
       .attr('x', (legendRectSize + legendSpacing)*-1)
       .attr('y', (legendRectSize - legendSpacing) -2)
-      .text(function(d) { return d.timescale.interval_name; });    
+      .text(function(d) {
+        return d.key;
+      }); 
+      
+      
+    
+    // LITHOLOGY legend  
+    
+    // sorted by lithology name
+    sortedData = data.sort(function(a,b){
+      return b.lithology.name.localeCompare(a.lithology.name);
+    });  
+    
+    filteredData = d3.nest()
+      .key(function(d) { return d.lithology.name; })
+      .key(function(d) { return d.lithology.url; })
+      .entries(sortedData);      
+    
+    legendRectSize *=1.5;
+    legendSpacing *=2;
+    legend = stratChart.selectAll('.legend-lithology')
+    .data(filteredData)
+    .enter()
+    .append('g')
+    .attr('class', 'legend-lithology')
+    .attr('transform', function(d, i) {
+      var lHeight = legendRectSize + legendSpacing;
+      var horz = width + 200;
+      var vert = -i * lHeight + height -80;
+      return 'translate(' + horz + ',' + vert + ')';
+    });      
+      
+    legend.append('rect')
+      .attr('width', legendRectSize*2)
+      .attr('height', legendRectSize)
+      .style('fill', function(d){
+        return `url(${d.values[0].key})`;
+      })
+      .style('stroke', "black:");    
+    
+    legend.append('text')
+      .attr('x', (legendRectSize)*-1)
+      .attr('y', (legendRectSize - legendSpacing) -2)
+      .text(function(d) { return d.key; });    
     
 
     return $("svg").appendTo(".stratChart");
@@ -182,6 +256,6 @@ $(document).on("turbolinks:load", function() {
   // And then it broke again? \_(--)_/
   let url_id = $('.general-info').data('stratid');
   let data_url = url_id + '/data.json';
-  let stratdata = d3.json(data_url, drawchart);
+  d3.json(data_url, drawchart);
 }
 );
