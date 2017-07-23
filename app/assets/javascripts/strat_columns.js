@@ -77,9 +77,24 @@ $(document).on("turbolinks:load", function() {
     }
     );
     
-    // LITHOLOGY
     var x2 = x.copy();
     x2.rangeRound([0, width]).domain(["Lithology"]).padding(0.5).align(0.25);
+    
+    // LITHOLOGY Color!
+    // x2 = x.copy();
+    // x2.rangeRound([0, width]).domain(["Lithology"]).padding(0.5).align(0.25);
+    // Append bar for texture 
+    bar.append('rect').attr('class', 'bar').attr('fill',"white"
+    ).attr('width', function(d) {
+        return x2.bandwidth();
+    }
+    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
+    ).attr("x", function(d){
+      return x2("Lithology");
+    }
+    );    
+    
+    // LITHOLOGY
     // Append bar for texture 
     bar.append('rect').attr('class', 'bar').attr('fill', function(d){
       // Here I can just return the url stored in the lithology json object!
@@ -95,10 +110,10 @@ $(document).on("turbolinks:load", function() {
         $(patternSelect + '> g').attr("transform", "scale(4)");
         $(patternSelect).attr("width", patternWidth*4);
         $(patternSelect).attr("height", patternHeight*4);
+        $(patternSelect).attr("x", "15");
+        $(patternSelect).attr("y", "20");
       }
-      
-      
-      return `url(${patternSelect})`;
+        return `url(${patternSelect})`;
     }
     ).attr('width', function(d) {
         return x2.bandwidth();
@@ -108,6 +123,41 @@ $(document).on("turbolinks:load", function() {
       return x2("Lithology");
     }
     );
+    
+  
+    // UNCONFORMITIES
+    // If user indicates an unconformity...  
+    bar.append('rect').attr('class', 'unconformity').attr('fill', function(d) {
+      var { contact_type } = d.contact;
+      if (contact_type === 'Depositional') {
+        return 'url(#unconformity)';
+      } else if (contact_type === 'Tectonic') {
+        return 'url(#tectonic)';
+      } else if (contact_type === 'Intrusion') {
+        return 'url(#intrusion)';
+      } else {
+        return 'None';
+      }
+    }  
+    ).attr('width', function(d)
+    { 
+      return x2.bandwidth();
+    }
+      
+    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
+    ).attr("x", function(d)
+    {
+      return x2("Lithology");
+    }
+    );
+    
+    
+    
+    
+    
+    
+    
+    
     
     // GEOLOGIC AGE
     var x3 = x.copy();
