@@ -84,7 +84,47 @@ $(document).on("turbolinks:load", function() {
     // x2 = x.copy();
     // x2.rangeRound([0, width]).domain(["Lithology"]).padding(0.5).align(0.25);
     // Append bar for texture 
-    bar.append('rect').attr('class', 'bar').attr('fill',"white"
+    bar.append('rect').attr('class', 'bar').attr('fill', function(d)
+    {
+      var lithologyClass = d.lithology.classification;
+      if ($(".interbedded-carbonate").length >= 1)
+      {
+        $(".interbedded-carbonate").attr("fill","rgb(108, 170, 213)");
+      }
+      if (lithologyClass == "Sandstone" || lithologyClass == "Breccia" || lithologyClass == "Conglomerate" || lithologyClass == "Ironstone" || lithologyClass == "Phosphatic")
+      {
+        return "#fbf7af";
+      }
+      else if (lithologyClass == "Mudrock" || lithologyClass == "Siliceous" || (lithologyClass == "Interbedded-mudrock"))
+      {
+        return "rgb(210, 211, 211)";
+      }
+      else if (lithologyClass == "Carbonate" || lithologyClass == "Evaporite")
+      {
+        return "rgb(108, 170, 213)";
+      }
+      else if (lithologyClass == "Igneous")
+      {
+        return "rgb(240, 90, 137)";
+      }
+      else if (lithologyClass == "Volcanic" || lithologyClass == "Volcanoclastic")
+      {
+        return "rgb(161, 37, 142)";
+      }
+      else if (lithologyClass == "Metamorphic")
+      {
+        return "#4d25a1";
+      }
+      else if (lithologyClass== "Other")
+      {
+        return "#ff6b6b";
+      }
+      else
+      {
+        return "white";
+      }
+    }
+    
     ).attr('width', function(d) {
         return x2.bandwidth();
     }
@@ -126,7 +166,12 @@ $(document).on("turbolinks:load", function() {
     
   
     // UNCONFORMITIES
-    // If user indicates an unconformity...  
+    
+    // The following is a unconformity texture modification that offsets
+    // it from center top of bar
+    // $("#unconformity").attr("y","-16");
+    
+    // If user indicates an unconformity... 
     bar.append('rect').attr('class', 'unconformity').attr('fill', function(d) {
       var { contact_type } = d.contact;
       if (contact_type === 'Depositional') {
@@ -149,7 +194,7 @@ $(document).on("turbolinks:load", function() {
     {
       return x2("Lithology");
     }
-    );
+    ).attr("y","-16").attr("stroke","none");
     
     
     
