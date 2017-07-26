@@ -89,7 +89,7 @@ $(document).on("turbolinks:load", function() {
       var lithologyClass = d.lithology.classification;
       if ($(".interbedded-carbonate").length >= 1)
       {
-        $(".interbedded-carbonate").attr("fill","rgb(108, 170, 213)");
+        $(".interbedded-carbonate").attr("fill","#6caad5");
       }
       if (lithologyClass == "Sandstone" || lithologyClass == "Breccia" || lithologyClass == "Conglomerate" || lithologyClass == "Ironstone" || lithologyClass == "Phosphatic")
       {
@@ -97,19 +97,19 @@ $(document).on("turbolinks:load", function() {
       }
       else if (lithologyClass == "Mudrock" || lithologyClass == "Siliceous" || (lithologyClass == "Interbedded-mudrock"))
       {
-        return "rgb(210, 211, 211)";
+        return "#d2d3d3";
       }
       else if (lithologyClass == "Carbonate" || lithologyClass == "Evaporite")
       {
-        return "rgb(108, 170, 213)";
+        return "#6caad5";
       }
       else if (lithologyClass == "Igneous")
       {
-        return "rgb(240, 90, 137)";
+        return "#f05a89";
       }
       else if (lithologyClass == "Volcanic" || lithologyClass == "Volcanoclastic")
       {
-        return "rgb(161, 37, 142)";
+        return "#a1258e";
       }
       else if (lithologyClass == "Metamorphic")
       {
@@ -163,19 +163,69 @@ $(document).on("turbolinks:load", function() {
       return x2("Lithology");
     }
     );
-    
-  
-    // UNCONFORMITIES
-    
-    // The following is a unconformity texture modification that offsets
-    // it from center top of bar
-    // $("#unconformity").attr("y","-16");
-    
+
+    // CREATE unconformity patterns container for dynamic pattern creation
+    d3.select("body").append("svg").attr("class","unconformityPatterns").attr("width", 0).attr("height", 0).attr("display","absolute").append("defs");
+
     // If user indicates an unconformity... 
-    bar.append('rect').attr('class', 'unconformity').attr('fill', function(d) {
+    bar.append('rect').attr('class', 'unconformity-color').attr('fill', function(d,i) {
       var { contact_type } = d.contact;
       if (contact_type === 'Depositional') {
-        return 'url(#unconformity)';
+        
+        // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
+        var dynFill = "none";
+
+        if (i > 0 )
+        {
+          
+          var lithologyClass = d.previous.lithology.classification;
+          if ($(".interbedded-carbonate").length >= 1)
+          {
+            $(".interbedded-carbonate").attr("fill","#6caad5");
+          }
+          if (lithologyClass == "Sandstone" || lithologyClass == "Breccia" || lithologyClass == "Conglomerate" || lithologyClass == "Ironstone" || lithologyClass == "Phosphatic")
+          {
+            dynFill = "#fbf7af";
+          }
+          else if (lithologyClass == "Mudrock" || lithologyClass == "Siliceous" || (lithologyClass == "Interbedded-mudrock"))
+          {
+            dynFill = "#d2d3d3";
+          }
+          else if (lithologyClass == "Carbonate" || lithologyClass == "Evaporite")
+          {
+            dynFill = "#6caad5";
+          }
+          else if (lithologyClass == "Igneous")
+          {
+            dynFill = "#f05a89";
+          }
+          else if (lithologyClass == "Volcanic" || lithologyClass == "Volcanoclastic")
+          {
+            dynFill = "#a1258e";
+          }
+          else if (lithologyClass == "Metamorphic")
+          {
+            dynFill = "#4d25a1";
+          }
+          else if (lithologyClass== "Other")
+          {
+            dynFill = "#ff6b6b";
+          }
+          else
+          {
+            dynFill = "transparent";
+          }          
+          
+        }
+        
+        var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = '  + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" fill-rule="evenodd" fill="none" stroke="rgb(0,0,0)"/></g>';        
+    
+        d3.select(".unconformityPatterns > defs").append("pattern").attr("id",`unconformity-color${i}`
+        ).attr("patternUnits","userSpaceOnUse").attr("x","0").attr("y","-18").attr("width","50").attr("height","9999")
+        .html(patternPath);        
+        
+        return `url(#unconformity-color${i})`;
+        
       } else if (contact_type === 'Tectonic') {
         return 'url(#tectonic)';
       } else if (contact_type === 'Intrusion') {
@@ -194,7 +244,52 @@ $(document).on("turbolinks:load", function() {
     {
       return x2("Lithology");
     }
-    ).attr("y","-16").attr("stroke","none");
+    ).attr("stroke","none");
+
+    // UNCONFORMITIES Textures
+    
+    
+    // If user indicates an unconformity... 
+    bar.append('rect').attr('class', 'unconformity').attr('fill', function(d,i) {
+      var { contact_type } = d.contact;
+      if (contact_type === 'Depositional') {
+        
+        // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
+        
+        var dynFill = "none";
+
+        if (i > 0)
+        {
+          dynFill = `url(${d.previous.lithology.url})`;
+        }
+        
+        var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = '  + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" fill-rule="evenodd" fill="none" stroke="rgb(0,0,0)"/></g>';        
+    
+        d3.select(".unconformityPatterns > defs").append("pattern").attr("id",`unconformity-${i}`
+        ).attr("patternUnits","userSpaceOnUse").attr("x","0").attr("y","-18").attr("width","50").attr("height","9999")
+        .html(patternPath);        
+        
+        return `url(#unconformity-${i})`;
+        
+      } else if (contact_type === 'Tectonic') {
+        return 'url(#tectonic)';
+      } else if (contact_type === 'Intrusion') {
+        return 'url(#intrusion)';
+      } else {
+        return 'None';
+      }
+    }  
+    ).attr('width', function(d)
+    { 
+      return x2.bandwidth();
+    }
+      
+    ).attr('height', d => y(0) - y(parseFloat(d.thickness))
+    ).attr("x", function(d)
+    {
+      return x2("Lithology");
+    }
+    ).attr("stroke","none");
     
     
     
