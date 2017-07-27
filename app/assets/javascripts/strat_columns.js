@@ -18,11 +18,10 @@ $(document).on('turbolinks:load', function () {
     var width = 600 - (margin.left) - (margin.right);
     var height = (100 * Math.sqrt(thickness_h)) - (margin.top) - (margin.bottom);
     //500
+    
     // x-axis scale!
     var x = d3.scaleBand();
-    // var domain_array = ['Geologic Age'];
 
-    // x.domain(domain_array);
     // y-axis scale!    
     var y = d3.scaleLinear().range([height, 0]);
 
@@ -42,16 +41,10 @@ $(document).on('turbolinks:load', function () {
     // Just sums the thickness of all the datasets in the JSON.
     var totalThickness = d3.sum(data, d => parseFloat(d.thickness));
     // Sets upper domain to the max thickness.
-    y.domain([
-      0,
-      totalThickness
-    ]);
+    y.domain([0, totalThickness]);
     // Defines the previous function to store previous thickness value up next
-    var i = 0;
-    while (i < data.length) {
-      data[i].previous = data[i - 1];
-      i++;
-    }
+    for(var i = 0; i < data.length; i++) { data[i].previous = data[i-1]; }      
+
     // Bar data bind and transformation
     var bar = stratChart.selectAll('g').data(data).enter().append('g').attr('transform', function (d, i) {
       // Note that i refers to the number of objects!
@@ -134,7 +127,7 @@ $(document).on('turbolinks:load', function () {
       if (contact_type === 'Depositional') {
 
         // GENERATE COLORS FOR UNCONFORMITY PATTERNS DYNAMICALLY
-        var dynFill = 'none';
+        var dynFill = 'transparent';
 
         // Prevents NaN from performing a previous operation on data index 0
         if (i > 0) {
@@ -149,7 +142,7 @@ $(document).on('turbolinks:load', function () {
         var patternPath =
           '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = ' +
           dynFill +
-          ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" fill-rule="evenodd" fill="none" stroke="rgb(0,0,0)"/></g>';
+          ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
 
         d3.select('.unconformityPatterns > defs').append('pattern').attr(
             'id', `unconformity-color${i}`).attr('patternUnits',
@@ -160,7 +153,7 @@ $(document).on('turbolinks:load', function () {
         return `url(#unconformity-color${i})`;
 
       } else {
-        return 'None';
+        return 'transparent';
       }
     }).attr('width', function (d) {
         return x2.bandwidth();
@@ -169,7 +162,7 @@ $(document).on('turbolinks:load', function () {
     ).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x',
       function (d) {
         return x2('Lithology');
-      }).attr('stroke', 'none');
+      }).attr('stroke', 'transparent');
 
 
     // UNCONFORMITIES Textures
@@ -182,7 +175,7 @@ $(document).on('turbolinks:load', function () {
 
         // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
 
-        var dynFill = 'none';
+        var dynFill = 'transparent';
 
         // Prevents NaN by preventing .previous operation from occuring
         // at data index 0
@@ -193,7 +186,7 @@ $(document).on('turbolinks:load', function () {
         var patternPath =
           '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = ' +
           dynFill +
-          ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" fill-rule="evenodd" fill="none" stroke="rgb(0,0,0)"/></g>';
+          ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
 
         d3.select('.unconformityPatterns > defs').append('pattern').attr(
             'id', `unconformity-${i}`).attr('patternUnits',
@@ -208,7 +201,7 @@ $(document).on('turbolinks:load', function () {
       } else if (contact_type === 'Intrusion') {
         return 'url(#intrusion)';
       } else {
-        return 'None';
+        return 'transparent';
       }
     }).attr('width', function (d) {
         return x2.bandwidth();
@@ -216,7 +209,7 @@ $(document).on('turbolinks:load', function () {
 
     ).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x', function (d) {
       return x2('Lithology');
-    }).attr('stroke', 'none');
+    }).attr('stroke', 'transparent');
 
 
     // GEOLOGIC AGE

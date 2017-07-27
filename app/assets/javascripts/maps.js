@@ -1,8 +1,13 @@
+/*global $*/
+/*global d3*/
+/*global google*/
+
+
 $( document ).on('turbolinks:load', function() {
   if ($('.maps.index').length == 1)
   {
     var map;
-    console.log("It works on each visit!")
+    console.log("It works on each visit!");
     google.maps.event.addDomListener(window, 'turbolinks:load', initMap);
     google.maps.event.addDomListener(window, 'turbolinks:load', fadingIn);
 
@@ -14,7 +19,7 @@ $( document ).on('turbolinks:load', function() {
   }
 
   
-})
+});
 
 
 function fadingIn(){
@@ -290,7 +295,7 @@ function addMarkerCustom(place) {
       }
     }
     
-    var checkExist = $(idSelect).find("*")
+    var checkExist = $(idSelect).find("*");
     // if the svg doesn't exist within the div with id idSelect...
     if (!checkExist.hasClass("stratChart"))
     {      
@@ -319,9 +324,6 @@ function drawchart(data){
   var thickness_h = d3.sum(data,function(d){
 	                  return parseFloat(d.thickness);
                   });
-  
-  var object_num = data.length;
-  // alert(object_num);
   
   var margin = {top: 20, right: 80, bottom: 40, left: 20},
       width = 300 - margin.left - margin.right, //960
@@ -364,7 +366,7 @@ function drawchart(data){
       // To avoid NaN error, make the var 0 when the index is greater than 0
       // ie.  No previous index exist before index 0/ first data array
       if (i > 0) { prevThickness = parseFloat(d.previous.thickness)}
-      else { prevThickness = 0};
+      else { prevThickness = 0}
 
       // Var defined outside of function allows for the addition of the 
       // prevThickness value due to how the function loop works.
@@ -374,67 +376,167 @@ function drawchart(data){
       // the bar located below.  IE: Stack bars.
       return "translate(0," + transSum + ")"; 
     });      
-    // Append bar for color    
-    bar.append("rect")
-        .attr("class", "bar-overlay")
-        .attr("fill", function(d) {
-          var spelCol = d.timescale.color;
-
-          if (d.lithology.url == "#sed659")
-          {
-            $(".inFill").css("fill",spelCol);
-          }
-          else
-          {
-            return d.timescale.color;
-            
-          }
-
-        })
-        .attr("width", width)
-        .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });    
-    
-    
-  // Bar texture 
+ 
+ 
+ 
+   // LITHOLOGY Color!
+  // Append bar for texture 
+  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+    if ($('.interbedded-carbonate').length >= 1) {
+      $('.interbedded-carbonate').attr('fill', '#6caad5');
+    }
+    var lithologyClass = d.lithology.classification;
+  
+    // Pass class to lithologyColoring function will return
+    // a color string
+    return lithologyColoring(lithologyClass);
+  }).attr('width', width).attr('height', d => y(0) - y(parseFloat(d.thickness)));
+ 
+  // LITHOLOGY Texture 
   bar.append("rect")
       .attr("class", "bar")
       .attr("fill",function(d){
         // Here I can just return the url stored in the lithology json object!
-        return "url(" + d.lithology.url + ")";
-      ;})
+        var patternSelect = d.lithology.url;
+  
+        // To prevent the pattern scaling operation from being done more than once...
+        if (!$(patternSelect + '> g').hasClass(patternSelect)) {
+          var patternWidth = $(patternSelect).attr('width');
+          var patternHeight = $(patternSelect).attr('height');
+  
+          $(patternSelect + '> g').addClass(patternSelect);
+          $(patternSelect + '> g').attr('transform', 'scale(4)');
+          $(patternSelect).attr('width', patternWidth * 4);
+          $(patternSelect).attr('height', patternHeight * 4);
+          $(patternSelect).attr('x', '15');
+          $(patternSelect).attr('y', '20');
+        }
+        return `url(${patternSelect})`;
+      })
       .attr("width", width)
       .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
 
-  // Append for unconformity
-  bar.append("rect")
-    .attr("class","unconformity")
-    .attr("fill", function(d){
-      var contact_type = d.contact.contact_type;
-      if (contact_type == "Depositional")
-      {
-        return "url(#unconformity)";
+ 
+ 
+ 
+  // CREATE unconformityPatterns container for dynamic pattern creation
+  if ($('.unconformityPatterns').length == 0)
+  {
+    d3.select('body').append('svg').attr('class', 'unconformityPatterns').attr(
+      'width', 0).attr('height', 0).attr('display', 'absolute').append(
+      'defs');
+  }
+  
+  // UNCONFORMITY COLOR
+
+  // If user indicates an unconformity... 
+  bar.append('rect').attr('class', 'unconformity-color').attr('fill', function (d, i) {
+    var {
+      contact_type
+    } = d.contact;
+    if (contact_type === 'Depositional') {
+
+      // GENERATE COLORS FOR UNCONFORMITY PATTERNS DYNAMICALLY
+      var dynFill = 'transparent';
+
+      // Prevents NaN from performing a previous operation on data index 0
+      if (i > 0) {
+
+        var lithologyClass = d.previous.lithology.classification;
+
+        // Pass to coloring function and assign the fill to the dynFill var...
+        dynFill = lithologyColoring(lithologyClass);
+
       }
-      else if (contact_type == "Tectonic")
+
+      var patternPath =
+        '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = ' +
+        dynFill +
+        ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke="black" fill-rule="evenodd" fill="transparent"/></g>';
+
+      if ($(`#unconformity-color${i}-id-${d.id}`).length == 0)
       {
-        return "url(#tectonic)";
+        d3.select('.unconformityPatterns > defs').append('pattern').attr(
+            'id', `unconformity-color${i}-id-${d.id}`).attr('patternUnits',
+            'userSpaceOnUse').attr('x', '0').attr('y', '-18').attr(
+            'width', '50').attr('height', '9999')
+          .html(patternPath);
       }
-      else if (contact_type == "Intrusion")
+
+      return `url(#unconformity-color${i}-id-${d.id})`;
+
+    } else {
+      return 'transparent';
+    }
+  }).attr('width', width
+  ).attr('height', d => y(0) - y(parseFloat(d.thickness))
+  ).attr('stroke', 'transparent');  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // UNCONFORMITIES Textures
+  // If user indicates an unconformity... 
+  bar.append('rect').attr('class', 'unconformity').attr('fill', function (d, i) {
+    var {
+      contact_type
+    } = d.contact;
+    if (contact_type === 'Depositional') {
+
+      // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
+
+      var dynFill = 'transparent';
+
+      // Prevents NaN by preventing .previous operation from occuring
+      // at data index 0
+      if (i > 0) {
+        dynFill = `url(${d.previous.lithology.url})`;
+      }
+
+      var patternPath =
+        '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = ' +
+        dynFill +
+        ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke="black" fill-rule="evenodd" fill="transparent"/></g>';
+      
+      if ($(`#unconformity-${i}-id-${d.id}`).length == 0)
       {
-        return "url(#intrusion)";
+        d3.select('.unconformityPatterns > defs').append('pattern').attr(
+            'id', `unconformity-${i}-id-${d.id}`).attr('patternUnits',
+            'userSpaceOnUse').attr('x', '0').attr('y', '-18').attr(
+            'width', '50').attr('height', '9999')
+          .html(patternPath);
       }
-      else
-      {
-        return "None";
-      }
-    })
-    .attr("width", width)
-    .attr("height", function(d){
-      return y(0) - y(parseFloat(d.thickness));
-    })    
+
+      return `url(#unconformity-${i}-id-${d.id})`;
+
+    } else if (contact_type === 'Tectonic') {
+      return 'url(#tectonic)';
+    } else if (contact_type === 'Intrusion') {
+      return 'url(#intrusion)';
+    } else {
+      return 'transparent';
+    }
+  }).attr('width', function (d) {
+      return width;
+    }
+
+  ).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('stroke', 'transparent');
+ 
+ 
+ 
+ 
+ 
 
 
   // x-axis line and ticks
-  d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x)).selectAll('.tick text').call(wrap, x.bandwidth());
+  d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x)).selectAll('.tick text');
 
 
   // y-axis line and ticks
@@ -448,6 +550,11 @@ function drawchart(data){
       .attr("dy", "0.71em")
       .text("THICKNESS (m)");      
   
+  
+  if ($('.tool').length != 0)
+  {
+    $('.tool').remove();
+  }
   // Tooltip D3 settings
   var tooltip = d3.select("body")
   	.append("div")
@@ -473,6 +580,48 @@ function drawchart(data){
   	.on("mousemove", function(){return tooltip.style("top", (event.pageY-170)+"px").style("left",(event.pageX+20)+"px");})
   	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});      
 } // draw chart end
+
+
+// This function returns the color of the bar
+// according to the d.lithology.classification
+function lithologyColoring(lithologyClass) {
+  if (lithologyClass == 'Sandstone' || lithologyClass == 'Breccia' ||
+    lithologyClass == 'Conglomerate' || lithologyClass == 'Ironstone' ||
+    lithologyClass == 'Phosphatic') {
+    return '#fbf7af';
+  } else if (lithologyClass == 'Mudrock' || lithologyClass == 'Siliceous' ||
+    (lithologyClass == 'Interbedded-mudrock')) {
+    return '#d2d3d3';
+  } else if (lithologyClass == 'Carbonate' || lithologyClass == 'Evaporite') {
+    return '#6caad5';
+  } else if (lithologyClass == 'Igneous') {
+    return '#f05a89';
+  } else if (lithologyClass == 'Volcanic' || lithologyClass ==
+    'Volcanoclastic') {
+    return '#a1258e';
+  } else if (lithologyClass == 'Metamorphic') {
+    return '#4d25a1';
+  } else if (lithologyClass == 'Other') {
+    return '#ff6b6b';
+  } else {
+    return 'transparent';
+  }
+} //lithologyColoring end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function WmsMapType(name, url, params, options) {

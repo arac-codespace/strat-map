@@ -18,7 +18,7 @@ class StratColumnsController < ApplicationController
     @textures_to_render = []
     @layers.each do |layer|
       @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
-      unless layer.contact.contact_type == "Conformity"
+      unless layer.contact.contact_type == "Conformity" or layer.contact.contact_type == "Depositional"
         @textures_to_render << "svg/contacts/#{layer.contact.contact_type.downcase}"
       end
     end

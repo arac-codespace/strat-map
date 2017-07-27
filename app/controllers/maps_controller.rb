@@ -15,7 +15,7 @@ before_action :authenticate_user!
       @layers = Layer.joins(:strat_column).where(strat_columns: {id: column.id}).each do |layer|
         @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
         
-        unless layer.contact.contact_type == "Conformity"
+        unless layer.contact.contact_type == "Conformity" or layer.contact.contact_type == "Depositional"
           @textures_to_render << "svg/contacts/#{layer.contact.contact_type.downcase}"
         end        
         
