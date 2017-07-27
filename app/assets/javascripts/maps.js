@@ -330,7 +330,7 @@ function drawchart(data){
       height = 60*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
 
   // x-axis scale!
-  var x = d3.scaleOrdinal().range([0, width]);
+  var x = d3.scaleBand();
   
   // y-axis scale!    
   var y = d3.scaleLinear()
@@ -379,8 +379,11 @@ function drawchart(data){
  
  
  
-   // LITHOLOGY Color!
   // Append bar for texture 
+  
+  var x2 = x.copy();
+  x2.rangeRound([0, width]).domain(['Lithology']).padding(0).align(0.25);
+  
   bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
     if ($('.interbedded-carbonate').length >= 1) {
       $('.interbedded-carbonate').attr('fill', '#6caad5');
@@ -390,31 +393,36 @@ function drawchart(data){
     // Pass class to lithologyColoring function will return
     // a color string
     return lithologyColoring(lithologyClass);
-  }).attr('width', width).attr('height', d => y(0) - y(parseFloat(d.thickness)));
- 
+  }).attr('width', function(d){
+    return x2.bandwidth();
+  }
+  ).attr('height', d => y(0) - y(parseFloat(d.thickness)));
+
+
   // LITHOLOGY Texture 
-  bar.append("rect")
-      .attr("class", "bar")
-      .attr("fill",function(d){
-        // Here I can just return the url stored in the lithology json object!
-        var patternSelect = d.lithology.url;
-  
-        // To prevent the pattern scaling operation from being done more than once...
-        if (!$(patternSelect + '> g').hasClass(patternSelect)) {
-          var patternWidth = $(patternSelect).attr('width');
-          var patternHeight = $(patternSelect).attr('height');
-  
-          $(patternSelect + '> g').addClass(patternSelect);
-          $(patternSelect + '> g').attr('transform', 'scale(4)');
-          $(patternSelect).attr('width', patternWidth * 4);
-          $(patternSelect).attr('height', patternHeight * 4);
-          $(patternSelect).attr('x', '15');
-          $(patternSelect).attr('y', '20');
-        }
-        return `url(${patternSelect})`;
-      })
-      .attr("width", width)
-      .attr("height", function(d) { return  y(0) - y(parseFloat(d.thickness)) ; });
+  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+    // Here I can just return the url stored in the lithology json object!
+    var patternSelect = d.lithology.url;
+
+    // To prevent the pattern scaling operation from being done more than once...
+    if (!$(patternSelect + '> g').hasClass(patternSelect)) {
+      var patternWidth = $(patternSelect).attr('width');
+      var patternHeight = $(patternSelect).attr('height');
+
+      $(patternSelect + '> g').addClass(patternSelect);
+      $(patternSelect + '> g').attr('transform', 'scale(4)');
+      $(patternSelect).attr('width', patternWidth * 4);
+      $(patternSelect).attr('height', patternHeight * 4);
+      $(patternSelect).attr('x', '15');
+      $(patternSelect).attr('y', '20');
+    }
+    return `url(${patternSelect})`;
+  }).attr('width', function (d) {
+    return x2.bandwidth();
+  }).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x',
+    function (d) {
+      return x2('Lithology');
+    });
 
  
  
@@ -472,16 +480,7 @@ function drawchart(data){
   ).attr('height', d => y(0) - y(parseFloat(d.thickness))
   ).attr('stroke', 'transparent');  
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   // UNCONFORMITIES Textures
   // If user indicates an unconformity... 
   bar.append('rect').attr('class', 'unconformity').attr('fill', function (d, i) {
@@ -530,14 +529,32 @@ function drawchart(data){
   ).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('stroke', 'transparent');
  
  
- 
- 
- 
+  // GEOLOGIC AGE
+  var x3 = d3.scaleBand();
+  x3.rangeRound([0, width / 2]).domain(['Geologic Age']).padding(0.5).align(
+    0);
+
+  // Append bar for age 
+  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+      return d.timescale.color;
+    }
+
+  ).attr('width', function (d) {
+    return x3.bandwidth();
+  }).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x', function (d) {
+    return x3('Geologic Age');
+  });
 
 
-  // x-axis line and ticks
-  d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x)).selectAll('.tick text');
-
+  // x3-axis geologic age line and ticks
+  d3.select(stratIdSelect).append('g').attr('class', 'axis axis--x').attr(
+    'transform', `translate(0,${height})`).call(d3.axisBottom(x3).tickSizeOuter(
+    [0])).selectAll('.tick text');
+    
+  // x2-axis lithology line and ticks
+  d3.select(stratIdSelect).append('g').attr('class', 'axis axis--x').attr(
+    'transform', `translate(0,${height})`).call(d3.axisBottom(x2)).selectAll(
+    '.tick text');    
 
   // y-axis line and ticks
   d3.select(stratIdSelect).append("g")
@@ -610,20 +627,8 @@ function lithologyColoring(lithologyClass) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// WMS Map overlay for google maps api!
+// https://github.com/beaugrantham/wmsmaptype
 function WmsMapType(name, url, params, options) {
 	var TILE_SIZE = 256;
 	var EARTH_RADIUS_IN_METERS = 6378137;

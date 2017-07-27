@@ -14,7 +14,7 @@ before_action :authenticate_user!
   def all_data
   
     @user_id = current_user.id
-    @strat_columns = StratColumn.where(user_id: @user_id)
+    @strat_columns = StratColumn.where(user_id: @user_id).where.not(lat: nil).where.not(lng: nil)
         
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
     render :json => @strat_columns, :except => [:created_at, :updated_at]  

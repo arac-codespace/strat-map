@@ -5,7 +5,7 @@ before_action :authenticate_user!
     
     @user_id = current_user.id
 
-    # Find all strat columns
+    # Find all strat columns.  This is to render textures.
     @strat = StratColumn.where(user_id: @user_id)
     
     @textures_to_render = []
