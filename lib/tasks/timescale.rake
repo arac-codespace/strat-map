@@ -9,7 +9,7 @@ namespace :timescale do
       json_list["records"].each_with_index do |x,i|
         timescale_record = Timescale.new
         timescale_record.interval_no = x["oid"]
-        timescale_record.scale_no = x["sca"]
+        timescale_record.scale_no = x["tsc"]
         timescale_record.level = x["lvl"]
         timescale_record.interval_name = x["nam"]
         timescale_record.abbrev = x["abr"]

@@ -16,7 +16,15 @@ $(document).on('turbolinks:load', function () {
       left: 60
     };
     var width = 600 - (margin.left) - (margin.right);
-    var height = (100 * Math.sqrt(thickness_h)) - (margin.top) - (margin.bottom);
+    var height = (80*Math.sqrt(thickness_h));
+    if (height < 300)
+    {
+      height = 300;
+    }
+    else if (height > 2000)
+    {
+      height = 2000;
+    }
     //500
     
     // x-axis scale!
@@ -218,16 +226,24 @@ $(document).on('turbolinks:load', function () {
       0);
 
     // Append bar for age 
-    bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+    bar.append('rect').attr('class', 'age').attr('fill', function (d) {
         return d.timescale.color;
       }
-
     ).attr('width', function (d) {
       return x3.bandwidth();
     }).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x', function (d) {
       return x3('Geologic Age');
     });
-
+    
+    // Attach Geologic Age
+    bar.append("text").text(function(d)
+    {
+      return d.timescale.interval_name;
+    })   
+    .attr("x", 70)
+    .attr("y", 12);
+    
+    
 
     // x3-axis line and ticks
     d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr(
@@ -373,7 +389,20 @@ $(document).on('turbolinks:load', function () {
       .attr('x', (legendRectSize) * -1)
       .attr('y', (legendRectSize - legendSpacing) - 2)
       .text(function (d) {
-        return d.key;
+        if (d.values[0].values[0].lithology.name3 != "")
+        {
+          let name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
+          return name;
+        }
+        else if (d.values[0].values[0].lithology.name2 != "")
+        {
+          let name = d.key + ' or ' + d.values[0].values[0].lithology.name2;  
+          return name;
+        }
+        else
+        {
+          return d.key;
+        }
       });
 
 

@@ -272,7 +272,7 @@ function addMarkerCustom(place) {
   var marker = new google.maps.Marker({
     position: myLatLng,
     map: map,
-    title: place.location
+    title: place.name
     });
   
   // Custom INFOWINDOW LISTENER
@@ -326,8 +326,8 @@ function drawchart(data){
                   });
   
   var margin = {top: 20, right: 80, bottom: 40, left: 20},
-      width = 300 - margin.left - margin.right, //960
-      height = 60*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
+      width = 200 - margin.left - margin.right, //960
+      height = 35*Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
 
   // x-axis scale!
   var x = d3.scaleBand();
@@ -531,18 +531,18 @@ function drawchart(data){
  
   // GEOLOGIC AGE
   var x3 = d3.scaleBand();
-  x3.rangeRound([0, width / 2]).domain(['Geologic Age']).padding(0.5).align(
+  x3.rangeRound([0, width / 2]).domain(['Age']).padding(0.5).align(
     0);
 
   // Append bar for age 
-  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+  bar.append('rect').attr('class', 'age').attr('fill', function (d) {
       return d.timescale.color;
     }
 
   ).attr('width', function (d) {
     return x3.bandwidth();
   }).attr('height', d => y(0) - y(parseFloat(d.thickness))).attr('x', function (d) {
-    return x3('Geologic Age');
+    return x3('Age');
   });
 
 
@@ -594,7 +594,7 @@ function drawchart(data){
     	    "Lithology Pattern: " + d.lithology.name
     	    )
   	  ;})
-  	.on("mousemove", function(){return tooltip.style("top", (event.pageY-170)+"px").style("left",(event.pageX+20)+"px");})
+  	.on("mousemove", function(){return tooltip.style("top", (event.pageY-120)+"px").style("left",(event.pageX+20)+"px");})
   	.on("mouseout", function(){return tooltip.style("visibility", "hidden");});      
 } // draw chart end
 
