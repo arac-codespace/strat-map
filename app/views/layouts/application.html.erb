@@ -30,9 +30,9 @@
         <div class="collapse navbar-collapse" id="main-nav-collapse">
           <% if user_signed_in? %>
             <ul class="nav navbar-nav navbar-left">
-              <li><%= link_to("Create", new_strat_column_path)%></li>
-              <li><%= link_to("Index", strat_columns_path)%></li>
               <li><%= link_to("Map View", maps_path)%></li>
+              <li><%= link_to("Index", strat_columns_path)%></li>
+              <li><%= link_to("Create", new_strat_column_path)%></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>

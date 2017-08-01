@@ -3,7 +3,6 @@
 {
 "records": [
 {"oid":"int:32","tsc":"tsc:1","lvl":4,"nam":"Holocene","pid":"int:12","col":"#FEF2E0","eag":0.01170,"lag":0.00000,"rid":["ref:47900"]},
-{"oid":"int:3002","tsc":"tsc:1","lvl":5,"nam":"Holocene","pid":"int:32","col":"#FEF2E0","eag":0.01170,"lag":0.00000,"rid":["ref:47900"]},
 {"oid":"int:922","tsc":"tsc:1","lvl":5,"nam":"Late Pleistocene","pid":"int:33","col":"#FFF2D3","eag":0.12600,"lag":0.01170,"rid":["ref:15443"]},
 {"oid":"int:923","tsc":"tsc:1","lvl":5,"nam":"Middle Pleistocene","pid":"int:33","col":"#FFF2C7","eag":0.78100,"lag":0.12600,"rid":["ref:15443"]},
 {"oid":"int:740","tsc":"tsc:1","lvl":5,"nam":"Calabrian","pid":"int:33","col":"#FFF2BA","eag":1.80600,"lag":0.78100,"rid":["ref:47900"]},

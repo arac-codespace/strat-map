@@ -239,9 +239,11 @@ $(document).on('turbolinks:load', function () {
     bar.append("text").text(function(d)
     {
       return d.timescale.interval_name;
-    })   
-    .attr("x", 70)
-    .attr("y", 12);
+    }   
+    ).attr("x", 40
+    ).attr("y", 16
+    ).style("text-anchor","middle"
+    ).style("font","14px sans-serif");
     
     
 
@@ -257,8 +259,13 @@ $(document).on('turbolinks:load', function () {
     // y-axis line and ticks
     d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(
         d3.axisLeft(y).ticks(10, 's')).append('text').attr('transform',
-        'rotate(-90)').attr('y', -45).attr('x', '-15%').attr('dy', '0.71em')
-      .text('THICKNESS (m)');
+        'rotate(-90)').attr('y', -45).attr('x', function()
+        {
+          return y(totalThickness/2);
+        }
+        
+        ).attr('dy', '0.71em')
+        .text('THICKNESS (m)');
 
     // Tooltip D3 settings
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style(
@@ -293,59 +300,59 @@ $(document).on('turbolinks:load', function () {
     // AGE LEGEND
 
     // sorted by late_age name
-    var sortedData = data.sort(function (b, a) {
-      return b.timescale.interval_name.localeCompare(a.timescale.interval_name);
-    });
+    // var sortedData = data.sort(function (b, a) {
+    //   return b.timescale.interval_name.localeCompare(a.timescale.interval_name);
+    // });
 
 
-    // Gets rid of duplicates by grouping... 
-    var filteredData = d3.nest()
-      .key(function (d) {
-        return d.timescale.interval_name;
-      })
-      .key(function (d) {
-        return d.timescale.color;
-      })
-      .entries(sortedData);
+    // // Gets rid of duplicates by grouping... 
+    // var filteredData = d3.nest()
+    //   .key(function (d) {
+    //     return d.timescale.interval_name;
+    //   })
+    //   .key(function (d) {
+    //     return d.timescale.color;
+    //   })
+    //   .entries(sortedData);
 
 
-    var legend = stratChart.selectAll('.legend-age')
-      .data(filteredData)
-      .enter()
-      .append('g')
-      .attr('class', 'legend-age')
-      .attr('transform', function (d, i) {
-        var lHeight = legendRectSize + legendSpacing;
-        var horz = width + 200;
-        var vert = i * lHeight;
-        return 'translate(' + horz + ',' + vert + ')';
-      });
+    // var legend = stratChart.selectAll('.legend-age')
+    //   .data(filteredData)
+    //   .enter()
+    //   .append('g')
+    //   .attr('class', 'legend-age')
+    //   .attr('transform', function (d, i) {
+    //     var lHeight = legendRectSize + legendSpacing;
+    //     var horz = width + 200;
+    //     var vert = i * lHeight;
+    //     return 'translate(' + horz + ',' + vert + ')';
+    //   });
 
-    legend.append('rect')
-      .attr('width', legendRectSize)
-      .attr('height', legendRectSize)
-      .style('fill', function (d, i) {
-        return d.values[0].key;
-      })
-      .style('stroke', 'black');
+    // legend.append('rect')
+    //   .attr('width', legendRectSize)
+    //   .attr('height', legendRectSize)
+    //   .style('fill', function (d, i) {
+    //     return d.values[0].key;
+    //   })
+    //   .style('stroke', 'black');
 
-    legend.append('text')
-      .attr('x', (legendRectSize + legendSpacing) * -1)
-      .attr('y', (legendRectSize - legendSpacing) - 2)
-      .text(function (d) {
-        return d.key;
-      });
+    // legend.append('text')
+    //   .attr('x', (legendRectSize + legendSpacing) * -1)
+    //   .attr('y', (legendRectSize - legendSpacing) - 2)
+    //   .text(function (d) {
+    //     return d.key;
+    //   });
 
 
 
     // LITHOLOGY legend  
 
     // sorted by lithology name
-    sortedData = data.sort(function (a, b) {
+    var sortedData = data.sort(function (a, b) {
       return b.lithology.name.localeCompare(a.lithology.name);
     });
 
-    filteredData = d3.nest()
+    var filteredData = d3.nest()
       .key(function (d) {
         return d.lithology.name;
       })
@@ -356,7 +363,7 @@ $(document).on('turbolinks:load', function () {
 
     legendRectSize *= 1.5;
     legendSpacing *= 2;
-    legend = stratChart.selectAll('.legend-lithology')
+    var legend = stratChart.selectAll('.legend-lithology')
       .data(filteredData)
       .enter()
       .append('g')
@@ -364,7 +371,7 @@ $(document).on('turbolinks:load', function () {
       .attr('transform', function (d, i) {
         var lHeight = legendRectSize + legendSpacing;
         var horz = width + 200;
-        var vert = -i * lHeight + height - 80;
+        var vert = i * lHeight;
         return 'translate(' + horz + ',' + vert + ')';
       });
 

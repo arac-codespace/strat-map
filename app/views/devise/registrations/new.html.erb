@@ -1,6 +1,11 @@
 <div class = "signup-container">
   <div class="signup-form-wrapper">
     <h2>Sign up</h2>
+    </br>
+    <p><strong>Note:</strong> This application is still in development and is therefore not accepting email addresses for signing up.</p>
+    <p>This means that currently, there are no password change or recovery options.  Please, secure your password 
+    if you wish to retain access to your account. </p>
+    </br>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
     

@@ -8,40 +8,20 @@
 
 
 <div class="flex-container-map">
-  <div class="flex-child flex-map-0" data-toClose= "close-0">
-    
-    <div class="chart-header-group text-center">
-      <h3 class="title title-0"></h3>
-      <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-0">
-        Close
-        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-      </button>
-    </div>  
-    
-    <!-- SVG -->
-  </div>  
-  <div class="flex-child flex-map-1" data-toClose= "close-1">
-    
-    <div class="chart-header-group text-center">
-      <h3 class="title title-1"></h3>
-      <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-1">
-        Close
-        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-      </button>
-    </div>  
-    
-    <!-- SVG -->
-  </div>
-  <div class="flex-child flex-map-2" data-toClose= "close-2">
-    
-    <div class="chart-header-group text-center">
-      <h3 class="title title-2"></h3>
-      <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-2">
-        Close
-        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-      </button>
-    </div>  
-    
-    <!-- SVG -->
-  </div>
+  <% (1..4).each_with_index do |x,i| %>
+  
+    <div class="flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>">
+      <div class="chart-header-group text-center">
+        <h3 class="title title-<%= i %>"></h3>
+        <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-<%= i %>">
+          Close
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </button>
+      </div>  
+      <!-- SVG -->
+    </div>     
+
+  <% end %>
 </div>
+
+
