@@ -14,7 +14,7 @@ $(document).on("turbolinks:load", function() {
 
   var clone = function() {
     // https://stackoverflow.com/questions/10308621/jquery-change-clone-inputs-to-empty
-    // Here we actually modify the cloned object and not the current object!
+    // Here we actually modify the cloned object and not the current object
     var source = $('.layer-fields_0');
     var cloned = source.clone();
     cloned.find('input,textarea,select').val('');
