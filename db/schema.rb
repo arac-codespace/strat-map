@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170723171605) do
+ActiveRecord::Schema.define(version: 20170802020435) do
 
   create_table "contacts", force: :cascade do |t|
     t.string "name"
@@ -57,16 +57,12 @@ ActiveRecord::Schema.define(version: 20170723171605) do
   end
 
   create_table "timescales", force: :cascade do |t|
-    t.integer "interval_no"
-    t.integer "scale_no"
     t.integer "level"
     t.string "interval_name"
     t.string "abbrev"
-    t.integer "parent_no"
     t.string "color"
     t.decimal "late_age", precision: 9, scale: 5
     t.decimal "early_age", precision: 9, scale: 5
-    t.string "reference_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
