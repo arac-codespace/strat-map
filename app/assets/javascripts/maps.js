@@ -158,6 +158,11 @@ function drawchart(data) {
       width = 200 - margin.left - margin.right,
       //960
   height = 35 * Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
+  if (height < 300) {
+    height = 300;
+  } else if (height > 1500) {
+    height = 1500;
+  }
 
   // x-axis scale!
   var x = d3.scaleBand();

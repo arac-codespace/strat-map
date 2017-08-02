@@ -18,7 +18,13 @@ the column in SVG format and edit it using a SVG editor
 (ie: Inkscape, Illustrator...).
 
 
-# Limitations
+# Version
+
+
+stratMap v0.1 is live! August 2, 2017
+
+
+# Limitations (v0.1)
 
 
 As with any program in their infancy, this web application has a number of 
