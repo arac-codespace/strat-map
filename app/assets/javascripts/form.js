@@ -1,27 +1,28 @@
+/* global $*/
+
 $(document).on("turbolinks:load", function() {
   
   if ($(".strat_columns.edit").length !== 1 && $(".strat_columns.new").length !== 1) { return; }
   
   console.log("form js loading?");
   // var cloneIndex = $(".layer-fields_0").length;
-  let layerNum = $('.layer').length;
-  let indexNum = (layerNum) + (-1);
-  let removeBtn = '<span class = \'btn btn-xs btn-default remove_btn\'><i class=\'glyphicon glyphicon-minus\'></i> Remove section </span>';
+  var layerNum = $('.layer').length;
+  var removeBtn = '<span class = \'btn btn-xs btn-default remove_btn\'><i class=\'glyphicon glyphicon-minus\'></i> Remove section </span>';
   // collapseAnchor = '<a data-toggle="collapse" href="#form-collapse' + indexNum + '"> <b>Stratum #' + indexNum+1 +'</b> </a>'
   //to check for current number of fields. 
   //Critical for edit form.
 
-  let clone = function() {
+  var clone = function() {
     // https://stackoverflow.com/questions/10308621/jquery-change-clone-inputs-to-empty
     // Here we actually modify the cloned object and not the current object!
-    let source = $('.layer-fields_0');
-    let cloned = source.clone();
+    var source = $('.layer-fields_0');
+    var cloned = source.clone();
     cloned.find('input,textarea,select').val('');
     // Clears values
     cloned.val('').appendTo('#layer-container').attr('class', `panel panel-default xtra-layer layer-fields_${layerNum}`).attr('data-index', layerNum).find('*').each(function() {
-      let fieldName = $(this).attr('data-fieldname');
-      let idOrLabel = `strat_column_layers_attributes_${layerNum}_${fieldName}`;
-      let name = `strat_column[layers_attributes][${layerNum}][${fieldName}]`;
+      var fieldName = $(this).attr('data-fieldname');
+      var idOrLabel = `strat_column_layers_attributes_${layerNum}_${fieldName}`;
+      var name = `strat_column[layers_attributes][${layerNum}][${fieldName}]`;
       // For label fields
       $(this).find('label').attr({for: idOrLabel});
       // For select fields
@@ -39,7 +40,7 @@ $(document).on("turbolinks:load", function() {
         id: idOrLabel,
         name
       });
-      let headerName = `section-label_${layerNum}`;
+      var headerName = `section-label_${layerNum}`;
       // if the object has a section-label class...
       if ($(this).attr('class') === 'section-label section-label_0') {
         // For Section header
@@ -47,7 +48,7 @@ $(document).on("turbolinks:load", function() {
         // change the object's class to section-label_index
         $(this).attr('class', headerName);
         // Append collapse anchor
-        let collapseAnchor = `<a data-toggle="collapse" href="#form-collapse${layerNum}"> <b>Stratum #${layerNum+1}</b> </a>`;
+        var collapseAnchor = `<a data-toggle="collapse" href="#form-collapse${layerNum}"> <b>Stratum #${layerNum+1}</b> </a>`;
         $(this).append(collapseAnchor);
         
         // Add data attribute to remove btn
@@ -56,7 +57,7 @@ $(document).on("turbolinks:load", function() {
         $(this).append(removeBtn);
       }
         
-      let collapseId = `form-collapse${layerNum}`;   
+      var collapseId = `form-collapse${layerNum}`;   
       if ($(this).attr('id') === 'form-collapse0') {
         $(this).attr('id', collapseId);
       }
@@ -71,13 +72,13 @@ $(document).on("turbolinks:load", function() {
   };
 
   if (layerNum > 1) {
-    let lastChildren = $('.layer').slice(-layerNum + 1);
+    var lastChildren = $('.layer').slice(-layerNum + 1);
     lastChildren.each(function() {
-      let removeBtn;
-      let dataIndex = $(this).attr('data-index');
+      var removeBtn;
+      var dataIndex = $(this).attr('data-index');
       removeBtn = `<span class = 'btn btn-xs btn-default remove_btn' data-removeindex=${dataIndex}><i class='glyphicon glyphicon-minus'></i> Remove section </span>`;
       $(this).find('.section-label').append(removeBtn);
-      $(this).find('.panel-collapse').removeClass("in")
+      $(this).find('.panel-collapse').removeClass("in");
     });
   }
     // cloneIndex = layerNum;
@@ -86,9 +87,9 @@ $(document).on("turbolinks:load", function() {
   // they must exist at the time your code makes the call to .on()
   // http://api.jquery.com/on/
   $('#layer-container').on('click', '.remove_btn', function() {
-    let dataIndexRemove = $(this).attr('data-removeindex');
+    var dataIndexRemove = $(this).attr('data-removeindex');
     // var toSearch = data-index=
-    $('html').find(`[data-index="${dataIndexRemove}"]`).find('.checkbox > input.delete_member').val('true').appendTo('#layer-container');
+    $('html').find(`[data-index="${dataIndexRemove}"]`).find('.checkbox > input.devare_member').val('true').appendTo('#layer-container');
     $('html').find(`[data-index="${dataIndexRemove}"]`).remove();
   }
   );

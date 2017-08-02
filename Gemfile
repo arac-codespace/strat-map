@@ -53,3 +53,6 @@ gem 'devise'
 
 # Console GUI
 gem 'hirb'
+
+# To manage JS in rails.  Seems to be require by Heroku...
+# gem 'webpacker', '~> 2.0'

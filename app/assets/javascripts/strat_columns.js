@@ -398,12 +398,12 @@ $(document).on('turbolinks:load', function () {
       .text(function (d) {
         if (d.values[0].values[0].lithology.name3 != "")
         {
-          let name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
+          var name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
           return name;
         }
         else if (d.values[0].values[0].lithology.name2 != "")
         {
-          let name = d.key + ' or ' + d.values[0].values[0].lithology.name2;  
+          name = d.key + ' or ' + d.values[0].values[0].lithology.name2;  
           return name;
         }
         else
