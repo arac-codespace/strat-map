@@ -1,4 +1,4 @@
-![Map View](http://imgur.com/a/fzzUi)
+<img src=http://imgur.com/aEj2oyC.png>
 
 # Introduction
 
@@ -108,20 +108,25 @@ The geologic time interval portion of this site's database is based on the
 Paleobiology Database's "Geological time intervals and time scales".
 
 
-+ D3.js:
++ D3js:
 https://d3js.org/
+
 
 + Google Maps API V3:
 https://developers.google.com/maps/documentation/javascript/
 
+
 + SVG Crowbar:
 http://nytimes.github.io/svg-crowbar/
+
 
 + FGDC Digital Cartographic Standard for Geologic Map Symbolization (PostScript Implementation):
 http://pubs.usgs.gov/tm/2006/11A02/
 
+
 + University of Otago; USGS Inkscape pack instructions and download link:
 https://blogs.otago.ac.nz/si-geology/resources/illustrationgraphics-resources/usgs-inkscape-pack-instructions-and-download-link/
+
 
 + PBDB Data Service 1.2 v2:
 https://paleobiodb.org/data1.2/
