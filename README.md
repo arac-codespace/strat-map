@@ -1,3 +1,5 @@
+![Map View](http://imgur.com/a/fzzUi)
+
 # Introduction
 
 The purpose of this application is to automatically generate a stratigraphic 
