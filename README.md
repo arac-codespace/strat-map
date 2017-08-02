@@ -1,7 +1,7 @@
 # Introduction
 
 The purpose of this application is to automatically generate a stratigraphic 
-column based on the information the user provides using the tools provided by 
+column based on the information the user provides using 
 Mike Bostock's Data-Driven-Documents Javascript Library (D3.js).  
 
 
@@ -21,40 +21,40 @@ the column in SVG format and edit it using a SVG editor
 # Limitations
 
 
-As with any program at their infancy, this web application has a number of 
+As with any program in their infancy, this web application has a number of 
 limitations that have yet to be addressed.  Some of these limitations are
 directly tied to the lack of user customization (layouts, colors, symbology, shapes)
 and others due to the absence of corresponding features (fossil representation, 
-parasequences...).  Some are minor and some are major.
+parasequences...).  Some are major and some are minor.
 
 
 One of the - what I consider to be - major limitations of this application 
-is the inability to generate a "generalized" stratigraphic column.
+is the inability to generate a "generalized" stratigraphic column.  
 This application is basically a fancy stack-bar graph, so by its nature 
 the application "assumes" that the user is providing it measurements 
 that run along a single line in space.  It doesn't concern itself with what features
 (facies, structures, dip angles, etc...) are next to it.  It's therefore not 
 possible to represent, for instance, a "rough" sketch of a formation's structure using 
 only a single column.  Or at least not without extensive modifications to the 
-bars or custom SVG patterns.
+bars and/or custom SVG patterns.
 
 
 I believe Map View alleviates this limitation a little by 
-providing a sort of "composite view" of multiple columns. I also plan to add a 
-"grouping" feature to help with the creation and view of these composite views.
+providing a sort of "composite view" of multiple columns.  I also plan to add a 
+"grouping" feature to help with the creation and view of these composite views.  
 These alternatives would of course require more data points and therefore
 more work from the user's part.  So it's a trade-off one way or another.
 
 
 Another limitation has to do with how each bar in the generated column represents 
 a certain type of lithology.  This means that -for now- it's not possible to create
-a more "expansive" column where each 'layer' represents a formation.  I've an
+a more "expansive" column where each 'layer' represents, say, a formation.  I've an
 idea on how do deal with this limitation though, and it shouldn't prove to be too
 difficult to implement.
 
 
 There are more limitations which honestly are closer to - as of yet - unavailable 
-features.  But these features need to be implemented step by step in order to 
+"features".  These features need to be implemented step by step in order to 
 keep things as neat as possible.  So, slow and steady...
 
 
@@ -77,13 +77,13 @@ in the column.  Perhaps on a separate/third column, or maybe as a toggle "overla
 
 
 Grouping, or a sort of tagging and a view where users can see a composite view
-of various related columns is another feature that I really want to implement.
+of various related columns is another feature that I really want to implement.  
 Unlike map view, this "Group View" will hopefully be more detailed and will not
 be limited to just 4 or 5 columns in succession.
 
 
 Finally, I want to experiment with adding overlays such as geologic map overlays 
-to the Google Maps API.  I already found a way to a add WMS data to the map, but I 
+to the Google Maps API.  I've already found a way to a add WMS data to the map, but I 
 need some time to read the documentation/ properly implement it.
 
 
@@ -100,20 +100,20 @@ The geologic time interval portion of this site's database is based on the
 Paleobiology Database's "Geological time intervals and time scales".
 
 
-+ D3.js
++ D3.js:
 https://d3js.org/
 
-+ Google Maps API V3
++ Google Maps API V3:
 https://developers.google.com/maps/documentation/javascript/
 
-+ SVG Crowbar
++ SVG Crowbar:
 http://nytimes.github.io/svg-crowbar/
 
-+ FGDC Digital Cartographic Standard for Geologic Map Symbolization (PostScript Implementation)
++ FGDC Digital Cartographic Standard for Geologic Map Symbolization (PostScript Implementation):
 http://pubs.usgs.gov/tm/2006/11A02/
 
-+ University of Otago; USGS Inkscape pack instructions and download link
++ University of Otago; USGS Inkscape pack instructions and download link:
 https://blogs.otago.ac.nz/si-geology/resources/illustrationgraphics-resources/usgs-inkscape-pack-instructions-and-download-link/
 
-+ PBDB Data Service 1.2 v2
++ PBDB Data Service 1.2 v2:
 https://paleobiodb.org/data1.2/

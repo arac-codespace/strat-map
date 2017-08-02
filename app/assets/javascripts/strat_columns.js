@@ -261,11 +261,11 @@ $(document).on('turbolinks:load', function () {
         d3.axisLeft(y).ticks(10, 's')).append('text').attr('transform',
         'rotate(-90)').attr('y', -45).attr('x', function()
         {
-          return y(totalThickness/2);
+          return "-" + y(totalThickness/2);
         }
         
         ).attr('dy', '0.71em')
-        .text('THICKNESS (m)');
+        .text("THICKNESS (m)");
 
     // Tooltip D3 settings
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style(
