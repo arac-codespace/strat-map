@@ -1,3 +1,5 @@
+"use strict";
+
 /* global $*/
 
 $(document).on("turbolinks:load", function () {
@@ -50,7 +52,7 @@ $(document).on("turbolinks:load", function () {
         // change the object's class to section-label_index
         $(this).attr('class', headerName);
         // Append collapse anchor
-        var collapseAnchor = "<a data-toggle=\"collapse\" href=\"#form-collapse" + layerNum + "\"> <b>Stratum #" + (layerNum + 1) + "</b> </a>";
+        var collapseAnchor = "<a data-toggle=\"collapse\" href=\"#form-collapse" + layerNum + "\"> <b>New Stratum" + "</b> </a>";
         $(this).append(collapseAnchor);
 
         // Add data attribute to remove btn
@@ -90,7 +92,7 @@ $(document).on("turbolinks:load", function () {
   $('#layer-container').on('click', '.remove_btn', function () {
     var dataIndexRemove = $(this).attr('data-removeindex');
     // var toSearch = data-index=
-    $('html').find("[data-index=\"" + dataIndexRemove + "\"]").find('.checkbox > input.devare_member').val('true').appendTo('#layer-container');
+    $('html').find("[data-index=\"" + dataIndexRemove + "\"]").find('.checkbox > input.delete_member').val('true').appendTo('#layer-container');
     $('html').find("[data-index=\"" + dataIndexRemove + "\"]").remove();
   });
 });

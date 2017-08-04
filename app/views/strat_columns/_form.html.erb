@@ -38,7 +38,11 @@
           
           <div class= "header panel-heading">
             <h3 class="section-label section-label_<%= layer.options[:child_index] %>"> 
-              <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>Stratum #<%= layer.options[:child_index]+1 %></b></a> 
+               <% if @strat_column.new_record? %>
+                <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>New Stratum </b></a> 
+              <% else %>
+                <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>Stratum #<%= layer.options[:child_index]+1 %></b></a> 
+              <% end %>
             </h3> 
             <% if layer.options[:child_index] == 0 %>
               <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
@@ -94,7 +98,7 @@
     
     <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-default" %>
-      <span class = "btn btn-xs btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new layer </span>
+      <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span>
     </div>
     
   <% end %>
