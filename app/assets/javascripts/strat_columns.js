@@ -180,7 +180,7 @@ $(document).on('turbolinks:load', function () {
           dynFill = 'url(' + d.previous.lithology.url + ')';
         }
 
-        var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125)"><path fill = ' + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
+        var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125) "><path fill = ' + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
 
         d3.select('.unconformityPatterns > defs').append('pattern').attr('id', 'unconformity-' + i).attr('patternUnits', 'userSpaceOnUse').attr('x', '0').attr('y', '-18').attr('width', '50').attr('height', '9999').html(patternPath);
 
@@ -216,9 +216,9 @@ $(document).on('turbolinks:load', function () {
     });
 
     // Attach Geologic Age
-    bar.append("text").attr("class","age-label").text(function (d) {
-      return d.timescale.interval_name;
-    }).attr("x", 40).attr("y", 16).style("text-anchor", "middle").style("font", "14px sans-serif").call(wrap,x3.bandwidth());
+    // bar.append("text").attr("class","age-label").text(function (d) {
+    //   return d.timescale.interval_name;
+    // }).attr("x", 40).attr("y", 16).style("text-anchor", "middle").style("font", "14px sans-serif").call(wrap,x3.bandwidth());
 
     // x3-axis line and ticks
     d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
@@ -242,52 +242,142 @@ $(document).on('turbolinks:load', function () {
     });
 
     // Icorporate LEGEND
+    // Age legend
+    var legendRectSize = 18*1.5;
+    var legendSpacing = 4*2;
 
-    var legendRectSize = 18;
-    var legendSpacing = 4;
-
-    // LITHOLOGY legend  
-
-    // sorted by lithology name
-    var sortedData = data.sort(function (a, b) {
-      return b.lithology.name.localeCompare(a.lithology.name);
+    // sorted by late_age name
+    var sortedData = data.sort(function (b, a) {
+      return b.timescale.interval_name.localeCompare(a.timescale.interval_name);
     });
 
-    var filteredData = d3.nest().key(function (d) {
+
+    // Gets rid of duplicates by grouping... 
+    var ageFilteredData = d3.nest()
+      .key(function (d) {
+        return d.timescale.interval_name;
+      })
+      .key(function (d) {
+        return d.timescale.color;
+      })
+      .entries(sortedData);
+
+
+    var lithologyFilteredData = d3.nest().key(function (d) {
       return d.lithology.name;
     }).key(function (d) {
       return d.lithology.url;
     }).entries(sortedData);
+    
+    var filteredData =  ageFilteredData.concat(lithologyFilteredData);
 
-    legendRectSize *= 1.5;
-    legendSpacing *= 2;
-    var legend = stratChart.selectAll('.legend-lithology').data(filteredData).enter().append('g').attr('class', 'legend-lithology').attr('transform', function (d, i) {
-      var lHeight = legendRectSize + legendSpacing;
-      var horz = width + 200;
-      var vert = i * lHeight;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
 
-    // Legend Lithology Coloring
-    legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
-      return lithologyColoring(d.values[0].values[0].lithology.classification);
-    }).style('stroke', 'black:');
-    // Legend Lithology Texture  
-    legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
-      return 'url(' + d.values[0].key + ')';
-    }).style('stroke', 'black:');
+    var legendContainer = d3.select('.stratChart').append('g').attr('class','legendContainer');
+    
+    legendContainer.append('g')
+      .attr('transform', function()
+      {
+        var horz = width + 200;
+        return 'translate(' + horz + ', ' + 0 +')';
+              
+      })
+      .append('text')
+      .attr('y', (legendRectSize - legendSpacing) - 2)
+      .attr('text-anchor','middle')
+      .text('LEGEND');
+    
+    var legend = legendContainer.selectAll('.legend')
+      .data(filteredData)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function (d, i) {
+        var lHeight = legendRectSize + legendSpacing;
+        var horz = width + 200;
+        var vert = i * lHeight;
+        
+        if (i >= ageFilteredData.length)
+        {
+          vert = (i+2) * lHeight;
+          return 'translate(' + horz + ',' + vert + ')';
+        }
+        else
+        {
+          vert = (i+1) * lHeight;
+          return 'translate(' + horz + ',' + vert + ')';
+        }
+      });
 
-    legend.append('text').attr('x', legendRectSize * -1).attr('y', legendRectSize - legendSpacing - 2).text(function (d) {
-      if (d.values[0].values[0].lithology.name3 != "") {
-        var name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
-        return name;
-      } else if (d.values[0].values[0].lithology.name2 != "") {
-        name = d.key + ' or ' + d.values[0].values[0].lithology.name2;
-        return name;
-      } else {
+    legend.append('rect')
+      .attr('width', legendRectSize*2)
+      .attr('height', legendRectSize)
+      .style('fill', function (d, i) {
+        
+        if (i >= ageFilteredData.length)
+        {
+          d3.select(this.parentNode).append('rect').attr('width', legendRectSize*2).attr('height', legendRectSize).style('fill', function (d) {
+            return 'url(' + d.values[0].key + ')';
+          }).style('stroke', 'black:');
+          
+          return lithologyColoring(d.values[0].values[0].lithology.classification);
+        }
+        else
+        {
+          return d.values[0].key;
+        }
+        
+      })
+      .style('stroke', 'black');
+
+    legend.append('text')
+      .attr('x', (legendRectSize + legendSpacing) * -1)
+      .attr('y', (legendRectSize - legendSpacing) - 2)
+      .text(function (d) {
         return d.key;
-      }
-    });
+      });
+
+    // LITHOLOGY legend  
+
+    // sorted by lithology name
+    // sortedData = data.sort(function (a, b) {
+    //   return b.lithology.name.localeCompare(a.lithology.name);
+    // });
+
+    // filteredData = d3.nest().key(function (d) {
+    //   return d.lithology.name;
+    // }).key(function (d) {
+    //   return d.lithology.url;
+    // }).entries(sortedData);
+
+    // legendRectSize *= 1.5;
+    // legendSpacing *= 2;
+    // legend = stratChart.selectAll('.legend-lithology').data(filteredData).enter().append('g').attr('class', 'legend-lithology').attr('transform', function (d, i) {
+    //   var lHeight = legendRectSize + legendSpacing;
+    //   var horz = width + 200;
+    //   var vert = i * lHeight;
+    //   return 'translate(' + horz + ',' + vert + ')';
+    // });
+
+    // // Legend Lithology Coloring
+    // legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
+    //   return lithologyColoring(d.values[0].values[0].lithology.classification);
+    // }).style('stroke', 'black:');
+    // // Legend Lithology Texture  
+    // legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
+    //   return 'url(' + d.values[0].key + ')';
+    // }).style('stroke', 'black:');
+
+    // legend.append('text').attr('x', legendRectSize * -1).attr('y', legendRectSize - legendSpacing - 2).text(function (d) {
+    //   if (d.values[0].values[0].lithology.name3 != "") {
+    //     var name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
+    //     return name;
+    //   } else if (d.values[0].values[0].lithology.name2 != "") {
+    //     name = d.key + ' or ' + d.values[0].values[0].lithology.name2;
+    //     return name;
+    //   } else {
+    //     return d.key;
+    //   }
+    // });
 
     return $('svg').appendTo('.stratChart');
   } // drawFunction end
