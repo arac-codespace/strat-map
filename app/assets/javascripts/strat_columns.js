@@ -18,11 +18,12 @@ $(document).on('turbolinks:load', function () {
       left: 60
     };
     var width = 600 - margin.left - margin.right;
-    var height = 80 * Math.sqrt(thickness_h);
+    var height = 80 * Math.sqrt(thickness_h) + data.length*100;
     if (height < 300) {
-      height = 300;
-    } else if (height > 2000) {
-      height = 2000;
+      height = 300 + data.length*100;
+    } else if (height > 2000)
+    {
+      height = 2000 + data.length*100;
     }
     //500
 
@@ -30,7 +31,16 @@ $(document).on('turbolinks:load', function () {
     var x = d3.scaleBand();
 
     // y-axis scale!    
-    var y = d3.scaleLinear().range([height, 0]);
+    if (data[0].strat_column.depth == false)
+    {
+      var yRange = [height, 0];
+    }
+    else
+    {
+      yRange = [0, height];
+    }    
+    
+    var y = d3.scaleLinear().range(yRange);
 
     // Selects the svg container and sets width attribute.  
     // NOTE: I'm using 100% to allow the svg to occupy the container's
@@ -70,7 +80,14 @@ $(document).on('turbolinks:load', function () {
       // Var defined outside of function allows for the addition of the 
       // prevThickness value due to how the function loop works.
       sumPrevThickness += prevThickness;
-      var transSum = y(0) - y(sumPrevThickness);
+      if (data[0].strat_column.depth == false)
+      {
+        var transSum = y(0) - y(sumPrevThickness);
+      }
+      else
+      {
+        transSum = y(sumPrevThickness);
+      }         
       // This is the value that will translate-y the bars right to the top of
       // the bar located below.  IE: Stack bars.
       return 'translate(0,' + transSum + ')';
@@ -93,7 +110,14 @@ $(document).on('turbolinks:load', function () {
     }).attr('width', function (d) {
       return x2.bandwidth();
     }).attr('height', function (d) {
-      return y(0) - y(parseFloat(d.thickness));
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
     }).attr('x', function (d) {
       return x2('Lithology');
     });
@@ -120,7 +144,14 @@ $(document).on('turbolinks:load', function () {
     }).attr('width', function (d) {
       return x2.bandwidth();
     }).attr('height', function (d) {
-      return y(0) - y(parseFloat(d.thickness));
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
     }).attr('x', function (d) {
       return x2('Lithology');
     });
@@ -158,7 +189,14 @@ $(document).on('turbolinks:load', function () {
     }).attr('width', function (d) {
       return x2.bandwidth();
     }).attr('height', function (d) {
-      return y(0) - y(parseFloat(d.thickness));
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
     }).attr('x', function (d) {
       return x2('Lithology');
     }).attr('stroke', 'transparent');
@@ -195,7 +233,14 @@ $(document).on('turbolinks:load', function () {
     }).attr('width', function (d) {
       return x2.bandwidth();
     }).attr('height', function (d) {
-      return y(0) - y(parseFloat(d.thickness));
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
     }).attr('x', function (d) {
       return x2('Lithology');
     }).attr('stroke', 'transparent');
@@ -210,7 +255,14 @@ $(document).on('turbolinks:load', function () {
     }).attr('width', function (d) {
       return x3.bandwidth();
     }).attr('height', function (d) {
-      return y(0) - y(parseFloat(d.thickness));
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
     }).attr('x', function (d) {
       return x3('Geologic Age');
     });
@@ -226,9 +278,18 @@ $(document).on('turbolinks:load', function () {
     d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text');
 
     // y-axis line and ticks
+    if (data[0].strat_column.depth == false)
+    {
+      var yAxisText = "HEIGHT (m)";
+    }
+    else
+    {
+      yAxisText = "DEPTH (m)";
+    }
+
     d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(10, 's')).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
       return "-" + y(totalThickness / 2);
-    }).attr('dy', '0.71em').text("THICKNESS (m)");
+    }).attr('dy', '0.71em').text(yAxisText);
 
     // Tooltip D3 settings
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px');
