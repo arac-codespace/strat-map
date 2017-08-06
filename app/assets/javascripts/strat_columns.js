@@ -269,7 +269,6 @@ $(document).on('turbolinks:load', function () {
     });
 
     // HOVER RECT
-    // Append bar for age 
     bar.append('rect').attr('class', 'hoverBar').attr('fill', 'transparent'
     ).attr('width', function (d) {
       return x2.bandwidth();
@@ -322,12 +321,6 @@ $(document).on('turbolinks:load', function () {
     var legendRectSize = 18*1.5;
     var legendSpacing = 4*2;
 
-    // sorted by late_age name
-    var sortedData = data.sort(function (b, a) {
-      return b.timescale.interval_name.localeCompare(a.timescale.interval_name);
-    });
-
-
     // Gets rid of duplicates by grouping... 
     var ageFilteredData = d3.nest()
       .key(function (d) {
@@ -336,19 +329,19 @@ $(document).on('turbolinks:load', function () {
       .key(function (d) {
         return d.timescale.color;
       })
-      .entries(sortedData);
+      .entries(data);
 
 
     var lithologyFilteredData = d3.nest().key(function (d) {
       return d.lithology.name;
     }).key(function (d) {
       return d.lithology.url;
-    }).entries(sortedData);
+    }).entries(data);
     
     var unconformityFilteredData = d3.nest().key(function (d) {
       return d.contact.contact_type;
     })
-    .entries(sortedData);
+    .entries(data);
     
     var filteredData =  ageFilteredData.concat(lithologyFilteredData);
     filteredData = filteredData.concat(unconformityFilteredData);
@@ -399,10 +392,7 @@ $(document).on('turbolinks:load', function () {
           
           if (d.key == 'Depositional')
           {
-            
-
             // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
-    
             var dynFill = 'transparent';
     
             // Prevents NaN by preventing .previous operation from occuring
@@ -424,7 +414,6 @@ $(document).on('turbolinks:load', function () {
           } else {
             return 'transparent';
           }          
-          
         }
         else if (i >= ageFilteredData.length)
         {
