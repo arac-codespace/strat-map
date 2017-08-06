@@ -157,19 +157,28 @@ function drawchart(data) {
   var margin = { top: 20, right: 80, bottom: 40, left: 20 },
       width = 200 - margin.left - margin.right,
       //960
-  height = 35 * Math.sqrt(thickness_h) - margin.top - margin.bottom; //500
+  height = 35 * Math.sqrt(thickness_h) - margin.top - margin.bottom  + data.length*100; //500
   if (height < 300) {
-    height = 300;
+    height = 300  + data.length*100;
   } else if (height > 1500) {
-    height = 1500;
+    height = 1500 + data.length*100;
   }
 
   // x-axis scale!
   var x = d3.scaleBand();
 
   // y-axis scale!    
-  var y = d3.scaleLinear().range([height, 0]);
-
+  if (data[0].strat_column.depth == false)
+  {
+    var yRange = [height, 0];
+  }
+  else
+  {
+    yRange = [0, height];
+  }    
+  
+  var y = d3.scaleLinear().range(yRange);
+    
   var stratChart = d3.select(stratIdSelect).attr("width", '100%');
 
   // Sets the height for the svg/chart container.
@@ -207,7 +216,14 @@ function drawchart(data) {
     // Var defined outside of function allows for the addition of the 
     // prevThickness value due to how the function loop works.
     sumPrevThickness += prevThickness;
-    var transSum = y(0) - y(sumPrevThickness);
+    if (data[0].strat_column.depth == false)
+    {
+      var transSum = y(0) - y(sumPrevThickness);
+    }
+    else
+    {
+      transSum = y(sumPrevThickness);
+    }   
     // This is the value that will translate-y the bars right to the top of
     // the bar located below.  IE: Stack bars.
     return "translate(0," + transSum + ")";
@@ -230,7 +246,14 @@ function drawchart(data) {
   }).attr('width', function (d) {
     return x2.bandwidth();
   }).attr('height', function (d) {
-    return y(0) - y(parseFloat(d.thickness));
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
   });
 
   // LITHOLOGY Texture 
@@ -254,7 +277,14 @@ function drawchart(data) {
   }).attr('width', function (d) {
     return x2.bandwidth();
   }).attr('height', function (d) {
-    return y(0) - y(parseFloat(d.thickness));
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
   }).attr('x', function (d) {
     return x2('Lithology');
   });
@@ -295,7 +325,14 @@ function drawchart(data) {
       return 'transparent';
     }
   }).attr('width', width).attr('height', function (d) {
-    return y(0) - y(parseFloat(d.thickness));
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
   }).attr('stroke', 'transparent');
 
   // UNCONFORMITIES Textures
@@ -332,8 +369,32 @@ function drawchart(data) {
   }).attr('width', function (d) {
     return width;
   }).attr('height', function (d) {
-    return y(0) - y(parseFloat(d.thickness));
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
   }).attr('stroke', 'transparent');
+
+  // HOVER RECT
+  bar.append('rect').attr('class', 'hoverBar').attr('fill', 'transparent'
+  ).attr('width', function (d) {
+    return x2.bandwidth();
+  }).attr('height', function (d) {
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
+  }).attr('x', function(d){
+    return x2('Lithology');
+  });
 
   // GEOLOGIC AGE
   var x3 = d3.scaleBand();
@@ -345,7 +406,14 @@ function drawchart(data) {
   }).attr('width', function (d) {
     return x3.bandwidth();
   }).attr('height', function (d) {
-    return y(0) - y(parseFloat(d.thickness));
+    if (data[0].strat_column.depth == false)
+    {
+      return y(0) - y(parseFloat(d.thickness));
+    }
+    else
+    {
+      return y(parseFloat(d.thickness));
+    }
   }).attr('x', function (d) {
     return x3('Age');
   });
@@ -357,8 +425,20 @@ function drawchart(data) {
   d3.select(stratIdSelect).append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text');
 
   // y-axis line and ticks
-  d3.select(stratIdSelect).append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s")).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text("THICKNESS (m)");
+  
+    if (data[0].strat_column.depth == false)
+    {
+      var yAxisText = "HEIGHT (m)";
+    }
+    else
+    {
+      yAxisText = "DEPTH (m)";
+    }  
+    
+  d3.select(stratIdSelect).append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s")).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
 
+  // In maps.js, you must remove the previous tooltip to erase the
+  // binded data and get the binded data when new windows are opened
   if ($('.tool').length != 0) {
     $('.tool').remove();
   }
@@ -366,7 +446,7 @@ function drawchart(data) {
   var tooltip = d3.select("body").append("div").attr('class', 'tool').style("background-color", "white").style("border", "1px solid black").style("padding", "12px").style("border-radius", "8px").style("position", "absolute").style("z-index", "10").style("visibility", "hidden");
 
   // Tooltip action
-  d3.selectAll('.bar, .bar-overlay, .unconformity').on("mouseover", function (d) {
+  d3.selectAll('.hoverBar').on("mouseover", function (d) {
     return tooltip.style("visibility", "visible").html("Lithology: " + d.name + "</br>" + "Formation: " + d.formation + "</br>" + "Geologic Age: " + d.timescale.interval_name + "</br>" + "Upper Contact: " + d.contact.name + "</br>" + "Thickness (m): " + d.thickness + "</br>" + "Lithology Pattern: " + d.lithology.name);
   }).on("mousemove", function () {
     return tooltip.style("top", event.pageY - 120 + "px").style("left", event.pageX + 20 + "px");
@@ -397,7 +477,6 @@ function lithologyColoring(lithologyClass) {
     return 'transparent';
   }
 } //lithologyColoring end
-
 
 function googleStyleList() {
   var styleList = [{

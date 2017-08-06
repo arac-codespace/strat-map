@@ -482,8 +482,6 @@ function generateUnconformity(dynFill, i, type)
   {
     console.log('generateUnconformity: Type argument invalid');
   }
-  
-
 }
 
   var url_id = $('.general-info').data('stratid');
