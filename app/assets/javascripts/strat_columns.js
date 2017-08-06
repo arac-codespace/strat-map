@@ -13,13 +13,13 @@ $(document).on('turbolinks:load', function () {
     });
 
     var margin = {
-      top: 40,
+      top: 50,
       right: 50,
-      bottom: 125,
-      left: 60
+      bottom: 50,
+      left: 50
     };
     var width = 600 - margin.left - margin.right;
-    var height = 80 * Math.sqrt(thickness_h) + data.length*100;
+    var height = 80 * Math.sqrt(thickness_h) + data.length*100 - margin.top - margin.bottom;
     if (height < 300) {
       height = 300 + data.length*100;
     } else if (height > 2000)
@@ -52,7 +52,6 @@ $(document).on('turbolinks:load', function () {
     var stratChart = d3.select('.stratChart').attr('width', '100%');
     // Sets the height for the svg/chart container.
     stratChart.attr('height', height + margin.top + margin.bottom);
-    // .append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');;    
     // For use inside the function.  This allows for the sum of successive thickness.
     var sumPrevThickness = 0;
     // Just sums the thickness of all the datasets in the JSON.

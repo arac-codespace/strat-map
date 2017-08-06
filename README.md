@@ -23,6 +23,14 @@ the column in SVG format and edit it using a SVG editor
 # Version
 
 
+stratMap v0.2 TBD
++ Improved legend
++ Added Height vs Depth option
++ Fixed bar highlighting
+TODO
++ Autocomplete select
++ AJAX edit forms
+
 stratMap v0.1 is live! August 2, 2017
 
 
