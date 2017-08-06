@@ -119,7 +119,7 @@ function addMarkerCustom(place) {
     for (var i = 0; i < 4; i++) {
       if ($(".flex-map-" + i).attr("id") == null && $(".flex-container-map").find(idSelect).length == 0) {
         $(".flex-map-" + i).attr("id", idName);
-        $(".title-" + i).text(place.name);
+        $(".title-" + i).html("<a target='_blank' href= '/strat_columns/" +  place.id + "'>" + place.name + "</a>");
         $(".flex-container-map").show();
         $(".flex-map-" + i).show();
         break;
