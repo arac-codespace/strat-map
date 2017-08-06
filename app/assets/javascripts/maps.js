@@ -155,7 +155,7 @@ function drawchart(data) {
   });
 
   var margin = { top: 20, right: 80, bottom: 40, left: 20 },
-      width = 200 - margin.left - margin.right,
+      width = 225 - margin.left - margin.right,
       //960
   height = 35 * Math.sqrt(thickness_h) - margin.top - margin.bottom  + data.length*100; //500
   if (height < 300) {
@@ -435,7 +435,7 @@ function drawchart(data) {
       yAxisText = "DEPTH (m)";
     }  
     
-  d3.select(stratIdSelect).append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(10, "s")).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
+  d3.select(stratIdSelect).append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(data.length*2)).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
 
   // In maps.js, you must remove the previous tooltip to erase the
   // binded data and get the binded data when new windows are opened
