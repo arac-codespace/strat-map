@@ -1,6 +1,7 @@
 /*global $*/
 /*global d3*/
 $(document).on('turbolinks:load', function () {
+
   // Return nothing unless the controller corresponds...
   if ($('.strat_columns.show').length !== 1) {
     return;
@@ -267,10 +268,24 @@ $(document).on('turbolinks:load', function () {
       return x3('Geologic Age');
     });
 
-    // Attach Geologic Age
-    // bar.append("text").attr("class","age-label").text(function (d) {
-    //   return d.timescale.interval_name;
-    // }).attr("x", 40).attr("y", 16).style("text-anchor", "middle").style("font", "14px sans-serif").call(wrap,x3.bandwidth());
+    // HOVER RECT
+    // Append bar for age 
+    bar.append('rect').attr('class', 'hoverBar').attr('fill', 'transparent'
+    ).attr('width', function (d) {
+      return x2.bandwidth();
+    }).attr('height', function (d) {
+      if (data[0].strat_column.depth == false)
+      {
+        return y(0) - y(parseFloat(d.thickness));
+      }
+      else
+      {
+        return y(parseFloat(d.thickness));
+      }
+    }).attr('x', function(d){
+      return x2('Lithology');
+    });
+
 
     // x3-axis line and ticks
     d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
@@ -287,14 +302,14 @@ $(document).on('turbolinks:load', function () {
       yAxisText = "DEPTH (m)";
     }
 
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(10, 's')).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
-      return "-" + y(totalThickness / 2);
+    d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
+      return "-" + height*0.15;
     }).attr('dy', '0.71em').text(yAxisText);
 
     // Tooltip D3 settings
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px');
     // Tooltip action
-    d3.selectAll('.bar, .bar-overlay, .unconformity').on('mouseover', function (d) {
+    d3.selectAll('.hoverBar').on('mouseover', function (d) {
       return tooltip.style('visibility', 'visible').html('Lithology: ' + d.name + '</br>Formation: ' + d.formation + '</br>Geologic Age: ' + d.timescale.interval_name + '</br>Upper Contact: ' + d.contact.name + '</br>Thickness (m): ' + d.thickness + '</br>Lithology Pattern: ' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name));
     }).on('mousemove', function () {
       return tooltip.style('top', event.pageY - 120 + 'px').style('left', event.pageX + 15 + 'px');
@@ -330,8 +345,13 @@ $(document).on('turbolinks:load', function () {
       return d.lithology.url;
     }).entries(sortedData);
     
+    var unconformityFilteredData = d3.nest().key(function (d) {
+      return d.contact.contact_type;
+    })
+    .entries(sortedData);
+    
     var filteredData =  ageFilteredData.concat(lithologyFilteredData);
-
+    filteredData = filteredData.concat(unconformityFilteredData);
 
     var legendContainer = d3.select('.stratChart').append('g').attr('class','legendContainer');
     
@@ -374,7 +394,39 @@ $(document).on('turbolinks:load', function () {
       .attr('height', legendRectSize)
       .style('fill', function (d, i) {
         
-        if (i >= ageFilteredData.length)
+        if (i >= lithologyFilteredData.length + ageFilteredData.length)
+        {
+          
+          if (d.key == 'Depositional')
+          {
+            
+
+            // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
+    
+            var dynFill = 'transparent';
+    
+            // Prevents NaN by preventing .previous operation from occuring
+            // at data index 0
+            if (i > 0) {
+              dynFill = 'url(' + d.key + ')';
+            }
+    
+            var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125) "><path fill = ' + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
+    
+            d3.select('.unconformityPatterns > defs').append('pattern').attr('id', 'unconformity-' + i).attr('patternUnits', 'userSpaceOnUse').attr('x', '0').attr('y', '-12').attr('width', '50').attr('height', '9999').html(patternPath);
+    
+            return 'url(#unconformity-' + i + ')';            
+            
+          } else if (d.key === 'Tectonic') {
+            return 'url(#tectonic)';
+          } else if (d.key === 'Intrusion') {
+            return 'url(#intrusion)';
+          } else {
+            return 'transparent';
+          }          
+          
+        }
+        else if (i >= ageFilteredData.length)
         {
           d3.select(this.parentNode).append('rect').attr('width', legendRectSize*2).attr('height', legendRectSize).style('fill', function (d) {
             return 'url(' + d.values[0].key + ')';
@@ -394,51 +446,16 @@ $(document).on('turbolinks:load', function () {
       .attr('x', (legendRectSize + legendSpacing) * -1)
       .attr('y', (legendRectSize - legendSpacing) - 2)
       .text(function (d) {
-        return d.key;
+        if (d.key == 'Depositional')
+        {
+          return d.key + ' unconformity';
+        }
+        else
+        {
+          return d.key;
+        }
       });
-
-    // LITHOLOGY legend  
-
-    // sorted by lithology name
-    // sortedData = data.sort(function (a, b) {
-    //   return b.lithology.name.localeCompare(a.lithology.name);
-    // });
-
-    // filteredData = d3.nest().key(function (d) {
-    //   return d.lithology.name;
-    // }).key(function (d) {
-    //   return d.lithology.url;
-    // }).entries(sortedData);
-
-    // legendRectSize *= 1.5;
-    // legendSpacing *= 2;
-    // legend = stratChart.selectAll('.legend-lithology').data(filteredData).enter().append('g').attr('class', 'legend-lithology').attr('transform', function (d, i) {
-    //   var lHeight = legendRectSize + legendSpacing;
-    //   var horz = width + 200;
-    //   var vert = i * lHeight;
-    //   return 'translate(' + horz + ',' + vert + ')';
-    // });
-
-    // // Legend Lithology Coloring
-    // legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
-    //   return lithologyColoring(d.values[0].values[0].lithology.classification);
-    // }).style('stroke', 'black:');
-    // // Legend Lithology Texture  
-    // legend.append('rect').attr('width', legendRectSize * 2).attr('height', legendRectSize).style('fill', function (d) {
-    //   return 'url(' + d.values[0].key + ')';
-    // }).style('stroke', 'black:');
-
-    // legend.append('text').attr('x', legendRectSize * -1).attr('y', legendRectSize - legendSpacing - 2).text(function (d) {
-    //   if (d.values[0].values[0].lithology.name3 != "") {
-    //     var name = d.key + ' or ' + d.values[0].values[0].lithology.name2 + ' or ' + d.values[0].values[0].lithology.name3;
-    //     return name;
-    //   } else if (d.values[0].values[0].lithology.name2 != "") {
-    //     name = d.key + ' or ' + d.values[0].values[0].lithology.name2;
-    //     return name;
-    //   } else {
-    //     return d.key;
-    //   }
-    // });
+    
 
     return $('svg').appendTo('.stratChart');
   } // drawFunction end
@@ -465,45 +482,6 @@ $(document).on('turbolinks:load', function () {
     }
   } //lithologyColoring end
 
-// https://bl.ocks.org/mbostock/7555321
-// Modified version: https://stackoverflow.com/questions/24784302/wrapping-text-in-d3
-function wrap(text, width) {
-    text.each(function () {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            x = text.attr("x"),
-            y = text.attr("y"),
-            dy = 0, //parseFloat(text.attr("dy")),
-            tspan = text.text(null)
-                        .append("tspan")
-                        .attr("x", x)
-                        .attr("y", y)
-                        .attr("dy", dy + "em");
-        while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-                line.pop();
-                tspan.text(line.join(" "));
-                line = [word];
-                tspan = text.append("tspan")
-                            .attr("x", x)
-                            .attr("y", y)
-                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                            .text(word);
-            }
-        }
-    });
-}
-
-
-  // It broke and then i was able to pass the url
-  // with just data.json. 
-  // And then it broke again? \_(--)_/
   var url_id = $('.general-info').data('stratid');
   var data_url = url_id + '/data.json';
   d3.json(data_url, drawchart);
