@@ -307,7 +307,7 @@ $(document).on('turbolinks:load', function () {
       return tooltip.style('visibility', 'hidden');
     });
 
-    // Icorporate LEGEND
+    // INCORPORATE LEGEND
     // Age legend
     var legendRectSize = 18*1.5;
     var legendSpacing = 4*2;
@@ -329,10 +329,11 @@ $(document).on('turbolinks:load', function () {
       return d.lithology.url;
     }).entries(data);
     
-    var unconformityFilteredData = d3.nest().key(function (d) {
+    var unconformityFilteredData = d3.nest().key( function (d) {
       return d.contact.contact_type;
     })
-    .entries(data);
+    // Here we filter out data that we don't want in the legend...
+    .entries(data.filter(function(d) { return d.contact.contact_type != 'Conformity'; }));
     
     var filteredData =  ageFilteredData.concat(lithologyFilteredData);
     filteredData = filteredData.concat(unconformityFilteredData);

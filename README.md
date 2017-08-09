@@ -28,9 +28,9 @@ stratMap v0.2 TBD
 + Added Height vs Depth option
 + Fixed bar highlighting
 + Fixed Form JS not running when rendering a view after failing validation.
-TODO
 + Autocomplete select
 + Fix conformity appearing in legend
+TODO
 + AJAX edit forms
 
 stratMap v0.1 is live! August 2, 2017
