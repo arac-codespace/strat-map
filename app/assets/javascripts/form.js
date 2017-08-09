@@ -1,21 +1,27 @@
-"use strict";
-
 /* global $*/
 
 $(document).on("turbolinks:load", function () {
 
-  if ($(".strat_columns.edit").length !== 1 && $(".strat_columns.new").length !== 1) {
+  if ($(".strat_columns.edit").length !== 1 && $(".strat_columns.new").length !== 1 && $(".strat_columns.create").length !== 1 && $(".strat_columns.update").length !== 1){
+    console.log("no controller action detected");
     return;
   }
+  
+  
+  // Initial binding of autocomplete...
+  $('.timescale_name').autocomplete({
+    // Note that in html, autocomplete_source is converted to autocomplete-source
+    source: $('.timescale_name').data('autocomplete-source')
+  });
 
   console.log("form js loading?");
+
   // var cloneIndex = $(".layer-fields_0").length;
   var layerNum = $('.layer').length;
   var removeBtn = '<span class = \'btn btn-xs btn-default remove_btn\'><i class=\'glyphicon glyphicon-minus\'></i> Remove section </span>';
   // collapseAnchor = '<a data-toggle="collapse" href="#form-collapse' + indexNum + '"> <b>Stratum #' + indexNum+1 +'</b> </a>'
   //to check for current number of fields. 
   //Critical for edit form.
-
   var clone = function clone() {
     // https://stackoverflow.com/questions/10308621/jquery-change-clone-inputs-to-empty
     // Here we actually modify the cloned object and not the current object
@@ -85,7 +91,16 @@ $(document).on("turbolinks:load", function () {
     });
   }
   // cloneIndex = layerNum;
-  $('.add_btn').on('click', clone);
+  $('.footer').on('click', '.add_btn', function(){
+    clone();
+    
+    // This will bind the data to the new text field when adding a new
+    // form
+    $('.timescale_name:last').autocomplete({
+      source: $('.timescale_name').data('autocomplete-source')
+    });    
+    
+  });
   // NOTE: Event handlers are bound only to the currently selected elements; 
   // they must exist at the time your code makes the call to .on()
   // http://api.jquery.com/on/

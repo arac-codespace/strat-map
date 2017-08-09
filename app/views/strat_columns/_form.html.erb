@@ -81,9 +81,9 @@
               <%= layer.text_field :formation, class: "form-control" %>
             </div>
             
-            <div class = "form-group" data-fieldname="timescale_id">
-              <%= layer.label :timescale_id,"Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
-              <%= layer.collection_select(:timescale_id, @timescale_collection, :id, :name_with_age, {include_blank: "Select Geologic Period"}, {required: true, class: "form-control"})%>    
+            <div class = "form-group" data-fieldname="timescale_name">
+              <%= layer.label :timescale_name,"Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
+              <%= layer.text_field :timescale_name, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
             </div>
             
             <div class = "form-group" data-fieldname="contact_id">

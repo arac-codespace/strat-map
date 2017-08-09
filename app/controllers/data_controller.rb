@@ -22,4 +22,17 @@ before_action :authenticate_user!
   end
   
   
+  def timescales_data
+    
+    @timescales = Timescale.order(:interval_name).where("interval_name like ?", "%#{params[:term]}%")
+    render :json => @timescales.map(&:interval_name)
+    
+  end
+  
+  def lithologies_data
+    @lithologies = Lithology.where('name LIKE :search OR name2 LIKE :search OR name3 LIKE :search', search: "%#{params[:term]}%")
+    render :json => @lithologies.map(&:name_with_texture_num)
+  end
+  
+  
 end
