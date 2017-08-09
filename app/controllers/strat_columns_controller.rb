@@ -80,7 +80,7 @@ class StratColumnsController < ApplicationController
   # create new entries for update instead of actually updating the entries!
   # Also, must allow_destroy in model and allow :_destroy param here to actually enable the function.
   # in main model and nested attributes alike.
-    params.require(:strat_column).permit(:_destroy, :user_id, :name, :location, :lat, :lng, :description, :depth, layers_attributes: [:timescale_name, :id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
+    params.require(:strat_column).permit(:_destroy, :user_id, :name, :location, :lat, :lng, :description, :depth, layers_attributes: [:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
   end    
   
   

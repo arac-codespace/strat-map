@@ -71,9 +71,9 @@
               <%= layer.text_field :name, required: :true, class: "form-control" %>
             </div>
             
-            <div class = "form-group" data-fieldname="lithology_id">
-              <%= layer.label :lithology_id, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-              <%= layer.collection_select(:lithology_id, Lithology.order(:name), :id, :name_with_texture_num, {include_blank: "Select Lithology"}, {required: true, class: "form-control"})%>    
+            <div class = "form-group" data-fieldname="lithology_name">
+              <%= layer.label :lithology_name, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
+              <%= layer.text_field :lithology_name, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
             </div> 
             
             <div class = "form-group" data-fieldname="formation">

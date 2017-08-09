@@ -13,6 +13,10 @@ $(document).on("turbolinks:load", function () {
     // Note that in html, autocomplete_source is converted to autocomplete-source
     source: $('.timescale_name').data('autocomplete-source')
   });
+  
+  $('.lithology_name').autocomplete({
+    source: $('.lithology_name').data('autocomplete-source')
+  });
 
   console.log("form js loading?");
 
@@ -98,6 +102,10 @@ $(document).on("turbolinks:load", function () {
     // form
     $('.timescale_name:last').autocomplete({
       source: $('.timescale_name').data('autocomplete-source')
+    });    
+    
+    $('.lithology_name:last').autocomplete({
+      source: $('.lithology_name').data('autocomplete-source')
     });    
     
   });
