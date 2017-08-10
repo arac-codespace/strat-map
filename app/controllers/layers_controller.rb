@@ -39,6 +39,28 @@ class LayersController < ApplicationController
   end    
   
   
+  def edit
+    @layer = Layer.find_by(id: params[:id])
+    # @user_id = params[:id]
+  end  
+  
+  
+  def update
+    # Find the corresponding record id that you want to update!
+    
+    @layer = Layer.find_by(id: params[:id])
+    
+    if @layer.update(layer_params)
+      redirect_to strat_column_path(id: @layer.strat_column_id)
+    else
+      respond_to do |format|
+        format.json {render json: @layer.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
+  end   
+  
+  
+  
   def layer_params
     params.require(:layer).permit(:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description )
   end

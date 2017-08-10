@@ -1,0 +1,8 @@
+// Add the dialog title
+$('#myModalLabel').html("<i class='glyphicon glyphicon-plus'></i> Edit Stratum "); 
+
+// Render the new form
+$('.modal-body').html('<%= j render("stratum_form") %>');
+ 
+// Show the dynamic dialog
+$('#dialog').modal("show");

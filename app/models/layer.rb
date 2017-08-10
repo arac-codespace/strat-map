@@ -31,7 +31,7 @@ class Layer < ApplicationRecord
     # with gsub, look for it using a like query and set attribute with last line
     name.gsub!(/[^0-9,.]/, "")
     find_byURL = Lithology.where("url like ?", "%#{name}%")
-    self.lithology = Lithology.find_by_url(find_byURL.first.url)
+    self.lithology = Lithology.find_by_url(find_byURL.first.url) if find_byURL.present?
   end
 
 end
