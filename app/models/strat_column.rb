@@ -8,6 +8,5 @@ class StratColumn < ApplicationRecord
   validates :user_id, presence: true
   validates :lat, numericality: { only_integer: false, allow_nil: true }
   validates :lng, numericality: { only_integer: false, allow_nil: true }
-  
-  
+
 end

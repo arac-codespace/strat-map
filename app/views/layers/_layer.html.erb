@@ -1,0 +1,30 @@
+<!-- JQuery uses this to attach/remove the corresponding entry when actions are run -->
+
+<div id = "id=layer_<%= layer.id%>" class="layer-info panel panel-default">
+  <% index = layer_counter %>
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" href="#collapse<%= index %>"> <b>Stratum #<%= index +1%></b> </a>
+    </h4>
+    <% if layer_counter == 0 %>
+      <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
+    <% end %>
+  </div> <!-- panel heading end-->
+  
+  <div id="collapse<%=index%>" class="layer-info-sub panel-collapse collapse">
+    <div class="panel-body">
+      <p>Lithology: <%= layer.name %> </p>
+      <p>Formation: <%= layer.formation %> </p>
+      <p>Geologic Age: <%= layer.timescale.interval_name%></p>
+      <p>Upper Contact: <%= layer.contact.name %></p>
+      <p>Thickness(m): <%= layer.thickness %> </p>
+      <p>Characteristics: <%= layer.description %> </p>
+      <%= link_to 'Edit', edit_layer_path(layer.id), remote: true, :class => 'btn btn-sm btn-info' %>
+      <%= link_to 'Delete', layer, remote: true, :method => :delete, data: {confirm: "Delete?"}, :class => 'btn btn-sm btn-danger' %>
+    </div>
+  </div> <!-- collapse panel end-->
+  
+  <!-- Path ids are user ids.  Row_id is a query string used to make record_id avaible for edit view -->
+  
+</div> <!-- panel end --> 
+    

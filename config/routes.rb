@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   end
   
   resources :maps, only: [:index]
+  resources :layers
 
 end
