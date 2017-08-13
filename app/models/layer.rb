@@ -29,9 +29,17 @@ class Layer < ApplicationRecord
     # shown above.  That attribute (defined in lithology model) has the url
     # texture number that is unique.  So we strip everything out of the string
     # with gsub, look for it using a like query and set attribute with last line
+    # Note that we include the methods to search for the attribute we want
+    # prior to the self.lithology line.  This is to prevent errors from trying
+    # to pass methods on a nil class.  The presense validation above takes care
+    # of validating for cases where user inputs that results in nil.
     name.gsub!(/[^0-9,.]/, "")
-    find_byURL = Lithology.where("url like ?", "%#{name}%")
-    self.lithology = Lithology.find_by_url(find_byURL.first.url) if find_byURL.present?
+    if name.present?
+      find_byURL = Lithology.where("url like ?", "%#{name}%").first.url
+    else
+      find_byURL = nil
+    end
+    self.lithology = Lithology.find_by_url(find_byURL)
   end
 
 end
