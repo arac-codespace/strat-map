@@ -35,7 +35,8 @@ class Layer < ApplicationRecord
     # of validating for cases where user inputs that results in nil.
     name.gsub!(/[^0-9,.]/, "")
     if name.present?
-      find_byURL = Lithology.where("url like ?", "%#{name}%").first.url
+      find_byURL = Lithology.where("url like ?", "%#{name}%")
+      find_byURL = find_byURL.try(:first).try(:url)
     else
       find_byURL = nil
     end
