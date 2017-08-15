@@ -84,6 +84,21 @@ div.info-btns > button {
   margin: 5px auto;
 }
 
+.edit_strat_column_btn {
+  display: inline-block;
+}
+
+.column-header {
+  padding-bottom: 5px;
+  > a.btn {
+    display: block;
+  }
+}
+
+.new_layer_btn > a {
+  display: block;
+}
+
 
 // INDEX CSS
 .index-container {
@@ -224,3 +239,4 @@ div.info-btns > button {
   display: block;
   width: 227px;
 }
+

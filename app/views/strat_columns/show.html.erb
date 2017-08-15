@@ -20,19 +20,30 @@
   
   <div class="right-column">
     <div class="general-info-wrapper">
-      <h3><b>Stratigraphic Column General Information</b></h3>
-      <div class="general-info" data-stratid= "<%= @strat_column.id%>">
-        <p><b><%= @strat_column.name %></b></p>
-        <p>Location: <%= @strat_column.location %></p>
-        <p>Latitude: <%= @strat_column.lat %> Longitude: <%= @strat_column.lng %> </p>
-        <p>Description: <%= @strat_column.description %> </p>
-        <p>Total Thickness (m): <%= @layers.sum(:thickness) %></p>
-      </div> 
+      <div class="column-header">
+        <h3><b>Stratigraphic Column General Information</b></h3>
+        
+        <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
+          <i class='glyphicon glyphicon-pencil'></i>
+          Edit Full Column Details
+        <% end %>        
+      </div>
+        
+
+      <div id="strat_column">
+        <!-- Funny enough, this renders the education partial and makes the records from the education 
+        var in the profile/show controller available to be used in the partial in the form education.column -->
+        <%= render @strat_column %>
+      </div>
       
       <div class="info-btns">
-        <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
-          Edit Column Details
-        <% end%>
+        
+        <div class="edit_strat_column_btn">
+          <%= link_to edit_strat_column_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs" do %>
+            <i class='glyphicon glyphicon-pencil'></i>
+            Edit Information
+          <% end %>
+        </div>
         
         <!--https://stackoverflow.com/questions/18492617/button-to-download-inpage-svg-code-as-an-svg-file-->
         <a class="btn btn-default btn-xs" href="javascript:(function () { var e = document.createElement('script'); if (window.location.protocol === 'https:') { e.setAttribute('src', 'https://rawgit.com/NYTimes/svg-crowbar/gh-pages/svg-crowbar.js'); } else { e.setAttribute('src', 'http://nytimes.github.com/svg-crowbar/svg-crowbar.js'); } e.setAttribute('class', 'svg-crowbar'); document.body.appendChild(e); })();">
@@ -60,9 +71,11 @@
     
     <div class="layer-info-wrapper">
       <h3><b>Strata Characteristics and Information</b></h3>
-      </br>
       <div class="new_layer_btn">
-        <%= link_to "New Stratum", new_layer_path(:id => @strat_column.id), remote: true, class: "btn btn-primary" %>
+        <%= link_to new_layer_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs" do %>
+          <i class='glyphicon glyphicon-plus'></i>
+          New Stratum
+        <% end %>
       </div>        
       </br>
       <div class="panel-group">

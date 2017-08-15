@@ -1,0 +1,7 @@
+<div class="general-info" data-stratid= "<%= strat_column.id%>">
+  <p><b><%= strat_column.name %></b></p>
+  <p>Location: <%= strat_column.location %></p>
+  <p>Latitude: <%= strat_column.lat %> Longitude: <%= strat_column.lng %> </p>
+  <p>Description: <%= strat_column.description %> </p>
+  <p>Total Thickness (m): <%= @layers.sum(:thickness) %></p>
+</div> 

@@ -53,16 +53,21 @@ class StratColumnsController < ApplicationController
     @strat_column = StratColumn.find(params[:id])
     @timescale_collection = Timescale.all.order(:late_age)
     
+    
   end
   
   def update
     @strat_column = StratColumn.find(params[:id])
-    if @strat_column.update_attributes(strat_params)
-      # Redirect to the strat's profile
-      redirect_to strat_column_path(id: params[:id])
-    else
-      @timescale_collection = Timescale.all.order(:late_age)
-      render action: :edit #Don't send, go back to edit action.
+    respond_to do |format|
+      if @strat_column.update_attributes(strat_params)
+        # Redirect to the strat's profile
+        format.html {redirect_to strat_column_path(id: params[:id])}
+        format.js {redirect_to strat_column_path(id: params[:id])}
+      else
+        @timescale_collection = Timescale.all.order(:late_age)
+        format.json {render json: @strat_column.errors.full_messages, status: :unprocessable_entity}
+        format.html {render action: :edit} #Don't send, go back to edit action.
+      end
     end
   end
 
