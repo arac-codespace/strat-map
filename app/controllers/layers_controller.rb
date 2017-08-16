@@ -1,5 +1,6 @@
 class LayersController < ApplicationController
-  
+  before_action :authenticate_user!
+  before_action :require_permission, except: [:index]
 
   def new
     @layer = Layer.new
@@ -65,9 +66,29 @@ class LayersController < ApplicationController
     end
   end   
   
+  private
+  
   def layer_params
     params.require(:layer).permit(:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description )
   end
   
+  
+  def require_permission
+    if params[:action] == 'new'
+      column_id = StratColumn.find_by_id(params[:id])
+    elsif params[:action] == 'create'
+      column_id = StratColumn.find_by_id(params[:layer][:strat_column_id])
+    else
+      layer_id = Layer.find_by_id(params[:id])
+      column_id = layer_id.strat_column
+    end
+    
+    
+    if column_id == nil
+      redirect_to root_path
+    elsif current_user.id != column_id.user_id
+      redirect_to root_path
+    end
+  end  
   
 end

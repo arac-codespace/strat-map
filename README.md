@@ -30,6 +30,7 @@ stratMap v0.2 TBD
 + Fixed Form JS not running when rendering a view after failing validation.
 + Autocomplete select
 + Fix conformity appearing in legend
++ Added require_permission to controllers
 TODO
 + AJAX edit forms
 

@@ -1,5 +1,6 @@
 class StratColumnsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_permission, except: [:index, :new, :create]
   
   def index
   @current_user = current_user
@@ -87,6 +88,16 @@ class StratColumnsController < ApplicationController
   # in main model and nested attributes alike.
     params.require(:strat_column).permit(:_destroy, :user_id, :name, :location, :lat, :lng, :description, :depth, layers_attributes: [:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
   end    
+  
+  def require_permission
+    column_id = StratColumn.find_by_id(params[:id])
+    if column_id == nil
+      redirect_to root_path
+    elsif current_user.id != column_id.user_id
+      redirect_to root_path
+      #Or do something else here
+    end
+  end
   
   
   
