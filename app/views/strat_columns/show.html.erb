@@ -4,7 +4,13 @@
   
   <div class= "left-column">
     <div class="left-column-title">
-      <h3><b>Stratigraphic Column Visualization</b></h3>
+      <h3 class="title-show"><b>Stratigraphic Column Visualization</b></h3>
+      
+      <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs edit-full-column-btn" do %>
+        <i class='glyphicon glyphicon-pencil'></i>
+        Edit Full Column Details
+      <% end %>       
+      
     </div>
     
     <div class="d3js-container">
@@ -22,11 +28,6 @@
     <div class="general-info-wrapper">
       <div class="column-header">
         <h3><b>Stratigraphic Column General Information</b></h3>
-        
-        <%= link_to edit_strat_column_path(id: @strat_column.id), class: "btn btn-default btn-xs" do %>
-          <i class='glyphicon glyphicon-pencil'></i>
-          Edit Full Column Details
-        <% end %>        
       </div>
         
 
@@ -39,7 +40,7 @@
       <div class="info-btns">
         
         <div class="edit_strat_column_btn">
-          <%= link_to edit_strat_column_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs" do %>
+          <%= link_to edit_strat_column_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs edit-column-info-btn" do %>
             <i class='glyphicon glyphicon-pencil'></i>
             Edit Information
           <% end %>
@@ -70,13 +71,13 @@
     </div> <!--general info-->
     
     <div class="layer-info-wrapper">
-      <h3><b>Strata Characteristics and Information</b></h3>
-      <div class="new_layer_btn">
+      <div class= "layer-heading">
+        <h3 class="layer-title-info"><b>Strata Information</b></h3>
         <%= link_to new_layer_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs new-layer-btn" do %>
           <i class='glyphicon glyphicon-plus'></i>
           New Stratum
         <% end %>
-      </div>        
+      </div>
       </br>
       <div class="panel-group">
         

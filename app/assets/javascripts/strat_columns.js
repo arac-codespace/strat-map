@@ -300,7 +300,13 @@ $(document).on('turbolinks:load', function () {
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px');
     // Tooltip action
     d3.selectAll('.hoverBar').on('mouseover', function (d) {
-      return tooltip.style('visibility', 'visible').html('Lithology: ' + d.name + '</br>Formation: ' + d.formation + '</br>Geologic Age: ' + d.timescale.interval_name + '</br>Upper Contact: ' + d.contact.name + '</br>Thickness (m): ' + d.thickness + '</br>Lithology Pattern: ' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name));
+      
+      if (d.description !== "")
+      {
+        var description = '</br>Description: ' + d.description;
+      }
+      
+      return tooltip.style('visibility', 'visible').html('Name: ' + d.name + '</br>Formation: ' + d.formation + '</br>Geologic Age: ' + d.timescale.interval_name + '</br>Upper Contact: ' + d.contact.name + '</br>Thickness (m): ' + d.thickness + '</br>Lithology Pattern: ' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
     }).on('mousemove', function () {
       return tooltip.style('top', event.pageY - 120 + 'px').style('left', event.pageX + 15 + 'px');
     }).on('mouseout', function () {

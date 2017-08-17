@@ -95,8 +95,26 @@ div.info-btns > button {
   }
 }
 
-.new_layer_btn > a {
-  display: block;
+.layer-title-info {
+  display: inline-block;
+}
+.new-layer-btn {
+  display: inline-block;
+  margin-left: 12px;
+  margin-bottom: 6px !important;
+}
+
+.layer-heading {
+  border-bottom: 1px solid var(--navBlack);
+}
+a.edit-full-column-btn {
+  margin-bottom: 6px;
+  margin-left: 12px;  
+  display: inline-block;
+}
+
+.title-show {
+  display: inline-block;
 }
 
 

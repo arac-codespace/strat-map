@@ -31,8 +31,10 @@ stratMap v0.2 TBD
 + Autocomplete select
 + Fix conformity appearing in legend
 + Added require_permission to controllers
-TODO
 + AJAX edit forms
+TODO
++ Enable JS require and tweak css
++ Review code
 
 stratMap v0.1 is live! August 2, 2017
 

@@ -67,13 +67,13 @@
             <% end %>
             
             <div class = "form-group" data-fieldname="name">
-              <%= layer.label :name, "Lithology" %>
+              <%= layer.label :name %>
               <%= layer.text_field :name, required: :true, class: "form-control" %>
             </div>
             
             <div class = "form-group" data-fieldname="lithology_name">
               <%= layer.label :lithology_name, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-              <%= layer.text_field :lithology_name, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
+              <%= layer.text_field :lithology_name, required: :true, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
             </div> 
             
             <div class = "form-group" data-fieldname="formation">
@@ -83,7 +83,7 @@
             
             <div class = "form-group" data-fieldname="timescale_name">
               <%= layer.label :timescale_name,"Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
-              <%= layer.text_field :timescale_name, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
+              <%= layer.text_field :timescale_name, required: :true, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
             </div>
             
             <div class = "form-group" data-fieldname="contact_id">
@@ -107,7 +107,7 @@
     </div> <!-- layer_section div end -->
     
     <div class = "form-group footer">
-      <%= f.submit "Submit", class: "btn btn-default" %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
       <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span>
     </div>
     

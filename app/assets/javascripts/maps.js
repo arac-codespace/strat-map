@@ -447,7 +447,13 @@ function drawchart(data) {
 
   // Tooltip action
   d3.selectAll('.hoverBar').on("mouseover", function (d) {
-    return tooltip.style("visibility", "visible").html("Lithology: " + d.name + "</br>" + "Formation: " + d.formation + "</br>" + "Geologic Age: " + d.timescale.interval_name + "</br>" + "Upper Contact: " + d.contact.name + "</br>" + "Thickness (m): " + d.thickness + "</br>" + "Lithology Pattern: " + d.lithology.name);
+    
+    if (d.description !== "")
+    {
+      var description = '</br>Description: ' + d.description;
+    }    
+    
+    return tooltip.style("visibility", "visible").html("Name: " + d.name + "</br>" + "Formation: " + d.formation + "</br>" + "Geologic Age: " + d.timescale.interval_name + "</br>" + "Upper Contact: " + d.contact.name + "</br>" + "Thickness (m): " + d.thickness + "</br>" + "Lithology Pattern: " + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
   }).on("mousemove", function () {
     return tooltip.style("top", event.pageY - 120 + "px").style("left", event.pageX + 20 + "px");
   }).on("mouseout", function () {
