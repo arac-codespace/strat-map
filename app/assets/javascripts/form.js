@@ -3,7 +3,7 @@
 $(document).on("turbolinks:load", function () {
 
   if ($(".strat_columns.edit").length !== 1 && $(".strat_columns.new").length !== 1 && $(".strat_columns.create").length !== 1 && $(".strat_columns.update").length !== 1){
-    console.log("no controller action detected");
+    console.log("no controller action for form.js");
     return;
   }
   

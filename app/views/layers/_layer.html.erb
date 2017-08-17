@@ -19,7 +19,7 @@
       <p>Upper Contact: <%= layer.contact.name %></p>
       <p>Thickness(m): <%= layer.thickness %> </p>
       <p>Characteristics: <%= layer.description %> </p>
-      <%= link_to 'Edit', edit_layer_path(layer.id), remote: true, :class => 'btn btn-sm btn-info' %>
+      <%= link_to 'Edit', edit_layer_path(layer.id), remote: true, :class => 'btn btn-sm btn-info edit-layer-btn' %>
       <%= link_to 'Delete', layer, remote: true, :method => :delete, data: {confirm: "Delete?"}, :class => 'btn btn-sm btn-danger' unless index == 0 %>
     </div>
   </div> <!-- collapse panel end-->
