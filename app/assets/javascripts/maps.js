@@ -3,6 +3,7 @@
 /*global google*/
 /*global OverlappingMarkerSpiderfier*/
 
+
 $(document).on('turbolinks:load', function () {
   if ($('.maps.index').length == 1) {
     console.log("It works on each visit!");
@@ -23,6 +24,7 @@ function initMap() {
     center: { lat: 18.2208, lng: -66.5901 },
     zoom: 9,
     mapTypeControl: true,
+    fullscreenControl: false,
     mapTypeControlOptions: {
       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
       position: google.maps.ControlPosition.TOP_RIGHT
@@ -443,19 +445,19 @@ function drawchart(data) {
     $('.tool').remove();
   }
   // Tooltip D3 settings
-  var tooltip = d3.select("body").append("div").attr('class', 'tool').style("background-color", "white").style("border", "1px solid black").style("padding", "12px").style("border-radius", "8px").style("position", "absolute").style("z-index", "10").style("visibility", "hidden");
+  var tooltip = d3.select("body").append("div").attr('class', 'tool').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
 
   // Tooltip action
   d3.selectAll('.hoverBar').on("mouseover", function (d) {
     
     if (d.description !== "")
     {
-      var description = '</br>Description: ' + d.description;
+      var description = '</br><strong>Description: </strong>' + d.description;
     }    
     
-    return tooltip.style("visibility", "visible").html("Name: " + d.name + "</br>" + "Formation: " + d.formation + "</br>" + "Geologic Age: " + d.timescale.interval_name + "</br>" + "Upper Contact: " + d.contact.name + "</br>" + "Thickness (m): " + d.thickness + "</br>" + "Lithology Pattern: " + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
+    return tooltip.style("visibility", "visible").html('<strong>Name: </strong>' + d.name + '</br><strong>Formation: </strong>' + d.formation + '</br><strong>Geologic Age: </strong>' + d.timescale.interval_name + '</br><strong>Upper Contact: </strong>' + d.contact.name + '</br><strong>Thickness (m): </strong>' + d.thickness + '</br><strong>Lithology Pattern: </strong>' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
   }).on("mousemove", function () {
-    return tooltip.style("top", event.pageY - 120 + "px").style("left", event.pageX + 20 + "px");
+    return tooltip.style("top", d3.event.pageY - 120 + "px").style("left", d3.event.pageX + 20 + "px");
   }).on("mouseout", function () {
     return tooltip.style("visibility", "hidden");
   });

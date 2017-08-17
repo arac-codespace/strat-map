@@ -32,8 +32,9 @@ stratMap v0.2 TBD
 + Fix conformity appearing in legend
 + Added require_permission to controllers
 + AJAX edit forms
-TODO
++ Firefox compatibility issues (Tooltip reference x error and wrong Map View column container width)
 + Enable JS require and tweak css
+TODO
 + Review code
 
 stratMap v0.1 is live! August 2, 2017

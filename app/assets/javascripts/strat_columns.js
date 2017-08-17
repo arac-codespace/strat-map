@@ -278,9 +278,9 @@ $(document).on('turbolinks:load', function () {
 
 
     // x3-axis line and ticks
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
+    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
     // x2-axis line and ticks
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text');
+    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text').style('font', '12px Tahoma');
 
     // y-axis line and ticks
     if (data[0].strat_column.depth == false)
@@ -294,21 +294,22 @@ $(document).on('turbolinks:load', function () {
 
     d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
       return "-" + height*0.15;
-    }).attr('dy', '0.71em').text(yAxisText);
+    }).attr('dy', '0.71em').text(yAxisText).style('font', '12px Tahoma');
 
     // Tooltip D3 settings
-    var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('border', '1px solid black').style('padding', '12px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px');
+    var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
     // Tooltip action
     d3.selectAll('.hoverBar').on('mouseover', function (d) {
       
       if (d.description !== "")
       {
-        var description = '</br>Description: ' + d.description;
+        var description = '</br><strong>Description: </strong>' + d.description;
       }
       
-      return tooltip.style('visibility', 'visible').html('Name: ' + d.name + '</br>Formation: ' + d.formation + '</br>Geologic Age: ' + d.timescale.interval_name + '</br>Upper Contact: ' + d.contact.name + '</br>Thickness (m): ' + d.thickness + '</br>Lithology Pattern: ' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
+      return tooltip.style('visibility', 'visible').html('<strong>Name: </strong>' + d.name + '</br><strong>Formation: </strong>' + d.formation + '</br><strong>Geologic Age: </strong>' + d.timescale.interval_name + '</br><strong>Upper Contact: </strong>' + d.contact.name + '</br><strong>Thickness (m): </strong>' + d.thickness + '</br><strong>Lithology Pattern: </strong>' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
     }).on('mousemove', function () {
-      return tooltip.style('top', event.pageY - 120 + 'px').style('left', event.pageX + 15 + 'px');
+
+      return tooltip.style('top', d3.event.pageY - 120 + 'px').style('left', d3.event.pageX + 15 + 'px');
     }).on('mouseout', function () {
       return tooltip.style('visibility', 'hidden');
     });
@@ -356,7 +357,7 @@ $(document).on('turbolinks:load', function () {
       .append('text')
       .attr('y', (legendRectSize - legendSpacing) - 2)
       .attr('text-anchor','middle')
-      .text('LEGEND');
+      .text('LEGEND').style('font', '12px Tahoma');
     
     var legend = legendContainer.selectAll('.legend')
       .data(filteredData)
@@ -434,8 +435,8 @@ $(document).on('turbolinks:load', function () {
         else
         {
           return d.key;
-        }
-      });
+        }})
+        .style('font', '12px Tahoma');
     
 
     return $('svg').appendTo('.stratChart');
