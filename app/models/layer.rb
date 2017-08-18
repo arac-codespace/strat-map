@@ -5,8 +5,8 @@ class Layer < ApplicationRecord
   belongs_to :contact
   
   validates :name, presence: true
-  validates :lithology_id, presence: true
-  validates :timescale_id, presence: true
+  validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern'
+  validates_presence_of :timescale_id, message: '- Please select a valid geologic age'
   validates :contact_id, presence: true
   validates :thickness, presence: true, numericality: { only_integer: false }
   

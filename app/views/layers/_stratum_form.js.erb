@@ -10,7 +10,7 @@
   </div>   
   
   <div class = "form-group" data-fieldname="lithology_name">
-    <%= f.label :lithology_name, "Lithology Patterns" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
+    <%= f.label :lithology_name, "Select Lithology Pattern" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
     <%= f.text_field :lithology_name, required: :true, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
   </div>   
   
@@ -20,12 +20,12 @@
   </div>
   
   <div class = "form-group" data-fieldname="timescale_name">
-    <%= f.label :timescale_name,"Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
+    <%= f.label :timescale_name,"Select Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
     <%= f.text_field :timescale_name, required: :true, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
   </div>
   
   <div class = "form-group" data-fieldname="contact_id">
-    <%= f.label :contact_id,"Contact Type (Upper Boundary)" %>
+    <%= f.label :contact_id,"Select Contact Type (Upper Boundary)" %>
     <%= f.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Select Contact Type"}, {required: true, class: "form-control"})%>    
   </div>   
   
