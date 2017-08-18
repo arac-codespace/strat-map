@@ -20,7 +20,7 @@ the column in SVG format and edit it using a SVG editor
 (ie: Inkscape, Illustrator...).
 
 
-# Version
+# Changelog
 
 
 stratMap v0.2 TBD
@@ -29,18 +29,30 @@ stratMap v0.2 TBD
 + Fixed bar highlighting
 + Fixed Form JS not running when rendering a view after failing validation.
 + Autocomplete select
-+ Fix conformity appearing in legend
++ Fixed conformity appearing in legend
 + Added require_permission to controllers
-+ AJAX edit forms
-+ Firefox compatibility issues (Tooltip reference x error and wrong Map View column container width)
-+ Enable JS require and tweak css
-TODO
-+ Review code
++ AJAX edit/add forms in column show page
++ Fixed firefox compatibility issues (Tooltip reference x error and wrong Map View column container width)
++ Enabled JS require and tweaked css
++ Added Puerto Rico Geologic Map as WMS overlay to the maps API (experimental).
+
 
 stratMap v0.1 is live! August 2, 2017
 
 
-# Limitations (v0.1)
+# Notes (v0.2)
+
+
+Implemented "semi-AJAX" forms to column show page.  Now it's easier to add/edit
+information to the column and there's no need to scroll through incredibly
+long forms.  The old edit form is still accessible through "Edit Full Column Details"
+in the show page.
+
+Added some more restrictions in controller and fixed Firefox incompability 
+issues.
+
+
+# Limitations (v0.2)
 
 
 As with any program in their infancy, this web application has a number of 
@@ -75,11 +87,6 @@ idea on how do deal with this limitation though, and it shouldn't prove to be to
 difficult to implement.
 
 
-There are more limitations which honestly are closer to - as of yet - unavailable 
-"features".  These features need to be implemented step by step in order to 
-keep things as neat as possible.  So, slow and steady...
-
-
 # TODO
 
 
@@ -87,11 +94,11 @@ There are a few features that I plan to work on in the near future.  That is,
 after I give my code a once over and plan/think things out some more.
 
 
-The first one will be AJAX forms implemented in a column's details
+~ The first one will be AJAX forms implemented in a column's details
 page.  It just seems like a logical UX improvement for at least editing
 a column's details.  This phase will include whatever other UX style and features
 I can think of (y-axis starting point, feet to M conversion?...) and 
-addressing the formation representation issue mentioned above.
+addressing the formation representation issue mentioned above. ~
 
 
 Later on I want to add a way to represent fossils/other features 
@@ -126,21 +133,25 @@ Paleobiology Database's "Geological time intervals and time scales".
 https://d3js.org/
 
 
++ FGDC Digital Cartographic Standard for Geologic Map Symbolization (PostScript Implementation):
+http://pubs.usgs.gov/tm/2006/11A02/
+
+
 + Google Maps API V3:
 https://developers.google.com/maps/documentation/javascript/
+
+
++ PBDB Data Service 1.2 v2:
+https://paleobiodb.org/data1.2/
 
 
 + SVG Crowbar:
 http://nytimes.github.io/svg-crowbar/
 
 
-+ FGDC Digital Cartographic Standard for Geologic Map Symbolization (PostScript Implementation):
-http://pubs.usgs.gov/tm/2006/11A02/
-
-
 + University of Otago; USGS Inkscape pack instructions and download link:
 https://blogs.otago.ac.nz/si-geology/resources/illustrationgraphics-resources/usgs-inkscape-pack-instructions-and-download-link/
 
 
-+ PBDB Data Service 1.2 v2:
-https://paleobiodb.org/data1.2/
++ USGS Geology of Puerto Rico WMS Service:
+https://mrdata.usgs.gov/services/pr?request=GetCapabilities&service=WMS&version=1.3.0
