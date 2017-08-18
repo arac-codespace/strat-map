@@ -23,7 +23,7 @@ the column in SVG format and edit it using a SVG editor
 # Changelog
 
 
-stratMap v0.2 TBD
+stratMap v0.2 August 17, 2017
 + Improved legend
 + Added Height vs Depth option
 + Fixed bar highlighting
@@ -94,11 +94,11 @@ There are a few features that I plan to work on in the near future.  That is,
 after I give my code a once over and plan/think things out some more.
 
 
-~ The first one will be AJAX forms implemented in a column's details
+~~ The first one will be AJAX forms implemented in a column's details
 page.  It just seems like a logical UX improvement for at least editing
 a column's details.  This phase will include whatever other UX style and features
 I can think of (y-axis starting point, feet to M conversion?...) and 
-addressing the formation representation issue mentioned above. ~
+addressing the formation representation issue mentioned above. ~~
 
 
 Later on I want to add a way to represent fossils/other features 
