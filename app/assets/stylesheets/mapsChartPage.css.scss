@@ -20,6 +20,10 @@
   
   height: 100%;
   // width: 60%;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
   display: flex;
   // background-color: blue;
   position: absolute;
@@ -34,15 +38,17 @@
   background-color: white;
   display: none; // value when hidden
   border-right: 5px solid var(--navBlack);
-  // width: 100%;
   max-width: 250px;
+  // Note that this is the fix for the FF window width issue
+  // FF seems to be unable to grow flex children so I needed to
+  // put width explicitly.
+  width: 250px;
 }
 
 .chart-header-group {
   padding: 10px 20px;
   background-color: #4aaecc;
   color: white;
-  
 }
 
 .title {
