@@ -1,5 +1,7 @@
 <img src=http://imgur.com/aEj2oyC.png>
 
+Video overview: https://www.youtube.com/watch?v=B58MM-xyJDs
+
 # Introduction
 
 The purpose of this application is to automatically generate a stratigraphic 
