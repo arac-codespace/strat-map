@@ -8,6 +8,10 @@
   z-index: 99999;
 }
 
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
 // FORM CSS
 .formContainer, .infoFormFields {
   padding: 10px 20px;

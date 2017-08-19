@@ -41,7 +41,7 @@ class StratColumnsController < ApplicationController
     @strat_column = StratColumn.new(strat_params)
     if @strat_column.save
         flash[:notice] = "Column created succesfully"
-        redirect_to strat_columns_path
+        redirect_to strat_column_path(@strat_column)
     else
         @id = current_user.id
         @timescale_collection = Timescale.all.order(:late_age)
