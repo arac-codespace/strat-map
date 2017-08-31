@@ -24,6 +24,14 @@ the column in SVG format and edit it using a SVG editor
 
 # Changelog
 
+stratMap v0.3 TBD
+TODO
++ Create a collection/grouping model so user can associate multiple columns
++ Create a collection index/show page where user will be able to access 
+  info about the multiple columns associated.
++ Create a map view for collections only?
++ Research Google Maps api marker filtering for Map View and Collection Map View.
+
 
 stratMap v0.2 August 17, 2017
 + Improved legend
