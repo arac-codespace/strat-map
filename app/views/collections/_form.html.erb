@@ -14,10 +14,15 @@
           <%= f.text_area :description, class: "form-control" %>
         </div>
         
+        
         <div class = "form-group">
-          <%= f.label :strat_column_ids %>
-          <!--%= f.collection_select(:strat_column_ids, @user_columns, :id, :name, {:prompt => "Please Select a Columns"}, {:multiple => true, class: "form-control"} ) %>-->
-          <%= f.collection_select(:strat_column_ids, @user_columns, :id, :name, {:prompt => "Please Select a Columns"}, {:multiple => true, class: "form-control"} ) %>
+          <%= f.label :strat_column_ids, "Select columns to include in the collection" %> </br>
+          
+          <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
+          <% @user_columns.each do |x| %>
+            <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
+            <%= x.name %> </br>
+          <% end %>
         </div>
         
       </div>  

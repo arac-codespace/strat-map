@@ -1,0 +1,10 @@
+<div class="general-info" data-stratid= "<%= collection.id%>">
+  <h4><strong><%= collection.name %></strong></h4>
+  <p>Description: <%= collection.description %></p>
+  </br>
+  
+  <h4><strong> Columns in Collection</strong></h4>
+  <% collection.strat_columns.each do |x| %>
+    <%=x.name%></br>
+  <% end %>
+</div> 
