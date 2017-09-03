@@ -4,6 +4,8 @@
       <h3>Collection Information</h3>
       <div class="infoFormFields">
 
+        <%= f.hidden_field :user_id, value: @user_id if @collection.new_record?%>   
+
         <div class = "form-group">
           <%= f.label :name %>
           <%= f.text_field :name, required: :true, class: "form-control" %>
