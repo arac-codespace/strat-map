@@ -1,8 +1,16 @@
 class CollectionsController < ApplicationController
+  before_action :authenticate_user!
+  # before_action :require_permission, except: [:index, :new, :create]
   
   def index
-    @user_id = current_user
-    @collections = Collection.all
+    @user_id = current_user.id
+    # For reference...This code filters the ColumnCollections by the associated strat_column.user_id
+    # @collections_filtered = ColumnCollection.joins(:strat_column).where(strat_columns: {user_id: @user_id})
+    
+    # This code filters the Collection.  Interesting enough, this query will return repeat entries
+    # of a column's respective collection record if they match the condition user_id: current_user.id
+    # which is why I use distinct here.
+    @collections_filtered = Collection.joins(:strat_columns).where(strat_columns: {user_id: @user_id}).distinct
   end
   
   def new
@@ -58,6 +66,17 @@ class CollectionsController < ApplicationController
 
   end
   
+  
+  # def require_permission
+  #   collection = Collection.find_by_id(params[:id])
+  #   if collection == nil
+  #     redirect_to root_path
+  #   elsif current_user.id != collection.strat_columns.first.user_id
+  #     redirect_to root_path
+  #     #Or do something else here
+  #   end
+  # end
+    
   
   
 end

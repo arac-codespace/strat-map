@@ -1,3 +1,11 @@
-.container_child {
-  flex: 1;
+// Collection show
+
+#collection_map {
+  margin: 0 auto;
+  height: inherit;
+  min-height: 350px;
+}
+
+.collection-info {
+  height: 100%;
 }

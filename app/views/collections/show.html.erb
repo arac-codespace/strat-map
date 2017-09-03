@@ -10,24 +10,19 @@
       <% end %>       
       
     </div>
-    
-    <div class="d3js-container">
-        
-      <div class='mapView'>
-        <h5> Map Placeholder </h5>
-      </div>
-    </div>
-    
+    <!--<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">-->
+    <div id="collection_map"></div>        
+
   </div>
   
   <div class="right-column">
-    <div class="general-info-wrapper">
+    <div class="general-info-wrapper collection-info">
       <div class="column-header">
         <h3><b>Collection General Information</b></h3>
       </div>
         
 
-      <div id="strat_column">
+      <div id="collection">
         <!-- Funny enough, this renders the education partial and makes the records from the education 
         var in the profile/show controller available to be used in the partial in the form education.column -->
         <%= render @collection %>
@@ -35,7 +30,7 @@
       
       <div class="info-btns">
         
-        <div class="edit_strat_column_btn">
+        <div class="edit_show_btn">
           <%= link_to edit_collection_path(:id => @collection.id), class: "btn btn-default btn-xs edit-column-info-btn" do %>
             <i class='glyphicon glyphicon-pencil'></i>
             Edit Information

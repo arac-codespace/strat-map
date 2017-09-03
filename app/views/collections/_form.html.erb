@@ -1,7 +1,7 @@
 <div class= "formContainer">
   <%= form_for @collection do |f| %>
     <div class="generalInfoForm">
-      <h3>Stratigraphic Column Information</h3>
+      <h3>Collection Information</h3>
       <div class="infoFormFields">
 
         <div class = "form-group">
@@ -21,7 +21,7 @@
           <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
           <% @user_columns.each do |x| %>
             <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
-            <%= x.name %> </br>
+            <%= label_tag dom_id(x), x.name %> </br>
           <% end %>
         </div>
         
