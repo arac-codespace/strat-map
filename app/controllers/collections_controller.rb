@@ -29,7 +29,25 @@ class CollectionsController < ApplicationController
   
   def show
     @collection = Collection.find(params[:id])
-  end
+    
+    
+    @collection_columns = @collection.strat_columns
+    
+    @textures_to_render = []
+    
+    # Loop to find urls to render
+    @collection_columns.each do |column|
+      @layers = Layer.joins(:strat_column).where(strat_columns: {id: column.id}).each do |layer|
+        @textures_to_render << "svg/#{layer.lithology.rock_type.downcase}/#{layer.lithology.url}"
+        
+        unless layer.contact.contact_type == "Conformity" or layer.contact.contact_type == "Depositional"
+          @textures_to_render << "svg/contacts/#{layer.contact.contact_type.downcase}"
+        end        
+        
+      end #layer inner loop ned
+    end #strat outer loop end
+  end   
+    
   
   def edit
     @collection = Collection.find(params[:id])

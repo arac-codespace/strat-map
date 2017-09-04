@@ -10,16 +10,19 @@
   height: 100%;
 }
 
-.collections-flex-child {
+div.collections-flex-child {
   flex-grow: 1;
   overflow: auto;
   background-color: white;
-  // border: 5px solid var(--navBlack);
+  min-width: 250px;
   max-width: 250px;
+  
+  // border: 5px solid var(--navBlack);
+  // max-width: 250px;
   // Note that this is the fix for the FF window width issue
   // FF seems to be unable to grow flex children so I needed to
   // put width explicitly.
-  width: 250px;
+  // width: fit-content;
 }
 
 .collections-flex-container-map {
@@ -34,7 +37,33 @@
   display: -webkit-flex;     /* NEW - Chrome */
   display: flex;
   // background-color: blue;
-  position: relative;
+  // position: relative;
   // z-index: -9999; // value when hidden
-  justify-content: center;
+  // justify-content: center;
+  // width: fit-content;
+}
+
+.collection-visualization-wrapper {
+  // background-color: white;
+  width: fit-content;
+  max-width: 100%;
+  margin: auto;
+  overflow-x: auto;
+  display: flex;
+}
+
+.visualization-header-wrapper {
+  max-width: 200px;
+  background-color: var(--navBlack);
+  padding: 20px;
+  flex: 1;
+  // margin: 0 10px;
+  > h3 {
+    color: white;
+  }
+}
+
+div.collection-header {
+  height: 100px;
+  overflow-y: auto;
 }

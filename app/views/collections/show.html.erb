@@ -1,3 +1,7 @@
+<% @textures_to_render.uniq.each do |i| %>
+  <%= render i %>
+<% end %>
+
 <div class="flex-container">
   
   <div class= "left-column">
@@ -47,16 +51,21 @@
   </div> <!--right-column end-->
 </div> <!--flex container-->
 
+<div class = "collection-visualization-wrapper">
+  <div class= "visualization-header-wrapper">
+    <h3 class="visualization-header"> <strong>Collection Visualization</strong></h3>
+  </div>
 
-<div class="collections-flex-container-map">
-  <% @collection.strat_columns.each do |x,i| %>
+  <div class="collections-flex-container-map">
+    <% @collection.strat_columns.each do |x,i| %>
+      <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>" id="column_<%=x.id%>">
+        <div class="chart-header-group text-center collection-header">
+          <h3 class="title title-<%= i %>"><strong> <%= x.name %></strong></h3>
+        </div>  
+        <!-- SVG -->
+      </div>     
   
-    <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>" id="column_<%=x.id%>">
-      <div class="chart-header-group text-center">
-        <h3 class="title title-<%= i %>"> <%= x.name %> </h3>
-      </div>  
-      <!-- SVG -->
-    </div>     
-
-  <% end %>
+    <% end %>
+  </div>
+  
 </div>

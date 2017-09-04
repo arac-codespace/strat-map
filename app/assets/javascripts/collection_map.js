@@ -484,7 +484,20 @@ $(document).on('turbolinks:load', function () {
       
       return tooltip.style("visibility", "visible").html('<strong>Name: </strong>' + d.name + '</br><strong>Formation: </strong>' + d.formation + '</br><strong>Geologic Age: </strong>' + d.timescale.interval_name + '</br><strong>Upper Contact: </strong>' + d.contact.name + '</br><strong>Thickness (m): </strong>' + d.thickness + '</br><strong>Lithology Pattern: </strong>' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
     }).on("mousemove", function () {
-      return tooltip.style("top", d3.event.pageY - 120 + "px").style("left", d3.event.pageX + 20 + "px");
+      var tool_width = $(".tool").css("width");
+      
+      return tooltip.style("top", (d3.event.pageY - 120) + "px").style("left", function(){
+        // This section allows tooltip to not collide with right margin!
+        var collectionDivWidth = $(".collection-visualization-wrapper").css("width");
+        if (d3.event.pageX > parseInt(collectionDivWidth)/2)
+        {
+          return (d3.event.pageX - parseInt(tool_width) - 20) + "px";
+        }
+        else
+        {
+          return d3.event.pageX + 20 + "px";
+        }
+      });
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     });
