@@ -46,3 +46,21 @@
     
   </div> <!--right-column end-->
 </div> <!--flex container-->
+
+
+<div class="flex-container-map">
+  <% (1..4).each_with_index do |x,i| %>
+  
+    <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>">
+      <div class="chart-header-group text-center">
+        <h3 class="title title-<%= i %>"></h3>
+        <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-<%= i %>">
+          Close
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </button>
+      </div>  
+      <!-- SVG -->
+    </div>     
+
+  <% end %>
+</div>

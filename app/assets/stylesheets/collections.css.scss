@@ -9,3 +9,15 @@
 .collection-info {
   height: 100%;
 }
+
+.collections-flex-child {
+  flex-grow: 1;
+  overflow: auto;
+  background-color: white;
+  border-right: 5px solid var(--navBlack);
+  max-width: 250px;
+  // Note that this is the fix for the FF window width issue
+  // FF seems to be unable to grow flex children so I needed to
+  // put width explicitly.
+  width: 250px;
+}

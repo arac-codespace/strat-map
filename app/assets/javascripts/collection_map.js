@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function () {
     
     google.maps.event.addDomListener(window, 'turbolinks:load', initMap());
   } else {
-    return false;
+    return;
   }
   
   function initMap() {

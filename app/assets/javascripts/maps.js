@@ -10,7 +10,7 @@ $(document).on('turbolinks:load', function () {
     google.maps.event.addDomListener(window, 'turbolinks:load', initMap);
     google.maps.event.addDomListener(window, 'turbolinks:load', fadingIn);
   } else {
-    return false;
+    return;
   }
 });
 
