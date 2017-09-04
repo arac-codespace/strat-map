@@ -34,5 +34,13 @@ before_action :authenticate_user!
     render :json => @lithologies.map(&:name_with_texture_num)
   end
   
+  def collections_data  
+    @collections_id = params[:collection_id]
+    @collection_columns = Collection.find(@collections_id).strat_columns
+    
+    # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
+    @exceptions = [:created_at, :updated_at]
+    render(json: @collection_columns, except: @exceptions )
+  end
   
 end

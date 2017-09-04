@@ -14,10 +14,27 @@
   flex-grow: 1;
   overflow: auto;
   background-color: white;
-  border-right: 5px solid var(--navBlack);
+  // border: 5px solid var(--navBlack);
   max-width: 250px;
   // Note that this is the fix for the FF window width issue
   // FF seems to be unable to grow flex children so I needed to
   // put width explicitly.
   width: 250px;
+}
+
+.collections-flex-container-map {
+  // Note, with display flex the parent container's width will grow proportional
+  // to the svg's width!
+  
+  // height: 100%;
+  // width: 60%;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+  // background-color: blue;
+  position: relative;
+  // z-index: -9999; // value when hidden
+  justify-content: center;
 }

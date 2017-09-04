@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   
   resources :maps, only: [:index]
   resources :layers
-  resources :collections
+  resources :collections do
+    get '/collections', to: 'data#collections_data'
+  end
 
 end

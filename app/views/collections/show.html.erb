@@ -48,16 +48,12 @@
 </div> <!--flex container-->
 
 
-<div class="flex-container-map">
-  <% (1..4).each_with_index do |x,i| %>
+<div class="collections-flex-container-map">
+  <% @collection.strat_columns.each do |x,i| %>
   
-    <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>">
+    <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>" id="column_<%=x.id%>">
       <div class="chart-header-group text-center">
-        <h3 class="title title-<%= i %>"></h3>
-        <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-<%= i %>">
-          Close
-          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-        </button>
+        <h3 class="title title-<%= i %>"> <%= x.name %> </h3>
       </div>  
       <!-- SVG -->
     </div>     
