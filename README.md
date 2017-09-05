@@ -31,6 +31,9 @@ TODO
   info about the multiple columns associated.
 + Create a map view for collections only?
 + Research Google Maps api marker filtering for Map View and Collection Map View.
++ Add map location center preference/presets to collection and normal map view(?) 
++ Add ajax capabilities to collections
++ Add legend to collection?
 
 
 stratMap v0.2 August 17, 2017

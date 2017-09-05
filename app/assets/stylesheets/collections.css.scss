@@ -66,4 +66,8 @@ div.collections-flex-child {
 div.collection-header {
   height: 100px;
   overflow-y: auto;
+  a > h3 {
+    color: white;
+  }
 }
+

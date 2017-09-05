@@ -6,44 +6,36 @@
 
 $(document).on('turbolinks:load', function () {
   if ($('.collections.show').length == 1) {
-
+    
+    //global var helps with infowindow toggle
+    var infowindow;
+    
     // This sets the map's height dynamically before rendering
     // Allows the height of the map to adjust to right-column's height
     var leftColHeight = $(".right-column").css("height");
     var leftColTitle = $(".left-column-title").css("height");
-      
     if (parseInt(leftColHeight) > 446) {
       $(".left-column").css("height", parseInt(leftColHeight) - parseInt(leftColTitle));
     }
     
-    google.maps.event.addDomListener(window, 'turbolinks:load', initMap());
-    
     // Feed draw function
-    
     var url_id = $('.general-info').data('collectionid');
     var data_url = url_id + '/collections.json';
-
     $.getJSON(data_url).done(function (data) {
       for (var i = 0; i < data.length; i++) {
         columnUrlParser(data[i]);
       }
     });    
-        
-
-    // d3.json(data_url, drawCollectionChart);
     
+    // Initialize map
+    google.maps.event.addDomListener(window, 'turbolinks:load', initMap(data_url));
+
   } else {
     return;
   }
   
-  function columnUrlParser(data)
-  {
-    var column_data_url = "/strat_columns/" + data.id + "/data.json";
-    
-    d3.json(column_data_url, drawCollectionChart);
-  }
   
-  function initMap() {
+  function initMap(data_url) {
   
     var map = new google.maps.Map(document.getElementById('collection_map'), {
       center: { lat: 18.2208, lng: -66.5901 },
@@ -61,7 +53,61 @@ $(document).on('turbolinks:load', function () {
       styles: googleStyleList()
     }); 
     
+    // For overlapping markers...  
+    var oms = new OverlappingMarkerSpiderfier(map, {
+      markersWontMove: true,
+      markersWontHide: true,
+      basicFormatEvents: true
+    });    
+    
+    // FEEDS json to marker function 
+    $.getJSON(data_url).done(function (data) {
+  
+      for (var i = 0, dataLen = data.length; i < dataLen; i++) {
+        // addMarkerCustom(data[i]);
+        oms.addMarker(addMarkerCustom(data[i], map));
+      }
+    });    
+    
+    
   } // iniMap end
+  
+  function addMarkerCustom(column, map) {
+  
+    var myLatLng = new google.maps.LatLng(column.lat, column.lng);
+  
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      title: column.name,
+      icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    });
+  
+    
+    
+    marker.addListener('spider_click', function() {
+      if (infowindow)
+      {
+        infowindow.close();
+      }
+        var contentString = '<div id="iw-container">' +
+                          '<div class="iw-title">' +  '<h3>' + column.name + '<h3>' + '</div>' +
+                          '<div class="iw-content">' +
+                          '<h5> Location: ' + '<strong>' + column.location + '</strong>' +'</h5>' +
+                          '<h5> Latitude: ' + '<strong>' + column.lat + ', </strong>' + 'Longitude: ' + '<strong>' + column.lng + '</strong>' +'</h5>' +
+                          '<h5> Total thickness(m): ' + '<strong>' + column.total_thickness + '</strong>' +'</h5>' +
+                          '<h5> Description: </h5>' + '<p>' + column.description +'</p>' +
+                          '</div>' +
+                          '</div>';   
+          
+          infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+        infowindow.open(map, marker);
+    });
+    
+    // This will return the marker which will feedit to OMS's addMarker function
+    return marker;
+  } //addMarkerCustom end  
   
   function googleStyleList() {
     var styleList = [{
@@ -166,7 +212,13 @@ $(document).on('turbolinks:load', function () {
   
     return styleList;
   } });
-
+  
+  function columnUrlParser(data) {
+    var column_data_url = "/strat_columns/" + data.id + "/data.json";
+    
+    d3.json(column_data_url, drawCollectionChart);
+  }
+  
   function drawCollectionChart(data) {
 
     // append svg to column_id

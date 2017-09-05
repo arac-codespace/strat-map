@@ -57,10 +57,12 @@
   </div>
 
   <div class="collections-flex-container-map">
-    <% @collection.strat_columns.each do |x,i| %>
-      <div class="collections-flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>" id="column_<%=x.id%>">
+    <% @collection.strat_columns.each do |x| %>
+      <div class="collections-flex-child" id="column_<%=x.id%>">
         <div class="chart-header-group text-center collection-header">
-          <h3 class="title title-<%= i %>"><strong> <%= x.name %></strong></h3>
+          <%= link_to strat_column_path(id: x.id), target: :_blank do %>
+            <h3 class="title"><strong> <%= x.name %></strong></h3>
+          <% end %>
         </div>  
         <!-- SVG -->
       </div>     

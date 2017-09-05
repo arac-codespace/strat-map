@@ -40,7 +40,7 @@ before_action :authenticate_user!
     
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
     @exceptions = [:created_at, :updated_at]
-    render(json: @collection_columns, except: @exceptions )
+    render(json: @collection_columns, except: @exceptions, methods: [:total_thickness] )
   end
   
 end
