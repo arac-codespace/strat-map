@@ -34,6 +34,7 @@ TODO
 + Add map location center preference/presets to collection and normal map view(?) 
 + Add ajax capabilities to collections
 + Add legend to collection?
++ Need to spend some time on media response. Check how site works on bigger/desktop screens...
 
 
 stratMap v0.2 August 17, 2017

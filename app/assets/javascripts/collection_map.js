@@ -12,11 +12,15 @@ $(document).on('turbolinks:load', function () {
     
     // This sets the map's height dynamically before rendering
     // Allows the height of the map to adjust to right-column's height
-    var leftColHeight = $(".right-column").css("height");
-    var leftColTitle = $(".left-column-title").css("height");
-    if (parseInt(leftColHeight) > 446) {
-      $(".left-column").css("height", parseInt(leftColHeight) - parseInt(leftColTitle));
-    }
+    // var rightColHeight = $(".right-column").css("height");
+    // var leftColTitle = $(".left-column-title").css("height");
+    // if (parseInt(rightColHeight) > 446) {
+    //   $("#collection_map").css("height", parseInt(rightColHeight) - parseInt(leftColTitle));
+    // }
+    
+    // var leftColHeight = $(".right-column").css("height");
+    // $(".left-column").css("height", parseInt(leftColHeight));
+
     
     // Feed draw function
     var url_id = $('.general-info').data('collectionid');

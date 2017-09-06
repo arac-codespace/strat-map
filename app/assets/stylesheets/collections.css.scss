@@ -1,9 +1,18 @@
 // Collection show
 
+div.left-column-collection {
+  height: 450px !important;
+}
+
+div.right-column-collection {
+  height: 450px !important;
+  overflow: auto;
+  background-color: var(--headBlue);
+}
+
 #collection_map {
   margin: 0 auto;
-  height: inherit;
-  min-height: 350px;
+  min-height: 355px;
 }
 
 .collection-info {
@@ -71,3 +80,6 @@ div.collection-header {
   }
 }
 
+div.collection-visualization-full-wrapper {
+  margin: 5px 10px;
+}
