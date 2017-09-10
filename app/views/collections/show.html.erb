@@ -2,6 +2,8 @@
   <%= render i %>
 <% end %>
 
+<%= render "base_modal" %>
+
 <div class="flex-container">
   
   <div class= "left-column left-column-collection">
@@ -10,7 +12,7 @@
       
       <%= link_to edit_collection_path(id: @collection.id), class: "btn btn-default btn-xs edit-full-column-btn" do %>
         <i class='glyphicon glyphicon-pencil'></i>
-        Edit Full Collection Details
+        Edit Collection Details (HTML)
       <% end %>       
       
     </div>
@@ -35,7 +37,7 @@
       <div class="info-btns">
         
         <div class="edit_show_btn">
-          <%= link_to edit_collection_path(:id => @collection.id), class: "btn btn-default btn-xs edit-column-info-btn" do %>
+          <%= link_to edit_collection_path(:id => @collection.id), remote: true, class: "btn btn-default btn-xs edit-column-info-btn" do %>
             <i class='glyphicon glyphicon-pencil'></i>
             Edit Information
           <% end %>

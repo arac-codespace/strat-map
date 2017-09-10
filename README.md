@@ -25,16 +25,17 @@ the column in SVG format and edit it using a SVG editor
 # Changelog
 
 stratMap v0.3 TBD
-TODO
 + Create a collection/grouping model so user can associate multiple columns
 + Create a collection index/show page where user will be able to access 
   info about the multiple columns associated.
 + Create a map view for collections only?
++ Add ajax capabilities to collections
+TODO
 + Research Google Maps api marker filtering for Map View and Collection Map View.
 + Add map location center preference/presets to collection and normal map view(?) 
-+ Add ajax capabilities to collections
 + Add legend to collection?
 + Need to spend some time on media response. Check how site works on bigger/desktop screens...
++ Add pagination to indexes?
 
 
 stratMap v0.2 August 17, 2017

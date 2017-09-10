@@ -1,0 +1,16 @@
+<!--Show validation errors at forms-->
+<!--https://stackoverflow.com/questions/10531762/rendering-validation-errors-in-ruby-on-rails-->
+
+<div class="error-wrapper">
+  <% if @collection.errors.any? %>
+    <div id="error_explanation">
+      <h4>Input Error(s):</h4>
+  
+      <ul>
+      <% @collection.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

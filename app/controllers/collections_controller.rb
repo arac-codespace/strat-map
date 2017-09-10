@@ -52,16 +52,25 @@ class CollectionsController < ApplicationController
   def edit
     @collection = Collection.find(params[:id])
     @user_id = current_user
-    @user_columns = StratColumn.where(user_id: @user_id)    
+    @user_columns = StratColumn.where(user_id: @user_id)
+    
   end
   
   def update
     @collection = Collection.find(params[:id])
-    if @collection.update_attributes(collection_params)
-      redirect_to collection_path(id: @collection)
-    else
-      render action: :new
+
+    respond_to do |format|
+      if @collection.update_attributes(collection_params)
+        # Redirect to the strat's profile
+        format.html {redirect_to collection_path(@collection)}
+        format.js {redirect_to collection_path(@collection)}
+      else
+        @user_columns = StratColumn.where(user_id: current_user.id)    
+        format.json {render json: @collection.errors.full_messages, status: :unprocessable_entity}
+        format.html {render action: :edit} #Don't send, go back to edit action.
+      end
     end
+
 
   end
 

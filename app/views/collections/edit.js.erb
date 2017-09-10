@@ -1,0 +1,8 @@
+// Add the dialog title
+$('#myModalLabel').html("<i class='glyphicon glyphicon-pencil'></i> Edit Collection Details "); 
+
+// Render the new form
+$('.modal-body').html('<%= j render("info_form") %>');
+ 
+// Show the dynamic dialog
+$('#dialog').modal("show");

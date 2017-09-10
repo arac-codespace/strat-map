@@ -13,7 +13,7 @@
         
         <div class = "form-group">
           <%= f.label :description %>
-          <%= f.text_area :description, class: "form-control" %>
+          <%= f.text_area :description, class: "form-control textarea_options" %>
         </div>
         
         
@@ -23,7 +23,7 @@
           <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
           <% @user_columns.each do |x| %>
             <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
-            <%= label_tag dom_id(x), x.name %> </br>
+            <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %> </br>
           <% end %>
         </div>
         
@@ -32,7 +32,6 @@
     
     <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-primary" %>
-      <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span>
     </div>
     
   <% end %>
