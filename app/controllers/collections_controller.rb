@@ -58,7 +58,6 @@ class CollectionsController < ApplicationController
   
   def update
     @collection = Collection.find(params[:id])
-
     respond_to do |format|
       if @collection.update_attributes(collection_params)
         # Redirect to the strat's profile

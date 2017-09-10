@@ -10,18 +10,6 @@ $(document).on('turbolinks:load', function () {
     //global var helps with infowindow toggle
     var infowindow;
     
-    // This sets the map's height dynamically before rendering
-    // Allows the height of the map to adjust to right-column's height
-    // var rightColHeight = $(".right-column").css("height");
-    // var leftColTitle = $(".left-column-title").css("height");
-    // if (parseInt(rightColHeight) > 446) {
-    //   $("#collection_map").css("height", parseInt(rightColHeight) - parseInt(leftColTitle));
-    // }
-    
-    // var leftColHeight = $(".right-column").css("height");
-    // $(".left-column").css("height", parseInt(leftColHeight));
-
-    
     // Feed draw function
     var url_id = $('.general-info').data('collectionid');
     var data_url = url_id + '/collections.json';
@@ -42,8 +30,8 @@ $(document).on('turbolinks:load', function () {
   function initMap(data_url) {
   
     var map = new google.maps.Map(document.getElementById('collection_map'), {
-      center: { lat: 18.2208, lng: -66.5901 },
-      zoom: 9,
+      center: new google.maps.LatLng(0,0),
+      zoom: 2,
       mapTypeControl: true,
       fullscreenControl: false,
       mapTypeControlOptions: {
@@ -57,6 +45,7 @@ $(document).on('turbolinks:load', function () {
       styles: googleStyleList()
     }); 
     
+    
     // For overlapping markers...  
     var oms = new OverlappingMarkerSpiderfier(map, {
       markersWontMove: true,
@@ -65,11 +54,24 @@ $(document).on('turbolinks:load', function () {
     });    
     
     // FEEDS json to marker function 
+    var firstLatLng = false;
+    
     $.getJSON(data_url).done(function (data) {
-  
       for (var i = 0, dataLen = data.length; i < dataLen; i++) {
         // addMarkerCustom(data[i]);
-        oms.addMarker(addMarkerCustom(data[i], map));
+        if (data[i].lat != null && data[i].lng != null)
+        {
+            
+          if (firstLatLng == false)
+          {
+            var myLatLng = new google.maps.LatLng(data[i].lat, data[i].lng);
+            firstLatLng = true;
+            map.setCenter(myLatLng);
+            map.setZoom(8);
+          }
+          
+          oms.addMarker(addMarkerCustom(data[i], map));
+        }
       }
     });    
     
@@ -85,8 +87,7 @@ $(document).on('turbolinks:load', function () {
       title: column.name,
       icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
     });
-  
-    
+          
     
     marker.addListener('spider_click', function() {
       if (infowindow)

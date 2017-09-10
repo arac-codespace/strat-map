@@ -7,7 +7,6 @@ $(document).on("turbolinks:load", function () {
     return;
   }
   
-  
   // Initial binding of autocomplete...
   $('.timescale_name').autocomplete({
     // Note that in html, autocomplete_source is converted to autocomplete-source

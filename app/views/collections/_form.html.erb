@@ -21,10 +21,14 @@
           <%= f.label :strat_column_ids, "Select columns to include in the collection" %> </br>
           
           <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
-          <% @user_columns.each do |x| %>
-            <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
-            <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %> </br>
-          <% end %>
+          <div id="sortable-columns">
+            <% @user_columns.each do |x| %>
+              <li>
+                <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
+                <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %> </br>
+              </li>
+            <% end %>
+          </div>
         </div>
         
       </div>  

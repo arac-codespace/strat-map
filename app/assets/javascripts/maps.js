@@ -19,10 +19,9 @@ function fadingIn() {
 }
 
 function initMap() {
-
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 18.2208, lng: -66.5901 },
-    zoom: 9,
+    center: new google.maps.LatLng(0,0),
+    zoom: 2,
     mapTypeControl: true,
     fullscreenControl: false,
     mapTypeControlOptions: {
@@ -35,7 +34,19 @@ function initMap() {
     },
     styles: googleStyleList()
   }); 
-
+  
+  // Try HTML5 geolocation.
+  // https://developers.google.com/maps/documentation/javascript/geolocation
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setZoom(5);
+      map.setCenter(pos);
+  })}
+ 
 
   // SEARCH BAR 
   var input = document.getElementById('pac-input');
@@ -121,7 +132,6 @@ function initMap() {
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
   
 } // iniMap end
-
 
 function addMarkerCustom(place) {
 

@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require_tree .
 //= require jquery-ui/widgets/autocomplete
+//= require jquery-ui/widgets/sortable
 
 
 
