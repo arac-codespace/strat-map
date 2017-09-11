@@ -59,3 +59,6 @@ gem 'hirb'
 
 # jQuery-ui gem
 gem 'jquery-ui-rails'
+
+# act_as_list to increment position column
+gem 'acts_as_list'

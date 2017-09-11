@@ -57,14 +57,21 @@
   <div class = "collection-visualization-wrapper">
     <div class= "visualization-header-wrapper">
       <h3 class="visualization-header"> <strong>Collection Visualization</strong></h3>
+      
+      <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help">Help</button>
+      <div id="help" class="collapse help-prompt sort-help">
+        <p> Sort the columns by dragging and dropping the move [<span class="glyphicon glyphicon-move"></span>] icon! </p>
+      </div>      
+      
     </div>
-    <div class="collections-flex-container-map">
-      <% @collection.strat_columns.each do |x| %>
-        <div class="collections-flex-child" id="column_<%=x.id%>">
+    <div class="collections-flex-container-map" data-update-url = "<%= collection_sort_path%>">
+      <% @collection.column_collections.each do |x| %>
+        <div class="collections-flex-child column_<%=x.strat_column.id%>" id="column_collection_<%=x.id%>">
           <div class="chart-header-group text-center collection-header">
-            <%= link_to strat_column_path(id: x.id), target: :_blank do %>
-              <h3 class="title"><strong> <%= x.name %></strong></h3>
+            <%= link_to strat_column_path(id: x.strat_column.id), target: :_blank do %>
+              <h3 class="title"><strong> <%= x.strat_column.name %></strong></h3>
             <% end %>
+            <span class="handle" title="Drag and drop!"> <span class="glyphicon glyphicon-move"></span></span>
           </div>  
           <!-- SVG -->
         </div>     

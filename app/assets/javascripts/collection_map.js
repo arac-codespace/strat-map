@@ -229,7 +229,7 @@ $(document).on('turbolinks:load', function () {
     // append svg to column_id
     var stratColumnId = data[0].strat_column_id;
   
-    var divId = "#column_" + stratColumnId;
+    var divId = ".column_" + stratColumnId;
     var stratId = "strat_" + stratColumnId;
     var stratIdSelect = "#" + stratId;
   

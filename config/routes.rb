@@ -17,5 +17,7 @@ Rails.application.routes.draw do
   resources :collections do
     get '/collections', to: 'data#collections_data'
   end
+  
+  post '/collection_sort', to: 'collections#sort'
 
 end

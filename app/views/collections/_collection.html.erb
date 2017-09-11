@@ -4,7 +4,9 @@
   </br>
   
   <h4><strong> Columns in Collection</strong></h4>
-  <% collection.strat_columns.each do |x| %>
-    <h5><%=x.name%></br></h5>
-  <% end %>
+  <div>
+    <% collection.column_collections.each do |x| %>
+      <h5><%=x.strat_column.name%></br></h5>
+    <% end %>
+  </div>
 </div> 

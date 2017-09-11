@@ -88,3 +88,18 @@ div.collection-visualization-full-wrapper {
 .column_checkbox_label {
   font-weight: normal;
 }
+
+#sortable_columns {
+  list-style-type: none;
+}
+
+.handle {
+  cursor: move;
+  font-size: 16px;
+}
+
+.sort-help {
+  padding: 20px 0 !important;
+  font-style: italic;
+  color: white;
+}

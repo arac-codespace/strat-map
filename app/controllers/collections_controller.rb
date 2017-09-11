@@ -1,6 +1,6 @@
 class CollectionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_permission, except: [:index, :new, :create]
+  before_action :require_permission, except: [:index, :new, :create, :sort]
   
   def index
     @user_id = current_user.id
@@ -80,6 +80,12 @@ class CollectionsController < ApplicationController
     redirect_to collections_path
   end  
 
+  def sort
+    params[:column_collection].each_with_index do |id, index|
+      @assign = ColumnCollection.find(id).update(position: (index + 1))
+    end
+  
+  end
   
   private
   def collection_params

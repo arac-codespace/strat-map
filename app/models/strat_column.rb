@@ -2,7 +2,8 @@ class StratColumn < ApplicationRecord
   belongs_to :user
   has_many :layers, dependent: :destroy
   has_many :column_collections
-  has_many :collections, through: :column_collections
+  # Destroys join table records
+  has_many :collections, through: :column_collections, dependent: :destroy
 
   
   accepts_nested_attributes_for :layers, allow_destroy: true

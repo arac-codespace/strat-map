@@ -21,7 +21,7 @@
           <%= f.label :strat_column_ids, "Select columns to include in the collection" %> </br>
           
           <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
-          <div id="sortable-columns">
+          <div id="column_checkbox_container">
             <% @user_columns.each do |x| %>
               <li>
                 <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
