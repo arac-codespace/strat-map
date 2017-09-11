@@ -232,7 +232,7 @@ $(document).on('turbolinks:load', function () {
     var divId = ".column_" + stratColumnId;
     var stratId = "strat_" + stratColumnId;
     var stratIdSelect = "#" + stratId;
-  
+
     d3.select(divId).append("svg").attr("class", "stratChart").attr("id", stratId);
   
 
@@ -558,6 +558,141 @@ $(document).on('turbolinks:load', function () {
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     });
+    
+    // INCORPORATE LEGEND
+    // Age legend
+    var legendRectSize = 18*1.5;
+    var legendSpacing = 4*2;
+  
+    // Gets rid of duplicates by grouping... 
+    var ageFilteredData = d3.nest()
+      .key(function (d) {
+        return d.timescale.interval_name;
+      })
+      .key(function (d) {
+        return d.timescale.color;
+      })
+      .entries(data);
+  
+  
+    var lithologyFilteredData = d3.nest().key(function (d) {
+      return d.lithology.name;
+    }).key(function (d) {
+      return d.lithology.url;
+    }).entries(data);
+    
+    var unconformityFilteredData = d3.nest().key( function (d) {
+      return d.contact.contact_type;
+    })
+    // Here we filter out data that we don't want in the legend...
+    .entries(data.filter(function(d) { return d.contact.contact_type != 'Conformity'; }));
+    
+    var filteredData =  ageFilteredData.concat(lithologyFilteredData);
+    filteredData = filteredData.concat(unconformityFilteredData);
+  
+    var currentId = data[0].strat_column_id;
+    var legendSelect = "#legendContainer_" + currentId;
+    var legendContainer = d3.select(legendSelect).append('g').attr('class','legendContainer');
+    
+    legendContainer.append('g')
+      .attr('transform', function()
+      {
+        var horz = width;
+        return 'translate(' + horz + ', ' + 0 +')';
+              
+      })
+      .append('text')
+      .attr('y', (legendRectSize - legendSpacing) - 2)
+      .attr('text-anchor','middle')
+      .text('LEGEND').style('font', '12px Tahoma');
+    
+    var legend = legendContainer.selectAll('.legend')
+      .data(filteredData)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function (d, i) {
+        var lHeight = legendRectSize + legendSpacing;
+        var horz = width -100;
+        var vert = i * lHeight;
+        
+        if (i >= ageFilteredData.length)
+        {
+          vert = (i+2) * lHeight;
+          return 'translate(' + horz + ',' + vert + ')';
+        }
+        else
+        {
+          vert = (i+1) * lHeight;
+          return 'translate(' + horz + ',' + vert + ')';
+        }
+      });
+  
+    legend.append('rect')
+      .attr('width', legendRectSize*2)
+      .attr('height', legendRectSize)
+      .style('fill', function (d, i) {
+        
+        if (i >= lithologyFilteredData.length + ageFilteredData.length)
+        {
+          
+          if (d.key == 'Depositional')
+          {
+            // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
+            var dynFill = 'transparent';
+    
+            // Prevents NaN by preventing .previous operation from occuring
+            // at data index 0
+            if (i > 0) {
+              dynFill = 'url(' + d.key + ')';
+            }
+            return generateUnconformity(dynFill, i, 'legend');
+          } else if (d.key === 'Tectonic') {
+            return 'url(#tectonic)';
+          } else if (d.key === 'Intrusion') {
+            return 'url(#intrusion)';
+          } else {
+            return 'transparent';
+          }          
+        }
+        else if (i >= ageFilteredData.length)
+        {
+          d3.select(this.parentNode).append('rect').attr('width', legendRectSize*2).attr('height', legendRectSize).style('fill', function (d) {
+            return 'url(' + d.values[0].key + ')';
+          }).style('stroke', 'black:');
+          
+          return lithologyColoring(d.values[0].values[0].lithology.classification);
+        }
+        else
+        {
+          return d.values[0].key;
+        }
+        
+      })
+      .style('stroke', 'black');
+  
+    legend.append('text')
+      .attr('x', 75)
+      .attr('y', (legendRectSize - legendSpacing) - 2)
+      .text(function (d) {
+        if (d.key == 'Depositional')
+        {
+          return d.key + ' unconformity';
+        }
+        else
+        {
+          return d.key;
+        }})
+        .style('font', '12px Tahoma');    
+    
+    // This piece of code is to dynamically assign height to legend svg.
+    // The +1 takes care of the extra space that divides age from lithology/features
+    // And 35 is an arbitrary height.
+    var legendCount = $(legendSelect + ' > .legendContainer > g').length;
+    d3.select(legendSelect).attr('height', (legendCount+1) * 35).attr('width','100%');
+    
+    
+    
   } // draw chart end
 
   function lithologyColoring(lithologyClass) {
@@ -579,3 +714,28 @@ $(document).on('turbolinks:load', function () {
       return 'transparent';
     }
   } //lithologyColoring end
+  function generateUnconformity(dynFill, i, type) {
+    var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125) "><path fill = ' + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
+    if (type == 'texture')
+    {
+      d3.select('.unconformityPatterns > defs').append('pattern').attr('id', 'unconformity-' + i).attr('patternUnits', 'userSpaceOnUse').attr('x', '0').attr('y', '-18').attr('width', '50').attr('height', '9999').html(patternPath);
+    
+      return 'url(#unconformity-' + i + ')'; 
+    }
+    else if (type == 'color')
+    {
+      d3.select('.unconformityPatterns > defs').append('pattern').attr('id', 'unconformity-color' + i).attr('patternUnits', 'userSpaceOnUse').attr('x', '0').attr('y', '-18').attr('width', '50').attr('height', '9999').html(patternPath);
+    
+      return 'url(#unconformity-color' + i + ')';
+    }
+    else if (type == 'legend')
+    {
+      d3.select('.unconformityPatterns > defs').append('pattern').attr('id', 'unconformity-legend' + i).attr('patternUnits', 'userSpaceOnUse').attr('x', '0').attr('y', '-12').attr('width', '50').attr('height', '9999').html(patternPath);
+    
+      return 'url(#unconformity-legend' + i + ')'; 
+    }
+    else
+    {
+      console.log('generateUnconformity: Type argument invalid');
+    }
+  }

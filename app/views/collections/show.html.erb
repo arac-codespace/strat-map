@@ -65,7 +65,8 @@
       
       <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help">Help</button>
       <div id="help" class="collapse help-prompt sort-help">
-        <p> Sort the columns by dragging and dropping the move [<span class="glyphicon glyphicon-move"></span>] icon! </p>
+        <p> Sort the columns by dragging and dropping the move [ <span class="glyphicon glyphicon-move"></span> ] icon! </p>
+        <p> View the column's legend by clicking the legend [ <span class="glyphicon glyphicon-list-alt"></span> ] icon! </p>
       </div>      
       
     </div>
@@ -77,6 +78,31 @@
               <h3 class="title"><strong> <%= x.strat_column.name %></strong></h3>
             <% end %>
             <span class="handle" title="Drag and drop!"> <span class="glyphicon glyphicon-move"></span></span>
+            
+            
+            <!-- Button trigger legend modal -->
+            <span class="legend-btn" data-toggle="modal" data-target="#modalLegend_<%= x.strat_column.id %>">
+              <span class="glyphicon glyphicon-list-alt column_legend_<%= x.strat_column.id%>" title="Legend"></span>
+            </span>
+            
+            <!-- Modal -->
+            <div class="modal fade modal-legend" id="modalLegend_<%= x.strat_column.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title legend-title" id="myModalLabel"><%= x.strat_column.name %> Legend</h4>
+                  </div>
+                  <div class="modal-body">
+                    <svg id = "legendContainer_<%= x.strat_column.id%>"></svg>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- legend modal end -->
+
           </div>  
           <!-- SVG -->
         </div>     
@@ -84,3 +110,6 @@
     </div>
   </div>
 </div>
+
+
+

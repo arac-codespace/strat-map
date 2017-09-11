@@ -73,7 +73,7 @@ div.collections-flex-child {
 }
 
 div.collection-header {
-  height: 100px;
+  height: 115px;
   overflow-y: auto;
   a > h3 {
     color: white;
@@ -102,4 +102,12 @@ div.collection-visualization-full-wrapper {
   padding: 20px 0 !important;
   font-style: italic;
   color: white;
+}
+
+.legend-btn {
+  cursor: pointer;
+}
+
+.legend-title {
+  color: black;
 }
