@@ -65,8 +65,9 @@
       
       <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help">Help</button>
       <div id="help" class="collapse help-prompt sort-help">
-        <p> Sort the columns by dragging and dropping the move [ <span class="glyphicon glyphicon-move"></span> ] icon! </p>
-        <p> View the column's legend by clicking the legend [ <span class="glyphicon glyphicon-list-alt"></span> ] icon! </p>
+        <p> Sort the columns by dragging and dropping the move [ <span class="glyphicon glyphicon-move"></span> ] icon. </p>
+        <p> View the column's legend by clicking the legend [ <span class="glyphicon glyphicon-list-alt"></span> ] icon. </p>
+        <p> Scroll or use the left/right arrow keys to view the columns that extend offscreen. </p>
       </div>      
       
     </div>
@@ -91,7 +92,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title legend-title" id="myModalLabel"><%= x.strat_column.name %> Legend</h4>
+                    <h4 class="modal-title legend-title" id="myModalLabel"><%= x.strat_column.name %></h4>
                   </div>
                   <div class="modal-body">
                     <svg id = "legendContainer_<%= x.strat_column.id%>"></svg>

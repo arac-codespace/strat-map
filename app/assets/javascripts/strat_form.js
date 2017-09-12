@@ -3,7 +3,6 @@
 $(document).on("turbolinks:load", function () {
 
   if ($(".strat_columns.edit").length !== 1 && $(".strat_columns.new").length !== 1 && $(".strat_columns.create").length !== 1 && $(".strat_columns.update").length !== 1){
-    console.log("no controller action for form.js");
     return;
   }
   
@@ -16,8 +15,6 @@ $(document).on("turbolinks:load", function () {
   $('.lithology_name').autocomplete({
     source: $('.lithology_name').data('autocomplete-source')
   });
-
-  console.log("form js loading?");
 
   // var cloneIndex = $(".layer-fields_0").length;
   var layerNum = $('.layer').length;

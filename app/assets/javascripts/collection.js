@@ -59,7 +59,7 @@ $(document).on('turbolinks:load', function () {
     $.getJSON(data_url).done(function (data) {
       for (var i = 0, dataLen = data.length; i < dataLen; i++) {
         // addMarkerCustom(data[i]);
-        if (data[i].lat != null && data[i].lng != null)
+        if (data[i].lat != null || data[i].lng != null)
         {
             
           if (firstLatLng == false)
@@ -67,7 +67,7 @@ $(document).on('turbolinks:load', function () {
             var myLatLng = new google.maps.LatLng(data[i].lat, data[i].lng);
             firstLatLng = true;
             map.setCenter(myLatLng);
-            map.setZoom(8);
+            map.setZoom(7);
           }
           
           oms.addMarker(addMarkerCustom(data[i], map));

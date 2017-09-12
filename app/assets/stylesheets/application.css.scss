@@ -45,10 +45,19 @@ body {
   margin-bottom: 0;
   background-color: var(--navBlack);
   border: none;
+  > .container {
+    height: 75px;
+  }
 }
 
-.navbar-brand {
-  color: white !important;
+#main-nav-collapse {
+  > ul.nav {
+    margin: 14px;
+  }  
+}
+
+.navbar-header {
+  height: 100%;
 }
 
 .navbar-default .navbar-nav > li > a:hover {

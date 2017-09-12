@@ -62,3 +62,6 @@ gem 'jquery-ui-rails'
 
 # act_as_list to increment position column
 gem 'acts_as_list'
+
+# will_paginate for pagination
+gem 'will_paginate', '>3.0'

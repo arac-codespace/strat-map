@@ -4,7 +4,7 @@ class StratColumnsController < ApplicationController
   
   def index
   @current_user = current_user
-  @strat_columns = StratColumn.where(user_id: @current_user.id)
+  @strat_columns = StratColumn.where(user_id: @current_user.id).paginate(:page => params[:page], :per_page => 10)
   end
   
   def show

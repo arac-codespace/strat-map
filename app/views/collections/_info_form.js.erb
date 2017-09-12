@@ -21,8 +21,13 @@
         
         <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
         <% @user_columns.each do |x| %>
-          <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
-          <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %> </br>
+          <li>
+            <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
+            <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %>
+            <% if x.lat.nil? || x.lng.nil? %> 
+              <p class="invalid-coords"> (<strong>Warning:</strong> <%= x.name %> coordinates are empty or invalid.) </p>
+            <% end %></br>
+          </li>
         <% end %>
       </div>
       

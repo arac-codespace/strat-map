@@ -49,6 +49,11 @@
   padding: 10px 20px;
   background-color: #4aaecc;
   color: white;
+  height: 115px;
+  overflow: auto;  
+  > .title {
+    font-weight: bold;
+  }
 }
 
 .title {
@@ -84,4 +89,9 @@
 #geo-map-btn :hover {
     background-color: #e6e6e6;
     border-radius: 2px;
+}
+
+.close-sidebar-btn {
+  cursor: pointer;
+  margin: 0px 2.5px 0 5px;
 }

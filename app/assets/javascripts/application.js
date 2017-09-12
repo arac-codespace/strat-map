@@ -19,16 +19,16 @@
 //= require jquery-ui/widgets/sortable
 
 
-
+/* global $*/
 $(document).ajaxError(function(event,xhr,options,exc) {
     
     var errors = JSON.parse(xhr.responseText);
     var er ="<ul>";
     for(var i = 0; i < errors.length; i++){
         var list = errors[i];
-        er += "<li>"+list+"</li>"
+        er += "<li>"+list+"</li>";
     }
-    er+="</ul>"
+    er+="</ul>";
     $("#errors").html(er);
        
 });

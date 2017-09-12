@@ -5,7 +5,7 @@
       <h3 class="text-center">Collection Index</h3>
     </div>
     
-    <% @collections_filtered.each do |x| %>
+    <% @collections.each do |x| %>
         <div class ='info-wrapper'>
           <div class="index-title">
             <%= link_to collection_path(x.id) do%>
@@ -18,6 +18,6 @@
           </div>
         </div>  
     <% end %>
-    
+    <%= will_paginate @collections%>
   </div>
 </div>

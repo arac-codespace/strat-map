@@ -166,3 +166,65 @@ a.edit-full-column-btn {
     font-weight: bold;
   }  
 }
+
+// Pagination styling
+// http://mislav.github.io/will_paginate/
+.pagination {
+  display: block !important;
+  margin: 10px 0 !important;
+  background: white;
+  // border: 1px solid #e5e5e5;
+  border-radius: 0 !important;
+  text-align: center;
+  padding: 1em;
+  cursor: default; }
+  .pagination a, .pagination span {
+    padding: 0.2em 0.3em; }
+  .pagination .disabled {
+    color: #aaaaaa; }
+  .pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background-color: #bebebe;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    line-height: 1.5;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
+  .pagination a {
+    text-decoration: none;
+    color: black; }
+    .pagination a:hover, .pagination a:focus {
+      text-decoration: underline; }
+      
+.dropdown {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  > a {
+    color: white;
+    padding: 0 10px;
+  }
+  > a:hover {
+    color: lightgray;
+  }
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: transparent !important;
+}
+ul.dropdown-menu {
+  background-color: var(--navBlack);
+  border-top: 1px solid black;
+  border-radius: 0;
+  margin-top: 0;  
+  li > a {
+    color: white;
+  }
+}
+
+.logo-container {
+  width: 110px;
+}

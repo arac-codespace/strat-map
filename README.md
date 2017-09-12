@@ -32,10 +32,8 @@ stratMap v0.3 TBD
 + Add ajax capabilities to collections
 + Add map location center presets to collection and normal map view
 + Add legend to collection
-TODO
-+ Research Google Maps api marker filtering for Map View and Collection Map View.
-+ Need to spend some time on media response. Check how site works on bigger/desktop screens...
-+ Add pagination to indexes?
++ Add pagination to indexes
++ Add legend to Map View
 
 
 stratMap v0.2 August 17, 2017

@@ -13,15 +13,35 @@
     <div class="flex-child flex-map-<%= i %>" data-toClose= "close-<%= i %>">
       <div class="chart-header-group text-center">
         <h3 class="title title-<%= i %>"></h3>
-        <button type="button" class="btn btn-default btn-xs close-map" data-close= "close-<%= i %>">
-          Close
+        <span class="close-sidebar-btn" title="Close" data-close= "close-<%= i %>">
           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-        </button>
+        </span>
+        
+        <!-- Button trigger legend modal -->
+        <span class="legend-btn" data-toggle="modal" data-target="#modalLegend_<%= i %>">
+          <span class="glyphicon glyphicon-list-alt column_legend_<%= i%>" title="Legend"></span>
+        </span>        
+        
+        <!-- Modal -->
+        <div class="modal fade modal-legend" id="modalLegend_<%= i %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title legend-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- legend modal end -->        
+        
+        
       </div>  
       <!-- SVG -->
     </div>     
 
   <% end %>
 </div>
-
-

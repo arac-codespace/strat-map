@@ -439,7 +439,7 @@ $(document).on('turbolinks:load', function () {
         .style('font', '12px Tahoma');
     
 
-    return $('svg').appendTo('.stratChart');
+    return $('svg').not('#logo-svg').appendTo('.stratChart');
   } // drawFunction end
 
   // This function returns the color of the bar
@@ -464,7 +464,7 @@ $(document).on('turbolinks:load', function () {
     }
   } //lithologyColoring end
 
-function generateUnconformity(dynFill, i, type) {
+  function generateUnconformity(dynFill, i, type) {
   var patternPath = '<g transform="rotate(-180 125.319091796875,22.8419189453125) "><path fill = ' + dynFill + ' d="m35.65581,28.28433c5.93317,-4.22123 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73268,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73253,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73269,16.88482c11.86634,0 11.86634,-16.88482 23.73269,-16.88482c11.86634,0 11.86634,16.88482 23.73252,16.88482c11.86651,0 11.86651,-16.88482 23.73269,-16.88482c11.86635,0 17.79952,12.6636 23.73269,16.32332" stroke-width="2" stroke= "black" fill-rule="evenodd" fill="transparent"/></g>';
   if (type == 'texture')
   {
