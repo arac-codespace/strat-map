@@ -6,8 +6,7 @@ $(document).on("turbolinks:load", function () {
     return;
   }
   
-  console.log("huh, this is the show controller?");
-  
+
   $('.layer-info-wrapper').on('click', '.edit-layer-btn, .new-layer-btn', function(){
     
     // Bootstrap loaded event

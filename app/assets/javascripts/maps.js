@@ -6,11 +6,11 @@
 
 
 $(document).on('turbolinks:load', function () {
-  if ($('.maps.index').length == 1) {
-    google.maps.event.addDomListener(window, 'turbolinks:load', initMap);
-    google.maps.event.addDomListener(window, 'turbolinks:load', fadingIn);
-  } else {
+  if ($('.maps.index').length != 1) {
     return;
+  } else {
+    google.maps.event.addDomListener(window, 'turbolinks:load', initMap());
+    google.maps.event.addDomListener(window, 'turbolinks:load', fadingIn());
   }
 });
 
@@ -531,8 +531,10 @@ function drawchart(data) {
 
   var currentId = data[0].strat_column_id;
   var legendSelect = "legendContainer_" + currentId;
+  // divId identifies the sidebar that the column will occupy
   var legendContainer = d3.select(divId).select(".modal-body").append('svg').attr('id',legendSelect).append('g').attr('class','legendContainer');
-  d3.select(divId).select(".modal-title").text(data[0].name);
+  var columnName = d3.select(divId).select(".title").text();
+  d3.select(divId).select(".modal-title").text(columnName);
   
   legendContainer.append('g')
     .attr('transform', function()

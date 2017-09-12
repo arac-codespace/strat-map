@@ -38,12 +38,12 @@
               
               <li>
                 <div class="dropdown">
-                  <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a id="columnLabel" class="dropdownLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Columns
                     <span class="caret"></span>
                   </a>
                 
-                  <ul class="dropdown-menu" aria-labelledby="dLabel">
+                  <ul class="dropdown-menu" aria-labelledby="columnLabel">
                     <li><%= link_to("Index", strat_columns_path)%></li>
                     <li><%= link_to("Create", new_strat_column_path)%></li>
                     <li><%= link_to("Map View", maps_path)%></li>
@@ -52,12 +52,12 @@
               </li>
               <li>
                 <div class="dropdown">
-                  <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a id="collectionLabel" class="dropdownLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Collections
                     <span class="caret"></span>
                   </a>
                 
-                  <ul class="dropdown-menu" aria-labelledby="dLabel">
+                  <ul class="dropdown-menu" aria-labelledby="collectionLabel">
                     <li><%= link_to("Index", collections_path)%></li>
                     <li><%= link_to("Create", new_collection_path)%></li>
                   </ul>
