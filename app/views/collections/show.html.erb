@@ -1,3 +1,4 @@
+<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">
 <% @textures_to_render.uniq.each do |i| %>
   <%= render i %>
 <% end %>
@@ -16,7 +17,6 @@
       <% end %>       
       
     </div>
-    <!--<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">-->
     <div id="collection_map"></div>        
 
   </div>
@@ -50,6 +50,8 @@
         <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help_info">Help</button>
         <div id="help_info" class="collapse help-prompt">
           <p> Note: Map will only display markers for columns with valid coordinates.</p>
+          <p> The map initially centers around the first (leftmost) column's coordinates.  Swapping the first column with another will
+          change where the map centers on refresh. </p>
         </div>            
         
       </div>  
@@ -92,7 +94,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title legend-title" id="myModalLabel"><%= x.strat_column.name %></h4>
+                    <h4 class="modal-title legend-title" id="myModalLabel"><%= x.strat_column.name%> Legend</h4>
                   </div>
                   <div class="modal-body">
                     <svg id = "legendContainer_<%= x.strat_column.id%>"></svg>
