@@ -315,9 +315,6 @@ $(document).on('turbolinks:load', function () {
     });
 
     // INCORPORATE LEGEND
-    // Age legend
-    var legendRectSize = 18*1.5;
-    var legendSpacing = 4*2;
 
     // Gets rid of duplicates by grouping... 
     var ageFilteredData = d3.nest()
@@ -347,97 +344,7 @@ $(document).on('turbolinks:load', function () {
 
     var legendContainer = d3.select('.stratChart').append('g').attr('class','legendContainer');
     
-    legendContainer.append('g')
-      .attr('transform', function()
-      {
-        var horz = width + 200;
-        return 'translate(' + horz + ', ' + 0 +')';
-              
-      })
-      .append('text')
-      .attr('y', (legendRectSize - legendSpacing) - 2)
-      .attr('text-anchor','middle')
-      .text('LEGEND').style('font', '12px Tahoma');
-    
-    var legend = legendContainer.selectAll('.legend')
-      .data(filteredData)
-      .enter()
-      .append('g')
-      .attr('class', 'legend')
-      .attr('transform', function (d, i) {
-        var lHeight = legendRectSize + legendSpacing;
-        var horz = width + 200;
-        var vert = i * lHeight;
-        
-        if (i >= ageFilteredData.length)
-        {
-          vert = (i+2) * lHeight;
-          return 'translate(' + horz + ',' + vert + ')';
-        }
-        else
-        {
-          vert = (i+1) * lHeight;
-          return 'translate(' + horz + ',' + vert + ')';
-        }
-      });
-
-    legend.append('rect')
-      .attr('width', legendRectSize*2)
-      .attr('height', legendRectSize)
-      .style('fill', function (d, i) {
-        
-        if (i >= lithologyFilteredData.length + ageFilteredData.length)
-        {
-          
-          if (d.key == 'Depositional')
-          {
-            // GENERATE UNCONFORMITY PATTERNS DYNAMICALLY
-            var dynFill = 'transparent';
-    
-            // Prevents NaN by preventing .previous operation from occuring
-            // at data index 0
-            if (i > 0) {
-              dynFill = 'url(' + d.key + ')';
-            }
-            return generateUnconformity(dynFill, i, 'legend');
-          } else if (d.key === 'Tectonic') {
-            return 'url(#tectonic)';
-          } else if (d.key === 'Intrusion') {
-            return 'url(#intrusion)';
-          } else {
-            return 'transparent';
-          }          
-        }
-        else if (i >= ageFilteredData.length)
-        {
-          d3.select(this.parentNode).append('rect').attr('width', legendRectSize*2).attr('height', legendRectSize).style('fill', function (d) {
-            return 'url(' + d.values[0].key + ')';
-          }).style('stroke', 'black:');
-          
-          return lithologyColoring(d.values[0].values[0].lithology.classification);
-        }
-        else
-        {
-          return d.values[0].key;
-        }
-        
-      })
-      .style('stroke', 'black');
-
-    legend.append('text')
-      .attr('x', (legendRectSize + legendSpacing) * -1)
-      .attr('y', (legendRectSize - legendSpacing) - 2)
-      .text(function (d) {
-        if (d.key == 'Depositional')
-        {
-          return d.key + ' unconformity';
-        }
-        else
-        {
-          return d.key;
-        }})
-        .style('font', '12px Tahoma');
-    
+    condensedLegend(legendContainer, filteredData, ageFilteredData, width, lithologyFilteredData);    
 
     return $('svg').not('#logo-svg').appendTo('.stratChart');
   } // drawFunction end

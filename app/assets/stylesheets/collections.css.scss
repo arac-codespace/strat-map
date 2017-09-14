@@ -54,7 +54,7 @@ div.collections-flex-child {
 
 .collection-visualization-wrapper {
   // background-color: white;
-  width: fit-content;
+  // width: fit-content;
   max-width: 100%;
   margin: auto;
   overflow-x: auto;
@@ -81,6 +81,7 @@ div.collection-header {
 }
 
 div.collection-visualization-full-wrapper {
+  display: flex;
   margin: 5px 10px;
 }
 
