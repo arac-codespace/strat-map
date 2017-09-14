@@ -25,17 +25,20 @@ the column in SVG format and edit it using a SVG editor
 # Changelog
 
 stratMap v0.3 August 17, 2017
-+ Create a collection/grouping model so user can associate multiple columns
-+ Create a collection index/show page where user will be able to access 
++ Created a collection/grouping model so user can associate multiple columns
++ Created a collection index/show page where user will be able to access 
   info about the multiple columns associated.
-+ Create a map view for collections only?
-+ Add ajax capabilities to collections
-+ Add map location center presets to collection and normal map view
-+ Add legend to collection
-+ Add pagination to indexes
-+ Add legend to Map View
++ Created a map view for collections only?
++ Added ajax capabilities to collections
++ Added map location center presets to collection and normal map view
++ Added legend to collection
++ Added pagination to indexes
++ Added legend to Map View
 + Added some pan and zoom limitations to maps
 + Improved CSS (WIP)
+Patch TODO 
++ Consider rendering the collection columns with same scale?
++ Better media queries
 
 
 stratMap v0.2 August 17, 2017
@@ -71,7 +74,7 @@ proper media queries, and I'll probably keep working on them before moving on
 to implementing other 'big' features (fossils?).
 
 
-# Limitations (v0.2)
+# Limitations (v0.3)
 
 
 As with any program in their infancy, this web application has a number of 
@@ -82,10 +85,10 @@ parasequences...).  Some are major and some are minor.
 
 
 One of the - what I consider to be - major limitations of this application 
-is the inability to generate a "generalized" stratigraphic column.  
+is the inability to generate a "generalized" stratigraphic column".  
 This application is basically a fancy stack-bar graph, so by its nature 
 the application "assumes" that the user is providing it measurements 
-that run along a single line in space.  It doesn't concern itself with what features
+that run along a single point in space.  It doesn't concern itself with what features
 (facies, structures, dip angles, etc...) are next to it.  It's therefore not 
 possible to represent, for instance, a "rough" sketch of a formation's structure using 
 only a single column.  Or at least not without extensive modifications to the 
@@ -93,17 +96,11 @@ bars and/or custom SVG patterns.
 
 
 I believe Map View alleviates this limitation a little by 
-providing a sort of "composite view" of multiple columns.  I also plan to add a 
-"grouping" feature to help with the creation and view of these composite views.  
-These alternatives would of course require more data points and therefore
-more work from the user's part.  So it's a trade-off one way or another.
-
-
-Another limitation has to do with how each bar in the generated column represents 
-a certain type of lithology.  This means that -for now- it's not possible to create
-a more "expansive" column where each 'layer' represents, say, a formation.  I've an
-idea on how do deal with this limitation though, and it shouldn't prove to be too
-difficult to implement.
+providing a sort of "composite view" of multiple columns.  With the v0.3 update, I
+also added collections which provides the user with more control over what 
+info to view in one page. These alternatives do, of course, require more data 
+points and therefore more work collecting information.  
+So it's a trade-off one way or another.
 
 
 # TODO
