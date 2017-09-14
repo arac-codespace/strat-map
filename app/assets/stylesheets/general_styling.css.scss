@@ -10,10 +10,13 @@
   background-color: white;
   margin: 10px 5px 10px 10px;
   box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.2);
+  overflow-x: auto;
+  flex-basis: 15%;
 }
 
 .right-column {
   flex: 1;
+  flex-basis: 10%;
   background-color: white;
   margin: 10px 10px 10px 5px;
 }
@@ -231,4 +234,22 @@ ul.dropdown-menu {
 
 .dropdownLabel {
   cursor: pointer;
+}
+
+@media (min-width: 2560px) {
+  .body {
+    margin: auto;
+    max-width: 2560px;
+  }
+  .flex-container {
+    margin: 20px;
+  }
+  .left-column {
+    margin: 10px 10px 10px 10px;
+    flex: 1.5;
+  }
+  .right-column {
+    flex-basis: 10%;
+    margin: 10px 10px 10px 10px;
+  }
 }

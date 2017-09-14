@@ -49,7 +49,7 @@ $(document).on('turbolinks:load', function () {
     // width + margin.left + margin.right which in the current settings
     // will compute to 600px.  This is also the dimensions the x-scale
     // is based on.
-    var stratChart = d3.select('.stratChart').attr('width', '100%');
+    var stratChart = d3.select('.stratChart').attr('width', width + margin.left + margin.right + 300);
     // Sets the height for the svg/chart container.
     stratChart.attr('height', height + margin.top + margin.bottom);
     // For use inside the function.  This allows for the sum of successive thickness.
