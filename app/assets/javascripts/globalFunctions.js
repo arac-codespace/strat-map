@@ -574,3 +574,29 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
     return tooltip.style("visibility", "hidden");
   });  
 }
+
+// Restricts bound pan
+//https://stackoverflow.com/questions/23580831/how-to-block-google-maps-api-v3-panning-in-the-gray-zone-over-north-pole-or-unde
+function checkBounds(map) {
+
+var latNorth = map.getBounds().getNorthEast().lat();
+var latSouth = map.getBounds().getSouthWest().lat();
+var newLat;
+
+if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+    return;
+else {
+    if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
+        return;
+    else {
+        if(latNorth>85)   
+            newLat =  map.getCenter().lat() - (latNorth-85);   /* too north, centering */
+        if(latSouth<-85) 
+            newLat =  map.getCenter().lat() - (latSouth+85);   /* too south, centering */
+    }   
+}
+if(newLat) {
+    var newCenter= new google.maps.LatLng( newLat ,map.getCenter().lng() );
+    map.setCenter(newCenter);
+    }   
+}

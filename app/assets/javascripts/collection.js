@@ -28,9 +28,19 @@ $(document).on('turbolinks:load', function () {
 
 function initMapCollection(data_url) {
   
+  var minZoomLevel;
+  
+  // Zoom level depending on device
+  var useragent = navigator.userAgent;
+  if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
+    minZoomLevel = 4;
+  } else {
+    minZoomLevel = 3;
+  }  
+  
   var map = new google.maps.Map(document.getElementById('collection_map'), {
     center: new google.maps.LatLng(0,0),
-    zoom: 2,
+    zoom: minZoomLevel,
     mapTypeControl: true,
     fullscreenControl: false,
     mapTypeControlOptions: {
@@ -47,6 +57,12 @@ function initMapCollection(data_url) {
   google.maps.event.addListener(map, 'idle', function() {
     fadingIn();
   });    
+  
+  // Limit the zoom level
+  // https://stackoverflow.com/questions/3818016/google-maps-v3-limit-viewable-area-and-zoom-level
+  google.maps.event.addListener(map, 'zoom_changed', function() {
+    if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+  });  
   
   // SEARCH BAR 
   var input = document.getElementById('pac-input');
@@ -110,6 +126,10 @@ function initMapCollection(data_url) {
     }
   });    
 
+  google.maps.event.addListener(map, 'center_changed', function() {
+      checkBounds(map);
+  });
+  
 } // iniMap end
 
 function addMarkerCustom(column, map) {

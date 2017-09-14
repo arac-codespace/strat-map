@@ -34,6 +34,8 @@ stratMap v0.3 TBD
 + Add legend to collection
 + Add pagination to indexes
 + Add legend to Map View
++ Added some pan and zoom limitations to maps
++ Improved CSS (WIP)
 
 
 stratMap v0.2 August 17, 2017

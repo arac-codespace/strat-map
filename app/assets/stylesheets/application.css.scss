@@ -40,6 +40,12 @@ body {
   background-color: var(--siteBGBlue);
 }
 
+.full-site-container {
+  max-width: 3840px;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
 // NAVBAR
 .navbar-default {
   margin-bottom: 0;

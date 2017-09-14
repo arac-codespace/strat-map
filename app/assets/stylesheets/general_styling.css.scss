@@ -239,17 +239,41 @@ ul.dropdown-menu {
 @media (min-width: 2560px) {
   .body {
     margin: auto;
-    max-width: 2560px;
   }
   .flex-container {
-    margin: 20px;
+    margin: 60px;
   }
   .left-column {
-    margin: 10px 10px 10px 10px;
+    margin: 10px 30px 10px 10px;
     flex: 1.5;
   }
   .right-column {
     flex-basis: 10%;
-    margin: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 30px;
   }
+  // Collection
+  div.left-column-collection {
+    height: 450px *1.2;
+  }
+  
+  div.right-column-collection {
+    height: 450px *1.2;
+  }  
+  
+  #collection_map {
+    min-height: 445px;
+  }  
+  
 }
+
+// @media (max-width: 1024px) {
+//   .flex-container {
+//     flex-flow: column nowrap;
+//   }
+//   body {
+//     max-width: 100%;
+//   }
+//   .stratChart {
+//     overflow: scroll;
+//   }
+// }

@@ -11,13 +11,29 @@ $(document).on('turbolinks:load', function () {
   }
   
   initMap();
- 
 }); // ready end
   
 function initMap() {
+    
+  var minZoomLevel;
+  var latResponse;
+  var lngResponse;
+  
+  // Zoom level depending on device
+  var useragent = navigator.userAgent;
+  if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
+    minZoomLevel = 4;
+    latResponse = 15.326572;
+    lngResponse = -76.157227;
+  } else {
+    minZoomLevel = 3;
+    latResponse = 24.023238;
+    lngResponse = -42.645272;
+  }
+    
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: new google.maps.LatLng(0,0),
-    zoom: 2,
+    center: new google.maps.LatLng(latResponse,lngResponse),
+    zoom: minZoomLevel,
     mapTypeControl: true,
     fullscreenControl: false,
     mapTypeControlOptions: {
@@ -31,7 +47,13 @@ function initMap() {
     styles: googleStyleList()
   }); 
   
-  // Try HTML5 geolocation.
+  // Limit the zoom level
+  // https://stackoverflow.com/questions/3818016/google-maps-v3-limit-viewable-area-and-zoom-level
+  google.maps.event.addListener(map, 'zoom_changed', function() {
+    if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+  });
+   
+  // Try HTML5 geolocation if user allows it.
   // https://developers.google.com/maps/documentation/javascript/geolocation
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -44,6 +66,11 @@ function initMap() {
   })}
  
   // SEARCH BAR
+
+  $(window).resize(function() {
+      google.maps.event.trigger(map, 'resize');
+  });
+  google.maps.event.trigger(map, 'resize');
   
   google.maps.event.addListener(map, 'idle', function() {
     fadingIn();
@@ -131,9 +158,15 @@ function initMap() {
   
   centerControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
+
+  google.maps.event.addListener(map, 'center_changed', function() {
+      checkBounds(map);
+  });
   
- 
 } // iniMap end
+
+// Restricts bound pan
+//https://stackoverflow.com/questions/23580831/how-to-block-google-maps-api-v3-panning-in-the-gray-zone-over-north-pole-or-unde
 
 function addMarkerMapCustom(place) {
 
