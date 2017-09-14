@@ -4,12 +4,10 @@
 /*global OverlappingMarkerSpiderfier*/
 
 $(document).on('turbolinks:load', function () {
-
+  
   if ($('.collections.show').length !== 1) {
     return;
   }
-    //global var helps with infowindow toggle
-    var infowindow;
     
     // Get data to feed draw function
     var url_id = $('.general-info').data('collectionid');
@@ -29,6 +27,7 @@ $(document).on('turbolinks:load', function () {
 function initMapCollection(data_url) {
   
   var minZoomLevel;
+
   
   // Zoom level depending on device
   var useragent = navigator.userAgent;
@@ -142,6 +141,7 @@ function addMarkerCustom(column, map) {
     icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
   });
         
+  var infowindow;  
   
   marker.addListener('spider_click', function() {
     if (infowindow)
