@@ -85,7 +85,7 @@ and others due to the absence of corresponding features (fossil representation,
 parasequences...).  Some are major and some are minor.
 
 
-One of the - what I consider to be - major limitations of this application 
+One of - what I consider to be - major limitations of this application 
 is the inability to generate a "generalized" stratigraphic column".  
 This application is basically a fancy stack-bar graph, so by its nature 
 the application "assumes" that the user is providing it measurements 
@@ -104,34 +104,27 @@ points and therefore more work collecting information.
 So it's a trade-off one way or another.
 
 
-# TODO
+# TODO (v0.3)
 
+With collections done, the other "essential" feature that I want to implement
+is a way to represent fossils on a column.  This is something that I'm still
+not sure how to implement -visually-, and it should prove to be a challange to
+implement on the back end.  Inspired by Macrostrat's integration of
+PBDM's services, I have this idea of making use of PaleoDB's web services to 
+display basic fossil information on the site too... somehow.  
 
-There are a few features that I plan to work on in the near future.  That is,
-after I give my code a once over and plan/think things out some more.
+After that, I plan to implement some form of basic statistics functions and
+some pretty graphs to go along with it.  I'm actually a bit excited about this
+part, since this will be the first time I will be doing some mathy code.
 
-
-~~The first one will be AJAX forms implemented in a column's details
-page.  It just seems like a logical UX improvement for at least editing
-a column's details.  This phase will include whatever other UX style and features
-I can think of (y-axis starting point, feet to M conversion?...) and 
-addressing the formation representation issue mentioned above.~~
-
-
-Later on I want to add a way to represent fossils/other features 
-in the column.  Perhaps on a separate/third column, or maybe as a toggle "overlay".
-
-
-~~Grouping, or a sort of tagging and a view where users can see a composite view
-of various related columns is another feature that I really want to implement.  
-Unlike map view, this "Group View" will hopefully be more detailed and will not
-be limited to just 4 or 5 columns in succession.~~
-
-
-Finally, I want to experiment with adding overlays such as geologic map overlays 
-to the Google Maps API.  I've already found a way to a add WMS data to the map, but I 
-need some time to read the documentation/ properly implement it.
-
+And of course, there's the media queries issue which may turn out to be a pain
+because I didn't design the page taking smaller devices(Smartphones) or large 
+devices (4k) into consideration.  Turns out, I do care how the site looks on 
+different devices so we'll see how I go about this in the not so distant future.
+Not having access to bigger displays may prove to be an issue though, since I 
+won't be able to see how the site looks outside of Chrome's emulator.  I'm also
+using Flexbox to style the page, so who knows how the site will behave 
+in x device and y browser.
 
 # Credits / References
 
