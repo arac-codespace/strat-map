@@ -28,7 +28,7 @@ stratMap v0.3 August 17, 2017
 + Created a collection/grouping model so user can associate multiple columns
 + Created a collection index/show page where user will be able to access 
   info about the multiple columns associated.
-+ Created a map view for collections only?
++ Created a map view for collections only
 + Added ajax capabilities to collections
 + Added map location center presets to collection and normal map view
 + Added legend to collection
@@ -36,6 +36,7 @@ stratMap v0.3 August 17, 2017
 + Added legend to Map View
 + Added some pan and zoom limitations to maps
 + Improved CSS (WIP)
+
 Patch TODO 
 + Consider rendering the collection columns with same scale?
 + Better media queries
@@ -62,14 +63,14 @@ stratMap v0.1 is live! August 2, 2017
 
 
 Implemented the "collection" feature.  Now it's possible to group a number of columns
-and view their collective info/visualizations in a separate page.  
+and view their collective info/visualizations on a separate page.  
 
 Added many other 'small' features that should improve user experience such as
 legend in map view, index pagination, location based map centering etc...
 
 One of the most glaring issues that I overlooked was how the site was displayed
 on smaller/bigger screens.  I've made some modifications which should make the
-site useable in those kind of devices.  I do need to take some time to create
+site 'prettier' in those kind of devices.  I do need to take some time to create
 proper media queries, and I'll probably keep working on them before moving on
 to implementing other 'big' features (fossils?).
 
@@ -110,21 +111,21 @@ There are a few features that I plan to work on in the near future.  That is,
 after I give my code a once over and plan/think things out some more.
 
 
-~~ The first one will be AJAX forms implemented in a column's details
+~~The first one will be AJAX forms implemented in a column's details
 page.  It just seems like a logical UX improvement for at least editing
 a column's details.  This phase will include whatever other UX style and features
 I can think of (y-axis starting point, feet to M conversion?...) and 
-addressing the formation representation issue mentioned above. ~~
+addressing the formation representation issue mentioned above.~~
 
 
 Later on I want to add a way to represent fossils/other features 
 in the column.  Perhaps on a separate/third column, or maybe as a toggle "overlay".
 
 
-~~ Grouping, or a sort of tagging and a view where users can see a composite view
+~~Grouping, or a sort of tagging and a view where users can see a composite view
 of various related columns is another feature that I really want to implement.  
 Unlike map view, this "Group View" will hopefully be more detailed and will not
-be limited to just 4 or 5 columns in succession. ~~
+be limited to just 4 or 5 columns in succession.~~
 
 
 Finally, I want to experiment with adding overlays such as geologic map overlays 
