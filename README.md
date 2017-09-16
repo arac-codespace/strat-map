@@ -1,4 +1,4 @@
-<img src=https://imgur.com/PLHc4NL>
+<img src=https://imgur.com/YjP4jA9>
 
 Video overview: https://www.youtube.com/watch?v=d8-UVMCnNUg
 
