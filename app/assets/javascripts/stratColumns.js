@@ -26,7 +26,10 @@ $(document).on('turbolinks:load', function () {
     {
       height = 2000 + data.length*100;
     }
-    //500
+    
+    // Scaling down columns from original dimensions...
+    width*=0.8;
+    height*=0.8;
 
     // x-axis scale!
     var x = d3.scaleBand();
@@ -49,9 +52,8 @@ $(document).on('turbolinks:load', function () {
     // width + margin.left + margin.right which in the current settings
     // will compute to 600px.  This is also the dimensions the x-scale
     // is based on.
-    var stratChart = d3.select('.stratChart').attr('width', width + margin.left + margin.right + 300);
-    // Sets the height for the svg/chart container.
-    stratChart.attr('height', height + margin.top + margin.bottom);
+    var stratChart = d3.select('.stratChart').attr('width', width + margin.left + margin.right + 300).attr('height', height + margin.top + margin.bottom).append('g').attr('class','columnContainer');
+
     // For use inside the function.  This allows for the sum of successive thickness.
     var sumPrevThickness = 0;
     // Just sums the thickness of all the datasets in the JSON.
@@ -158,7 +160,7 @@ $(document).on('turbolinks:load', function () {
 
     // UNCONFORMITY COLOR
     // CREATE unconformityPatterns container for dynamic pattern creation
-    d3.select('body').append('svg').attr('class', 'unconformityPatterns').attr('width', 0).attr('height', 0).attr('display', 'absolute').append('defs');
+    d3.select('.stratChart').append('svg').attr('class', 'unconformityPatterns').attr('width', 0).attr('height', 0).attr('display', 'absolute').append('defs');
 
     // If user indicates an unconformity... 
     bar.append('rect').attr('class', 'unconformity-color').attr('fill', function (d, i) {
@@ -278,9 +280,9 @@ $(document).on('turbolinks:load', function () {
 
 
     // x3-axis line and ticks
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
+    var xAxis_1 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
     // x2-axis line and ticks
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text').style('font', '12px Tahoma');
+    var xAxis_2 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text').style('font', '12px Tahoma');
 
     // y-axis line and ticks
     if (data[0].strat_column.depth == false)
@@ -292,7 +294,7 @@ $(document).on('turbolinks:load', function () {
       yAxisText = "DEPTH (m)";
     }
 
-    d3.select('.stratChart').append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
+    var yAxis = stratChart.append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
       return "-" + height*0.15;
     }).attr('dy', '0.71em').text(yAxisText).style('font', '12px Tahoma');
 
@@ -342,12 +344,30 @@ $(document).on('turbolinks:load', function () {
     var filteredData =  ageFilteredData.concat(lithologyFilteredData);
     filteredData = filteredData.concat(unconformityFilteredData);
 
-    var legendContainer = d3.select('.stratChart').append('g').attr('class','legendContainer');
+    var legendContainer = d3.select(".stratChart").append('g').attr('class','legendContainer');
     
     condensedLegend(legendContainer, filteredData, ageFilteredData, width, lithologyFilteredData);    
 
-    return $('svg').not('#logo-svg').appendTo('.stratChart');
+
+  // var svgChildren = d3.selectAll('.stratChart');
+   
+  // stratChart.append('g').attr('class','columnContainer');
+    // stratChart.call(d3.zoom().on("zoom", function () {
+    //     d3.select(".stratChart > g").attr("transform", d3.event.transform);
+    // }))
+    // .append("g");
+
+
+
+
+
+
+
+
+    // return $('svg').not('#logo-svg').appendTo('.stratChart');
   } // drawFunction end
+  
+  zoomColumn();
 
   var url_id = $('.general-info').data('stratid');
   var data_url = url_id + '/data.json';

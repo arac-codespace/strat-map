@@ -38,11 +38,11 @@
   background-color: white;
   display: none; // value when hidden
   border-right: 5px solid var(--navBlack);
-  max-width: 250px;
+  max-width: 225px;
   // Note that this is the fix for the FF window width issue
   // FF seems to be unable to grow flex children so I needed to
   // put width explicitly.
-  width: 250px;
+  width: 225px;
 }
 
 .chart-header-group {

@@ -13,13 +13,16 @@ $(document).on('turbolinks:load', function () {
     var url_id = $('.general-info').data('collectionid');
     var data_url = url_id + '/collections.json';
     
+    initMapCollection(data_url);
+    
     $.getJSON(data_url).done(function(data) {
       for (var i = 0; i < data.length; i++) {
         columnUrlParser(data[i]);
       }
     });    
     // Initialize map
-    initMapCollection(data_url);
+  
+    zoomColumn();
   
   
 }); // ready end
@@ -53,8 +56,14 @@ function initMapCollection(data_url) {
     styles: googleStyleList()
   }); 
   
+  // These functions are meant to occur after the map loads
   google.maps.event.addListener(map, 'idle', function() {
     fadingIn();
+    
+    // Prevents scrolling out of bounds
+    google.maps.event.addListener(map, 'center_changed', function() {
+      checkBounds(map);
+    });    
   });    
   
   // Limit the zoom level
@@ -124,10 +133,6 @@ function initMapCollection(data_url) {
       }
     }
   });    
-
-  google.maps.event.addListener(map, 'center_changed', function() {
-      checkBounds(map);
-  });
   
 } // iniMap end
 
@@ -201,7 +206,7 @@ function drawCollectionChart(data) {
   }
     
   // stratIdSelect is the id of the svg wherein the chart will be generated
-  condensedColumnGenerator(data, height, width, stratIdSelect, margin);
+  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin);
   
   // INCORPORATE LEGEND
   // Gets rid of duplicates by grouping... 

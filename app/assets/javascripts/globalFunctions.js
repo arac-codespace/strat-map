@@ -280,10 +280,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   
   var y = d3.scaleLinear().range(yRange);
     
-  var stratChart = d3.select(stratIdSelect).attr("width", '100%');
-
-  // Sets the height for the svg/chart container.
-  stratChart.attr('height', height + margin.top + margin.bottom);
+  var stratChart = d3.select(stratIdSelect).attr("width", '100%').attr('height', height + margin.top + margin.bottom).append('g').attr("class", "columnContainer");
 
   // For use inside the function.  This allows for the sum of successive thickness.
   var sumPrevThickness = 0;
@@ -520,10 +517,10 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   });
 
   // x3-axis geologic age line and ticks
-  d3.select(stratIdSelect).append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
+  stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
 
   // x2-axis lithology line and ticks
-  d3.select(stratIdSelect).append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text');
+  stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text');
 
   // y-axis line and ticks
   
@@ -536,7 +533,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
       yAxisText = "DEPTH (m)";
     }  
     
-  d3.select(stratIdSelect).append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(data.length*2)).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
+  stratChart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(data.length*2)).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
 
   // In maps.js, you must remove the previous tooltip to erase the
   // binded data and get the binded data when new windows are opened
@@ -599,4 +596,27 @@ if(newLat) {
     var newCenter= new google.maps.LatLng( newLat ,map.getCenter().lng() );
     map.setCenter(newCenter);
     }   
+}
+
+function zoomColumn(){
+  // Append zoom behaviour    
+  var zoomIn = d3.select('.columnZoomIn');
+  var zoomOut = d3.select('.columnZoomOut');
+  var scaleNum = 1
+  ;
+  zoomIn.on("click", function(){
+    if (scaleNum < 1)
+    {
+      scaleNum += 0.1;
+  	  d3.selectAll(".stratChart > g.columnContainer").style("transform", "scale(" + scaleNum + ")");
+    }
+  });
+  
+  zoomOut.on("click", function(){
+    if (scaleNum > 0.8)
+    {
+      scaleNum -= 0.1;
+  	  d3.selectAll(".stratChart > g.columnContainer").style("transform", "scale(" + scaleNum + ")");
+    }
+  });  
 }

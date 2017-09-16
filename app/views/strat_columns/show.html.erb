@@ -2,7 +2,7 @@
   
   <%= render "base_modal" %>
   
-  <div class= "left-column">
+  <div class= "left-column strat-left-column">
     <div class="left-column-title">
       <h3 class="title-show"><b>Stratigraphic Column Visualization</b></h3>
       
@@ -11,20 +11,29 @@
         Edit Full Column Details (HTML)
       <% end %>       
       
+      <div class="zoom-container">
+        <button class="btn btn-default btn-xs columnZoomIn" title="Zoom In">+</button>
+        <button class="btn btn-default btn-xs columnZoomOut" title="Zoom Out">-</button>
+      </div>
+      
     </div>
     
     <div class="d3js-container">
       
-      <% @textures_to_render.uniq.each do |i| %>
-        <%= render i %>
-      <% end %>        
         
-      <svg class='stratChart'></svg>
+      <svg class='stratChart'>
+        <g class='svgTexturesContainer'>
+          <% @textures_to_render.uniq.each do |i| %>
+            <%= render i %>
+          <% end %>
+        </g>
+      </svg>
+      
     </div>
     
   </div>
   
-  <div class="right-column">
+  <div class="right-column strat-right-column">
     <div class="general-info-wrapper">
       <div class="column-header">
         <h3><b>Stratigraphic Column General Information</b></h3>

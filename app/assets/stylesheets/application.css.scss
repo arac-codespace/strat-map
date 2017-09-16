@@ -31,17 +31,19 @@
 
 // GENERAL
 html, body {
-  height: 100%;
+  // html height screws up the all map view...
+  // height: 100%;
   margin: 0 !important;
   padding: 0 !important;
 }
 
 body {
   background-color: var(--siteBGBlue);
+  height: 100%;
 }
 
 .full-site-container {
-  max-width: 3840px;
+  max-width: 2560px;
   margin: auto;
   height: 100%;
   width: 100%;

@@ -241,39 +241,36 @@ ul.dropdown-menu {
     margin: auto;
   }
   .flex-container {
-    margin: 60px;
+    max-width: 2560px;
+    justify-content: center;
   }
   .left-column {
-    margin: 10px 30px 10px 10px;
-    flex: 1.5;
+    flex-grow: 2;
   }
   .right-column {
-    flex-basis: 10%;
-    margin: 10px 10px 10px 30px;
+    flex-grow: 1;
+  }
+  
+  // Strat Column
+  div.strat-left-column {
+    max-width: 35%;
+  }
+  
+  div.strat-right-column {
+    max-width: 25%;
   }
   // Collection
   div.left-column-collection {
+    max-width: 50%;
     height: 450px *1.2;
   }
   
   div.right-column-collection {
+    max-width: 25%;
     height: 450px *1.2;
   }  
   
   #collection_map {
     min-height: 445px;
   }  
-  
 }
-
-// @media (max-width: 1024px) {
-//   .flex-container {
-//     flex-flow: column nowrap;
-//   }
-//   body {
-//     max-width: 100%;
-//   }
-//   .stratChart {
-//     overflow: scroll;
-//   }
-// }

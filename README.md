@@ -35,6 +35,9 @@ stratMap v0.3 August 17, 2017
 + Added pagination to indexes
 + Added legend to Map View
 + Added some pan and zoom limitations to maps
++ Organized the svg columns for better structure
++ Added zoom buttons to collections and single column show page
++ Scaled down columns size
 + Improved CSS (WIP)
 
 Patch TODO 

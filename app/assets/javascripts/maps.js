@@ -74,6 +74,11 @@ function initMap() {
   
   google.maps.event.addListener(map, 'idle', function() {
     fadingIn();
+    
+    // Prevents scrolling out of bounds
+    google.maps.event.addListener(map, 'center_changed', function() {
+      checkBounds(map);
+    });     
   });
   
   var input = document.getElementById('pac-input');
@@ -218,7 +223,7 @@ function drawMapColumn(data) {
   var stratIdSelect = "#" + stratId;
 
   d3.select(divId).append("svg").attr("class", "stratChart").attr("id", stratId);
-
+  
   var thickness_h = d3.sum(data, function (d) {
     return parseFloat(d.thickness);
   });
@@ -233,7 +238,8 @@ function drawMapColumn(data) {
     height = 1500 + data.length*100;
   }
   // stratIdSelect is the id of the svg wherein the chart will be generated
-  condensedColumnGenerator(data, height, width, stratIdSelect, margin);
+  // The multiplication is just scaling things down for Map View.
+  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin);
   
   // INCORPORATE LEGEND
   // Gets rid of duplicates by grouping... 
