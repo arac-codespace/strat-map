@@ -25,7 +25,7 @@ the column in SVG format and edit it using a SVG editor
 # Changelog
 
 stratMap v0.3.1 TBD
-+ Changed from using cloud-based IDE to local environment
++ Changed from using a cloud-based IDE to a local environment
 + Changed development DB from SQlite to PG 
 + Reinstalled bcrypt gem to fix compatibiliy issues with Windows OS
 
