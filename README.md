@@ -24,6 +24,12 @@ the column in SVG format and edit it using a SVG editor
 
 # Changelog
 
+stratMap v0.3.1 TBD
++ Changed from using cloud-based IDE to local environment
++ Changed development DB from SQlite to PG 
++ Reinstalled bcrypt gem to fix compatibiliy issues with Windows OS
+
+
 stratMap v0.3 August 17, 2017
 + Created a collection/grouping model so user can associate multiple columns
 + Created a collection index/show page where user will be able to access 
