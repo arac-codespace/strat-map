@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.2'
+# Use the PostgreSQL gem for Heroku production servers
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '3.4.0'
 # Use SCSS for stylesheets
@@ -24,8 +26,8 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  # Changed to use Postgres for development to avoid sqlite to pg errors
+  # gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
@@ -38,12 +40,12 @@ group :development do
   gem 'spring-watcher-listen', '2.0.0'
 end
 group :production do
-  # Use the PostgreSQL gem for Heroku production servers
-  gem 'pg', '0.18.4'
+  # # Use the PostgreSQL gem for Heroku production servers
+  # gem 'pg'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-ruby '2.3.4'
+ruby '2.3.3'
 
 # Use Twitter Bootstrap library for front-end UI and layout
 gem 'bootstrap-sass', '3.3.7'
@@ -65,3 +67,6 @@ gem 'acts_as_list'
 
 # will_paginate for pagination
 gem 'will_paginate', '>3.0'
+
+# windows directory monitor
+gem 'wdm', '>=0.1.0' if Gem.win_platform?
