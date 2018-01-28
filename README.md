@@ -1,3 +1,4 @@
+
 <img src=https://i.imgur.com/YjP4jA9.png>
 
 Video overview: https://www.youtube.com/watch?v=d8-UVMCnNUg
@@ -25,6 +26,11 @@ the column in SVG format and edit it using a SVG editor
 # Changelog
 
 stratMap v0.3.1 TBD
+
+ 
++ 1/27/2018 
+   Back from hiatus.
+   * Synchronized local environment with server
 + Changed from using a cloud-based IDE to a local environment
 + Changed development DB from SQlite to PG 
 + Reinstalled bcrypt gem to fix compatibiliy issues with Windows OS
