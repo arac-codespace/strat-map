@@ -254,7 +254,7 @@ function drawMapColumn(data) {
 
 
   var lithologyFilteredData = d3.nest().key(function (d) {
-    return d.lithology.name;
+    return d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name;
   }).key(function (d) {
     return d.lithology.url;
   }).entries(data);

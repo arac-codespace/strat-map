@@ -306,6 +306,8 @@ $(document).on('turbolinks:load', function () {
       if (d.description !== "")
       {
         var description = '</br><strong>Description: </strong>' + d.description;
+      } else {
+        description = "";
       }
       
       return tooltip.style('visibility', 'visible').html('<strong>Name: </strong>' + d.name + '</br><strong>Formation: </strong>' + d.formation + '</br><strong>Geologic Age: </strong>' + d.timescale.interval_name + '</br><strong>Upper Contact: </strong>' + d.contact.name + '</br><strong>Thickness (m): </strong>' + d.thickness + '</br><strong>Lithology Pattern: </strong>' + (d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name) + description);
@@ -330,7 +332,7 @@ $(document).on('turbolinks:load', function () {
 
 
     var lithologyFilteredData = d3.nest().key(function (d) {
-      return d.lithology.name;
+      return d.lithology.name3 !== "" ? d.lithology.name + ' / ' + d.lithology.name2 + ' / ' + d.lithology.name3 : d.lithology.name2 !== '' ? d.lithology.name + ' / ' + d.lithology.name2 : d.lithology.name;
     }).key(function (d) {
       return d.lithology.url;
     }).entries(data);
