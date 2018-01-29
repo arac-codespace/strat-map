@@ -128,21 +128,6 @@ function initMap() {
       oms.addMarker(addMarkerMapCustom(data[i]));
     }
   });
-
-  // Bind btns to markers...
-  $(".flex-container-map").hide();
-
-  $(".close-sidebar-btn").click(function () {
-    var closeData = $(this).attr("data-close");
-    var dataToClose = $(".flex-container-map").find("[data-toclose='" + closeData + "']");
-
-    dataToClose.hide();
-    dataToClose.removeAttr("id");
-    dataToClose.find(".modal-body >svg").remove();
-    dataToClose.find(".stratChart").remove();
-    dataToClose.find(".title").text("");
-  });
-  
   
   // WMS add map
   
@@ -173,6 +158,7 @@ function initMap() {
 // Restricts bound pan
 //https://stackoverflow.com/questions/23580831/how-to-block-google-maps-api-v3-panning-in-the-gray-zone-over-north-pole-or-unde
 
+// Note that place is a singular column's data!
 function addMarkerMapCustom(place) {
 
   var myLatLng = new google.maps.LatLng(place.lat, place.lng);
@@ -191,23 +177,58 @@ function addMarkerMapCustom(place) {
   marker.addListener('spider_click', function () {
     // Checks if any of the three side columns is occupied
     // Attachs the svg anchor to the unoccupied column
-    for (var i = 0; i < 8; i++) {
-      if ($(".flex-map-" + i).attr("id") == null && $(".flex-container-map").find(idSelect).length == 0) {
-        $(".flex-map-" + i).attr("id", idName);
-        $(".title-" + i).html("<a target='_blank' href= '/strat_columns/" +  place.id + "'>" + place.name + "</a>");
-        $(".flex-container-map").show();
-        $(".flex-map-" + i).show();
-        break;
-      }
-    }
 
-    var checkExist = $(idSelect).find("*");
-    // if the svg doesn't exist within the div with id idSelect...
-    if (!checkExist.hasClass("stratChart")) {
-      // drawMapColumn(place, idSelect)
+
+  var columnHtml =
+    `<div class="flex-child" id=${idName} data-toClose="close-${idName}">
+      <div class="chart-header-group text-center">
+        <h3 class="title title-${idName}"><a target="_blank" href= "/strat_columns/${place.id}">${place.name}</a></h3>
+        <span class="close-sidebar-btn" title="Close" data-close= "close-${idName}">
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </span>
+        
+        <span class="legend-btn" data-toggle="modal" data-target="#modalLegend_${idName}">
+          <span class="glyphicon glyphicon-list-alt column_legend_${idName}" title="Legend"></span>
+        </span>        
+        
+        <div class="modal fade modal-legend" id="modalLegend_${idName}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title legend-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div> `;
+
+
+    // If id doesn't exist, generate html and run drawMapColumn
+    if ($(idSelect).length == 0 && ($(".flex-child").length < 9)) {
+      $(".flex-container-map").append(columnHtml);
       var data_url = "strat_columns/" + place.id + "/data.json";
       d3.json(data_url, drawMapColumn);
     }
+
+    // Bind btns to markers...
+    // Btw, the reason this is here is bc the handler must run at least once after the column's
+    // html is generated.  Additionally, I bind the handler to the specific btn of the
+    // column to prevent applying the handler multiple times to the same close btn.
+
+
+    $(idSelect).find(".close-sidebar-btn").click(function () {
+      var closeData = $(this).attr("data-close");
+      var dataToClose = $(".flex-container-map").find("[data-toclose='" + closeData + "']");
+
+      dataToClose.remove();
+    });
+    
+      
+
   }); // listener end
   // This will return the marker which will feedit to OMS's addMarker function
   return marker;

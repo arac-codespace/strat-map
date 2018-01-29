@@ -20,12 +20,17 @@ Furthermore, thanks to svg-crowbar.js, the user will also be able to download
 the column in SVG format and edit it using a SVG editor
 (ie: Inkscape, Illustrator...).
 
+Contact: *alex.aguirre0026@gmail.com*
+
 
 # Changelog
 
 stratMap v0.3.1 WIP
++ More improvements to Map View.
+   * Columns are now generated through JS.  This fixes the unexpected 
+      behaviour of the columns when closing/opening multiple visualizations.
 + Improved Map View layout.
-   * A massive improvement if I do say so myself. It's no longer as... archaic.
+   * A massive improvement if I do say so myself.
    * Adjusted some padding/margins.
    * Created a script to add dummy data.  About time!
 + 1/27/2018 
@@ -53,10 +58,6 @@ stratMap v0.3 August 17, 2017
 + Scaled down columns size
 + Improved CSS (WIP)
 
-Patch TODO 
-+ Consider rendering the collection columns with same scale?
-+ Better media queries
-
 
 stratMap v0.2 August 17, 2017
 + Improved legend
@@ -75,20 +76,21 @@ stratMap v0.2 August 17, 2017
 stratMap v0.1 is live! August 2, 2017
 
 
-# Notes (v0.3)
 
+# Notes (v0.3 and 0.3.1)
+**About v0.3.1**
 
-Implemented the "collection" feature.  Now it's possible to group a number of columns
-and view their collective info/visualizations on a separate page.  
+Well, Hurricane Maria happened thus the hiatus.  If one good thing came out of the whole situation is that I had a lot of time to reconsider the interface of Map View.  A full screen map with absolute positioned columns may look fancy(?), but the whole thing was not exactly practical.  Ignoring practicality, even if I wanted to keep the old interface I would be forced to incorporate any new features while working around the idiosyncrasies of Google Maps' API.  Now I'm not exactly afraid of taking on the unknown, but I've noticed that the API is very finicky and it doesn't really like to have its place in the DOM tree messed around with.  So who knows what problems that would've brought.
 
-Added many other 'small' features that should improve user experience such as
-legend in map view, index pagination, location based map centering etc...
+Moreover, I want to add a way to filter data and therefore, I need a place to insert the tools necessary to do so.  The new interface provides more options on where to stash those tools.  It just makes better use of the available space overall.  
 
-One of the most glaring issues that I overlooked was how the site was displayed
-on smaller/bigger screens.  I've made some modifications which should make the
-site 'prettier' in those kind of devices.  I do need to take some time to create
-proper media queries, and I'll probably keep working on them before moving on
-to implementing other 'big' features (fossils?).
+---
+**About v0.3**
+Implemented the "collection" feature.  Now it's possible to group a number of columns and view their collective info/visualizations on a separate page.  
+
+Added many other 'small' features that should improve user experience such as legend in map view, index pagination, location based map centering etc...
+
+One of the most glaring issues that I overlooked was how the site was displayed on smaller/bigger screens.  I've made some modifications which should make the site 'prettier' in those kind of devices.  I do need to take some time to create proper media queries, and I'll probably keep working on them before moving on to implementing other 'big' features (fossils?).
 
 
 # Limitations (v0.3)
@@ -96,24 +98,18 @@ to implementing other 'big' features (fossils?).
 
 As with any program in their infancy, this web application has a number of 
 limitations that have yet to be addressed.  Some of these limitations are
-directly tied to the lack of user customization (layouts, colors, symbology, shapes)
-and others due to the absence of corresponding features (fossil representation, 
-parasequences...).  Some are major and some are minor.
+directly tied to the lack of user customization (layouts, colors, symbology, shapes) and others due to the absence of corresponding features (fossil representation, parasequences...).  Some are major and some are minor.
 
 
 One of - what I consider to be - major limitations of this application 
 is the inability to generate a "generalized" stratigraphic column".  
 This application is basically a fancy stack-bar graph, so by its nature 
 the application "assumes" that the user is providing it measurements 
-that run along a single point in space.  It doesn't concern itself with what features
-(facies, structures, dip angles, etc...) are next to it.  It's therefore not 
-possible to represent, for instance, a "rough" sketch of a formation's structure using 
-only a single column.  Or at least not without extensive modifications to the 
-bars and/or custom SVG patterns.
+that run along a single point in space.  It doesn't concern itself with what features (facies, structures, dip angles, etc...) are next to it.  It's therefore not 
+possible to represent, for instance, a "rough" sketch of a formation's structure using only a single column.  Or at least not without extensive modifications to the bars and/or custom SVG patterns.
 
 
-I believe Map View alleviates this limitation a little by 
-providing a sort of "composite view" of multiple columns.  With the v0.3 update, I
+I believe Map View alleviates this limitation a little by providing a sort of "composite view" of multiple columns.  With the v0.3 update, I
 also added collections which provides the user with more control over what 
 info to view in one page. These alternatives do, of course, require more data 
 points and therefore more work collecting information.  
@@ -133,14 +129,10 @@ After that, I plan to implement some form of basic statistics functions and
 some pretty graphs to go along with it.  I'm actually a bit excited about this
 part, since this will be the first time I will be doing some mathy code.
 
-And of course, there's the media queries issue which may turn out to be a pain
-because I didn't design the page taking smaller devices(Smartphones) or large 
-devices (4k) into consideration.  Turns out, I do care how the site looks on 
-different devices so we'll see how I go about this in the not so distant future.
-Not having access to bigger displays may prove to be an issue though, since I 
-won't be able to see how the site looks outside of Chrome's emulator.  I'm also
-using Flexbox to style the page, so who knows how the site will behave 
-in x device and y browser.
+Another thing I should be implementing soon is the option of rendering multiple columns using a single scale for Map View and Collections.  Currently, every column has their own scale which is fine when considering a single column.  However, the different scales can be misleading when trying to compare multiple columns side by side.
+
+Finally, I also plan to implement a way to search/filter/sort data in Map View.  This will perhaps be the most difficult part of the project, as I wish this function to be specific enough to serve as another powerful interpretative tool.  I should be fairly certain about the structure of my database before I even attempt doing this.  So this may be among the last features I add to the website. 
+
 
 # Credits / References
 
