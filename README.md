@@ -13,9 +13,7 @@ Mike Bostock's Data-Driven-Documents Javascript Library (D3.js).
 Thanks to Google Map's wonderful API, the user will also be able to see the 
 location of each of those columns on a map in the form of markers if proper 
 coordinates are provided when creating a column.  Clicking the markers will open 
-an info window with a simplified version of the stratigraphic column.  The user
-will be able to open up to four columns of their choosing side by side and 
-interact with them.
+an info window with a simplified version of the stratigraphic column.  
 
 
 Furthermore, thanks to svg-crowbar.js, the user will also be able to download 
@@ -25,7 +23,11 @@ the column in SVG format and edit it using a SVG editor
 
 # Changelog
 
-stratMap v0.3.1 TBD
+stratMap v0.3.1 WIP
++ Improved Map View layout.
+   * A massive improvement if I do say so myself. It's no longer as... archaic.
+   * Adjusted some padding/margins.
+   * Created a script to add dummy data.  About time!
 + 1/27/2018 
    Back from hiatus.
    * Synchronized local environment with server

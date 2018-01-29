@@ -559,7 +559,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
     
     return tooltip.style("top", (d3.event.pageY - 120) + "px").style("left", function(){
       // This section allows tooltip to not collide with right margin!
-      var collectionDivWidth = $(".collection-visualization-wrapper").css("width");
+      var collectionDivWidth = $(".tooltip-hover-aid").css("width");
       if (d3.event.pageX > parseInt(collectionDivWidth)/2)
       {
         return (d3.event.pageX - parseInt(tool_width) - 20) + "px";

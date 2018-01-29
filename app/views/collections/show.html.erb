@@ -1,7 +1,10 @@
 <input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">
-<% @textures_to_render.uniq.each do |i| %>
-  <%= render i %>
-<% end %>
+
+<div class="svg_render_container">
+  <% @textures_to_render.uniq.each do |i| %>
+    <%= render i %>
+  <% end %>
+</div>
 
 <%= render "base_modal" %>
 
@@ -58,7 +61,7 @@
 </div> <!--flex container-->
 
 <div class= "collection-visualization-full-wrapper">
-  <div class = "collection-visualization-wrapper">
+  <div class = "collection-visualization-wrapper tooltip-hover-aid">
     <div class= "visualization-header-wrapper">
       <h3 class="visualization-header"> <strong>Collection Visualization</strong></h3>
       

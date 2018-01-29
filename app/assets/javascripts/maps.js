@@ -191,7 +191,7 @@ function addMarkerMapCustom(place) {
   marker.addListener('spider_click', function () {
     // Checks if any of the three side columns is occupied
     // Attachs the svg anchor to the unoccupied column
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 8; i++) {
       if ($(".flex-map-" + i).attr("id") == null && $(".flex-container-map").find(idSelect).length == 0) {
         $(".flex-map-" + i).attr("id", idName);
         $(".title-" + i).html("<a target='_blank' href= '/strat_columns/" +  place.id + "'>" + place.name + "</a>");

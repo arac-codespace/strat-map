@@ -92,13 +92,13 @@ a.edit-full-column-btn {
 
 
 // INDEX CSS
-.index-container {
+/*.index-container {
   margin: 10px 20px;
 
-}
+}*/
 
 .info-container {
-  width: 60%;
+  width: 70%;
   margin: 10px auto;
 }
 
@@ -235,6 +235,8 @@ ul.dropdown-menu {
 .dropdownLabel {
   cursor: pointer;
 }
+
+/*Note!  Most monitors used are below 1920 width in resolution*/
 
 @media (min-width: 2560px) {
   .body {
