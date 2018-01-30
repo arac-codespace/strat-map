@@ -28,6 +28,9 @@ $(document).on('turbolinks:load', function () {
     $("button#hide-details").on("click", function() {
       $("div.right-column-collection").toggle();
       $("button#hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
+      // Fixes gray areas when resizing map div
+      google.maps.event.trigger(map, "resize");
+
     });
     
 
@@ -47,7 +50,7 @@ function initMapCollection(data_url) {
     minZoomLevel = 3;
   }  
   
-  var map = new google.maps.Map(document.getElementById('collection_map'), {
+    map = new google.maps.Map(document.getElementById('collection_map'), {
     center: new google.maps.LatLng(0,0),
     zoom: minZoomLevel,
     mapTypeControl: true,
