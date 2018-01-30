@@ -25,12 +25,11 @@ Contact: *alex.aguirre0026@gmail.com*
 
 # Changelog
 
-stratMap v0.3.1 WIP
+stratMap v0.3.1 1/30/2018
 + More improvements to Map View.
    * Columns are now generated through JS.  This fixes the unexpected 
       behaviour of the columns when closing/opening multiple visualizations.
 + Improved Map View layout.
-   * A massive improvement if I do say so myself.
    * Adjusted some padding/margins.
    * Created a script to add dummy data.  About time!
 + 1/27/2018 
