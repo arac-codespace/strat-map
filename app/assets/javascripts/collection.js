@@ -23,7 +23,14 @@ $(document).on('turbolinks:load', function () {
     // Initialize map
   
     zoomColumn();
-  
+
+    // Hides Collection details and toggles glyphicon class
+    $("button#hide-details").on("click", function() {
+      $("div.right-column-collection").toggle();
+      $("button#hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
+    });
+    
+
   
 }); // ready end
 
@@ -133,7 +140,27 @@ function initMapCollection(data_url) {
       }
     }
   });    
+
+  // WMS add map
   
+  // https://github.com/beaugrantham/wmsmaptype
+  var geoMapPR = new WmsMapType(
+    "PuertoRico_Geology",
+    "https://mrdata.usgs.gov/services/pr?",
+    {layers: "geol,fault,faultn"},
+    // {layers: "PuertoRico_Geology"},
+    {opacity: 0.8});
+  
+  // Create the DIV to hold the control and call the CenterControl()
+  // constructor passing in this DIV, the google map object and the WMS
+  // object.
+  
+  var centerControlDiv = document.createElement('div');
+  var centerControl = new addGeoMap(centerControlDiv, map, geoMapPR);  
+
+  centerControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
+
 } // iniMap end
 
 function addMarkerCustom(column, map) {

@@ -182,7 +182,7 @@ function addMarkerMapCustom(place) {
   var columnHtml =
     `<div class="flex-child" id=${idName} data-toClose="close-${idName}">
       <div class="chart-header-group text-center">
-        <h3 class="title title-${idName}"><a target="_blank" href= "/strat_columns/${place.id}">${place.name}</a></h3>
+        <h4 class="title title-${idName}"><a target="_blank" href= "/strat_columns/${place.id}">${place.name}</a></h4>
         <span class="close-sidebar-btn" title="Close" data-close= "close-${idName}">
           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
         </span>

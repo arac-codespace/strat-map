@@ -12,12 +12,14 @@
 .column-preview {
   background-color: var(--navBlack);
   position: relative;
-  padding: 10px;
+  padding: 5px;
   > p {
     color: white;
     margin: 0;
     font-size: large; 
     font-weight: bold;
+    display: inline-block;
+    padding: 0 5px;
   }
 }
 .flex-container-map {
@@ -46,7 +48,7 @@
   background-color: white;
   /*display: none; // value when hidden*/
   /*border-right: 5px solid var(--navBlack);*/
-  max-width: 350px;
+  max-width: 300px;
   // Note that this is the fix for the FF window width issue
   // FF seems to be unable to grow flex children so I needed to
   // put width explicitly.
@@ -54,10 +56,11 @@
 }
 
 .chart-header-group {
-  padding: 10px 20px;
+  padding: 5px 5px;
   background-color: #4aaecc;
   color: white;
-  height: 115px;
+  height: 12%;
+  min-height: 70px;
   overflow: auto;  
   > .title {
     font-weight: bold;

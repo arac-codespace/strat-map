@@ -104,7 +104,7 @@ a.edit-full-column-btn {
 
 .index-title {
   background-color: var(--headBlue);
-  padding: 10px 20px;  
+  padding: 5px 20px;  
   color: white;
   > a {
     color: white;
@@ -126,7 +126,7 @@ a.edit-full-column-btn {
 .index-header {
   background-color: var(--navBlack);
   color: white;
-  padding: 10px 20px;  
+  padding: 5px 20px;  
   >h3 {
     font-weight: bold;
   }
@@ -255,7 +255,7 @@ ul.dropdown-menu {
   
   // Strat Column
   div.strat-left-column {
-    max-width: 35%;
+    /*max-width: 35%;*/
   }
   
   div.strat-right-column {
@@ -263,7 +263,7 @@ ul.dropdown-menu {
   }
   // Collection
   div.left-column-collection {
-    max-width: 50%;
+    /*max-width: 50%;*/
     height: 450px *1.2;
   }
   

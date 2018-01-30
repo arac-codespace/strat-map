@@ -17,7 +17,13 @@
       <%= link_to edit_collection_path(id: @collection.id), class: "btn btn-default btn-xs edit-full-column-btn" do %>
         <i class='glyphicon glyphicon-pencil'></i>
         Edit Collection Details (HTML)
-      <% end %>       
+      <% end %>    
+
+      <button type="button" class="btn btn-default btn-xs" id="hide-details" title="Toggle Details">
+        
+        <i class="glyphicon glyphicon-menu-right"></i>
+
+      </button>
       
     </div>
     <div id="collection_map"></div>        
@@ -81,7 +87,7 @@
         <div class="collections-flex-child column_<%=x.strat_column.id%>" id="column_collection_<%=x.id%>">
           <div class="chart-header-group text-center collection-header">
             <%= link_to strat_column_path(id: x.strat_column.id), target: :_blank do %>
-              <h3 class="title"><strong> <%= x.strat_column.name %></strong></h3>
+              <h4 class="title"><strong> <%= x.strat_column.name %></strong></h4>
             <% end %>
             <span class="handle" title="Drag and drop!"> <span class="glyphicon glyphicon-move"></span></span>
             
