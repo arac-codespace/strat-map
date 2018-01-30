@@ -3,6 +3,8 @@ class Layer < ApplicationRecord
   belongs_to :lithology
   belongs_to :timescale
   belongs_to :contact
+
+  has_many :fossils, dependent: :destroy
   
   validates :name, presence: true
   validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern'

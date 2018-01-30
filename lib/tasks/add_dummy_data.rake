@@ -7,7 +7,7 @@ namespace :add_dummy_data do
 
   	if Rails.env.development?
 
-	  	(1..2).each do |x|
+	  	(1..10).each do |x|
 		  	column = StratColumn.new
 		  	column.user_id = 1
 		  	column.name = "Paginate dummy data number " + x.to_s
@@ -18,7 +18,7 @@ namespace :add_dummy_data do
 		  	column.depth = false
 		  	column.save
 
-		  	(1..4).each do |x|
+		  	(1..8).each do |x|
 		  		last_column = StratColumn.last
 		  		layer = Layer.new
 
@@ -26,7 +26,7 @@ namespace :add_dummy_data do
 		  		layer.strat_column_id = last_column.id
 		  		layer.name = "Dummy layer number " + x.to_s
 		  		layer.formation = "Dummy layer formation"
-		  		layer.thickness = rand(25)
+		  		layer.thickness = rand(100)
 		  		layer.description = "Dummy layer description"
 		  		layer.timescale_id = rand(168)
 		  		layer.contact_id = rand(10)
