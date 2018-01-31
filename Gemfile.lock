@@ -49,6 +49,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.3)
+    cocoon (1.2.11)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -144,6 +145,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    simple_form (3.5.0)
+      actionpack (> 4, < 5.2)
+      activemodel (> 4, < 5.2)
     spring (1.7.2)
     spring-watcher-listen (2.0.0)
       listen (>= 2.7, < 4.0)
@@ -187,6 +191,7 @@ DEPENDENCIES
   acts_as_list
   bootstrap-sass (= 3.3.7)
   byebug
+  cocoon
   coffee-rails (= 4.2.1)
   devise
   hirb
@@ -198,6 +203,7 @@ DEPENDENCIES
   puma (= 3.4.0)
   rails (= 5.1.2)
   sass-rails (= 5.0.6)
+  simple_form
   spring
   spring-watcher-listen (= 2.0.0)
   turbolinks (= 5.0.0)

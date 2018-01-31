@@ -17,6 +17,7 @@
 //= require_tree .
 //= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/widgets/sortable
+//= require cocoon
 
 
 /* global $*/

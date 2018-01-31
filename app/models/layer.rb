@@ -5,6 +5,8 @@ class Layer < ApplicationRecord
   belongs_to :contact
 
   has_many :fossils, dependent: :destroy
+  accepts_nested_attributes_for :fossils, allow_destroy: true
+
   
   validates :name, presence: true
   validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern'

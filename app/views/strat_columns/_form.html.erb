@@ -1,114 +1,40 @@
 <div class= "formContainer">
-  <%= form_for @strat_column do |f| %>
+  <%= simple_form_for @strat_column do |f| %>
     <div class="generalInfoForm">
       <h3>Stratigraphic Column Information</h3>
       <div class="infoFormFields">
         <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
       
-        <div class = "form-group">
-          <%= f.label :name %>
-          <%= f.text_field :name, required: :true, class: "form-control" %>
-        </div>
+          <%= f.input :name, error: 'Column name is required' %>
         
-        <div class = "form-group">
-          <%= f.label :location %>
-          <%= f.text_field :location, class: "form-control" %>
-        </div>
+          <%= f.input :location %>
         
-        <div class = "form-group">
-          <%= f.label :lat, "Latitude" %>
-          <%= f.text_field :lat, class: "form-control" %>
-        </div>
+          <%= f.input :lat, as: :string %>
         
-        <div class = "form-group">
-          <%= f.label :lng, "Longitude" %>
-          <%= f.text_field :lng, class: "form-control" %>
-        </div>
+          <%= f.input :lng, as: :string %>
         
-        <div class = "form-group">
-          <%= f.label :description %>
-          <%= f.text_area :description, class: "form-control textarea_options" %>
-        </div>
-        
-        <div class = "form-group">
-          <%= f.label :depth, "Height vs Depth" %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
-          </br>
-          <%= f.label :depth, "Height", :value => "false" %>
-          <%= f.radio_button :depth, false, :checked => true %>
-          <%= f.label :depth, "Depth", :value => "true"  %>
-          <%= f.radio_button :depth, true %>
-        </div>
-        
+          <%= f.input :description %>
+          
+          <%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
+          <%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
+
       </div>  
     </div>
+    
     <!--Nested attributes-->
     <div id="layer-container" class="panel-group">
-      <%= f.fields_for :layers do |layer| %>
-        <div class="panel panel-default layer layer-fields_<%= layer.options[:child_index] %>" data-index="<%= layer.options[:child_index] %>">
+      <%= f.simple_fields_for :layers do |layer| %>
           
-          <div class= "header panel-heading">
-            <h3 class="section-label section-label_<%= layer.options[:child_index] %>"> 
-               <% if @strat_column.new_record? %>
-                <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>New Stratum </b></a> 
-              <% else %>
-                <a data-toggle="collapse" href="#form-collapse<%=layer.options[:child_index]%>"> <b>Stratum #<%= layer.options[:child_index]+1 %></b></a> 
-              <% end %>
-            </h3> 
-            <% if layer.options[:child_index] == 0 %>
-              <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
-            <% end %>
-          </div>
+        <%= render 'layer_fields', f: layer %>
           
-          <div id="form-collapse<%=layer.options[:child_index]%>" class="infoFormFields panel-collapse collapse in">
-            <% if !@strat_column.new_record? && layer.options[:child_index] != 0%>
-              <div class="checkbox">
-                <%= layer.hidden_field :_destroy, class: 'delete_member', :id => layer %>   
-              </div>
-            <% end %>
-            
-            <div class = "form-group" data-fieldname="name">
-              <%= layer.label :name %>
-              <%= layer.text_field :name, required: :true, class: "form-control" %>
-            </div>
-            
-            <div class = "form-group" data-fieldname="lithology_name">
-              <%= layer.label :lithology_name, "Select Lithology Pattern" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-              <%= layer.text_field :lithology_name, required: :true, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
-            </div> 
-            
-            <div class = "form-group" data-fieldname="formation">
-            <%= layer.label :formation %>
-              <%= layer.text_field :formation, class: "form-control" %>
-            </div>
-            
-            <div class = "form-group" data-fieldname="timescale_name">
-              <%= layer.label :timescale_name,"Select Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
-              <%= layer.text_field :timescale_name, required: :true, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
-            </div>
-            
-            <div class = "form-group" data-fieldname="contact_id">
-              <%= layer.label :contact_id,"Select Contact Type (Upper Boundary)" %>
-              <%= layer.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Select Contact Type"}, {required: true, class: "form-control"})%>    
-            </div>      
-            
-            <div class = "form-group" data-fieldname="thickness">
-            <%= layer.label :thickness %>
-              <%= layer.text_field :thickness, required: :true, placeholder: "Must be in meters", class: "form-control" %>
-            </div>
-            
-            <div class = "form-group" data-fieldname="description">
-              <%= layer.label :description %>
-              <%= layer.text_area :description, class: "form-control textarea_options" %>
-            </div>
-          </div> <!--infoFormFields-->
-          
-        </div>
       <% end %> 
     </div> <!-- layer_section div end -->
-    
+
+
     <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-primary" %>
-      <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span>
+      <%= link_to_add_association 'Add Layer', f, :layers, data: {association_insertion_node: '#layer-container', association_insertion_method: :append} %>
+      <!-- <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span> -->
     </div>
     
   <% end %>

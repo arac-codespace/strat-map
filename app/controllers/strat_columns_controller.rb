@@ -29,7 +29,9 @@ class StratColumnsController < ApplicationController
   
   def new
     @strat_column = StratColumn.new
-    @strat_column.layers.build
+    @strat_column.layers.build.fossils.build
+    # @strat_column.fossils.build
+
     @current_user = current_user
     # Just a whim.
     @id = @current_user.id
@@ -86,7 +88,7 @@ class StratColumnsController < ApplicationController
   # create new entries for update instead of actually updating the entries!
   # Also, must allow_destroy in model and allow :_destroy param here to actually enable the function.
   # in main model and nested attributes alike.
-    params.require(:strat_column).permit(:_destroy, :user_id, :name, :location, :lat, :lng, :description, :depth, layers_attributes: [:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description] )
+    params.require(:strat_column).permit(:_destroy, :user_id, :name, :location, :lat, :lng, :description, :depth, layers_attributes: [:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description, fossils_attributes: [:id, :name, :notes, :frequency, :layer_id, :_destroy]] )
   end    
   
   def require_permission
