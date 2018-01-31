@@ -9,6 +9,7 @@ class Layer < ApplicationRecord
 
   
   validates :name, presence: true
+  validates :timescale_name, presence: true
   validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern'
   validates_presence_of :timescale_id, message: '- Please select a valid geologic age'
   validates :contact_id, presence: true

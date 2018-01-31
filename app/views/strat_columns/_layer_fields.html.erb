@@ -8,6 +8,8 @@
         <a data-toggle="collapse" href="#<%= f.index %>"> <b>Edit Stratum</b></a> 
       <% end %>
     </h3> 
+    <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
+
   </div>
 
 
@@ -15,17 +17,21 @@
 
     <%= f.input :name, error: 'Layer name is required' %>
 
-    <%= f.input :lithology_name, label: 'Select Lithology Pattern', input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}} %>
+    <%= f.input :lithology_name, label: 'Select Lithology Pattern', input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>
 
     <%= f.input :formation %>
 
-    <%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}} %>
+    <%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}}, error: "Input a valid geologic age" %>
 
-    <%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Can't be blank" %>
+    <%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Select a type of contact" %>
 
-    <%= f.input :thickness, placeholder: 'Must be in meters', error: "Can't be blank"%>
+    <%= f.input :thickness, as: :string, placeholder: 'Must be in meters', error: "Can't be blank"%>
 
     <%= f.input :description %>
-    <%= link_to_remove_association('remove this', f, {wrapper_class: 'layer'})%>
+
+    <% if f.index != 0 %>
+      <%= link_to_remove_association('Remove', f, {wrapper_class: 'layer'})%>
+    <% end %>
+
   </div>
 </div>
