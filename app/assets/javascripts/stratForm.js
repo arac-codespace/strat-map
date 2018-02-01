@@ -9,22 +9,18 @@ $(document).on("turbolinks:load", function () {
   fireAutoComplete();
 
   // Attaches hrefs and ids for collapse functionality
-  $(".add_fields").on('click', function(){
+  $(".add-layer").on('click', function(){
 
-    var randomNum = getRandomInt(100, 9999);
+    var randomNum = getRandomInt(100, 99999);
     var latestSection = $(".section-label>a").last();
     var latestField = $(".layerFields").last();
 
     latestSection.attr("href", "#" + randomNum.toString());
     latestField.attr("id", randomNum.toString());
 
-  });
-
-  $(document).on('cocoon:after-insert', function(){
-
-      console.log("after insert...");
+    $(".formContainer").on('cocoon:after-insert', function(){
       fireAutoComplete();
-
+    })
   });
 
 
@@ -34,7 +30,6 @@ $(document).on("turbolinks:load", function () {
   }  
 
   function fireAutoComplete() {
-    console.log("AutoComplete function")
     // Initial binding of autocomplete...
     $('.timescale_name').autocomplete({
       // Note that in html, autocomplete_source is converted to autocomplete-source

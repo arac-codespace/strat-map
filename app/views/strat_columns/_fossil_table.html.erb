@@ -1,0 +1,22 @@
+<% layer.each do |x| %>
+  <div class = "table-container"> 
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Frequency</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% x.fossils.each do |y| %>
+          <tr>
+            <td><%= y.name%></td>
+            <td><%= y.frequency%></td>
+            <td><%= y.notes%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

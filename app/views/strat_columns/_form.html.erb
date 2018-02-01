@@ -22,18 +22,16 @@
     </div>
     
     <!--Nested attributes-->
-    <div id="layer-container" class="panel-group">
       <%= f.simple_fields_for :layers do |layer| %>
           
         <%= render 'layer_fields', f: layer %>
           
       <% end %> 
-    </div> <!-- layer_section div end -->
 
 
     <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-primary" %>
-      <%= link_to_add_association 'Add Layer', f, :layers, data: {association_insertion_node: '#layer-container', association_insertion_method: :append} %>
+      <%= link_to_add_association 'Add Layer', f, :layers, class: "add-layer" %>
       <!-- <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span> -->
     </div>
     

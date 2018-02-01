@@ -1,37 +1,55 @@
-<div class="panel panel-default layer">
+<div class="layer-container" class="panel-group">
 
-  <div class= "header panel-heading">
-    <h3 class="section-label"> 
-       <% if @strat_column.new_record? %>
-        <a data-toggle="collapse" href="#<%=f.index %>"> <b>New Stratum </b></a> 
-      <% else %>
-        <a data-toggle="collapse" href="#<%= f.index %>"> <b>Edit Stratum</b></a> 
-      <% end %>
-    </h3> 
-    <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
+  <div class="panel panel-default layer">
 
-  </div>
+    <div class= "header panel-heading">
+      <h3 class="section-label"> 
+         <% if @strat_column.new_record? %>
+          <a data-toggle="collapse" href="#<%=f.index %>"> <b>New Stratum </b></a> 
+        <% else %>
+          <a data-toggle="collapse" href="#<%= f.index %>"> <b>Edit Stratum</b></a> 
+        <% end %>
+      </h3> 
+      <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
+      <% if f.index != 0 %>
+        <%= link_to_remove_association('', f, {wrapper_class: 'layer', class: 'remove-layer glyphicon glyphicon-remove btn btn-default btn-xs', title: "Remove"}) %>
+      <% end %>    
+
+    </div>
 
 
-  <div id="<%=f.index %>" class="infoFormFields layerFields panel-collapse collapse in">
+    <div id="<%=f.index %>" class="infoFormFields layerFields panel-collapse collapse in">
 
-    <%= f.input :name, error: 'Layer name is required' %>
+      <%= f.input :name, error: 'Layer name is required' %>
 
-    <%= f.input :lithology_name, label: 'Select Lithology Pattern', input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>
+      <%= f.input :lithology_name, label: "Select Lithology Pattern", placeholder: "Input name or FGDC Pattern Number",input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>
 
-    <%= f.input :formation %>
+      <%= f.input :formation %>
 
-    <%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}}, error: "Input a valid geologic age" %>
+      <%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}}, error: "Input a valid geologic age", placeholder: "Input name of Geologic Age" %>
 
-    <%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Select a type of contact" %>
+      <%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Select a type of contact" %>
 
-    <%= f.input :thickness, as: :string, placeholder: 'Must be in meters', error: "Can't be blank"%>
+      <%= f.input :thickness, as: :string, placeholder: 'Must be in meters', error: "Can't be blank"%>
 
-    <%= f.input :description %>
+      <%= f.input :description %>
 
-    <% if f.index != 0 %>
-      <%= link_to_remove_association('Remove', f, {wrapper_class: 'layer'})%>
-    <% end %>
+      <div class="fossil-label">
+        <h3 class="section-label"> <strong>Fossil Content</strong></h3> 
+        <!--_traversal chooses the closest node selection relative to the link -->
+      </div>
 
+      <div class="fossil-container">
+
+        <%= f.simple_fields_for :fossils do |fossil|%>
+          <%= render 'fossil_fields', f: fossil %>
+        <% end %>     
+      </div>
+
+      <div>
+        <%= link_to_add_association 'Add', f, :fossils, class: "add-fossil glyphicon glyphicon-plus btn btn-default btn-sm", title: 'Add fossil field' %> 
+      </div>
+
+    </div>
   </div>
 </div>

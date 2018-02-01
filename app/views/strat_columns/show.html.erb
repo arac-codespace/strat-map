@@ -97,10 +97,15 @@
             <%= render @layers %>
           </div>
         <% end %>        
-        
-      </div>
-      
+      </div> 
     </div>
     
   </div> <!--right-column end-->
+
 </div> <!--flex container-->
+
+<!-- <div class = "table-container"> -->
+  <%= render partial: 'fossil_table', locals: {layer: @layers}%>
+<!-- </div> -->
+
+</div>

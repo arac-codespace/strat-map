@@ -27,7 +27,7 @@
   }
 }
 
-#layer-container > div {
+.layer-container > div {
   
   background-color: white;
   margin: 10px auto;
@@ -50,11 +50,11 @@
   margin-left: 20px;
 }
 
-#layer-container > div.panel.panel-default> div.header.panel-heading > h3 > a {
+.layer-container > div.panel.panel-default> div.header.panel-heading > h3 > a {
   color: var(--navBlack);
 }
 
-#layer-container > div.panel.panel-default > div.header.panel-heading {
+.layer-container > div.panel.panel-default > div.header.panel-heading {
   border-bottom: 1px solid var(--navBlack);  
   > h3 {
     display: inline-block;
@@ -71,4 +71,20 @@
 .add_fields {
   margin-left: 20px;
   font-weight: bold;
+}
+
+.fossilFields {
+  background-color: #efefef;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.remove-layer {
+  float: right;
+}
+
+.fossil-label {
+  >h3 {
+    border-bottom: 1px solid black;
+  }
 }
