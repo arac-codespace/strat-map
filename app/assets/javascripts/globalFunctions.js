@@ -1,6 +1,16 @@
 /* global $*/
 /* global d3 */
 
+// Simple function definition to check url...
+function urlExists(url, callback) {
+  fetch(url)
+  .then(function(status) {
+    callback(status);
+  })
+}
+
+
+
 // Map search bar fade in
 function fadingIn() {
   $("#pac-input").fadeIn('fast');

@@ -8,9 +8,6 @@ $(document).on('turbolinks:load', function () {
   }
 
   function drawStratChart(data) {
-    var thickness_h = d3.sum(data, function (d) {
-      return parseFloat(d.thickness);
-    });
 
     var margin = {
       top: 50,
@@ -19,20 +16,33 @@ $(document).on('turbolinks:load', function () {
       left: 50
     };
     var width = 600 - margin.left - margin.right;
-    var height = 80 * Math.sqrt(thickness_h) + data.length*100 - margin.top - margin.bottom;
-    if (height < 300) {
-      height = 300 + data.length*100;
-    } else if (height > 2000)
-    {
-      height = 2000 + data.length*100;
-    }
-    
-    // Scaling down columns from original dimensions...
-    width*=0.8;
-    height*=0.8;
+    var height = 1000 - margin.top - margin.bottom;
 
-    // x-axis scale!
-    var x = d3.scaleBand();
+
+    // The following is to find the proportion between the smallest layer
+    // and the total thickness
+    var minThickness = d3.min(data, function(d) {
+      return parseFloat(d.thickness);
+    })
+
+    var totalThickness = d3.sum(data, function (d) {
+      return parseFloat(d.thickness);
+    });    
+
+    var minMaxProportionality = minThickness/totalThickness;
+
+    // Finds the pixel height of the minThickness layer.
+    var currentProportionality = minMaxProportionality*height;
+
+    // If the pixel height is less than C, calculate a new height
+    // that would result in the minThickness having a height of
+    // C
+    if (currentProportionality < 32) {
+      var dynHeight = 32/minMaxProportionality;
+
+      height = dynHeight;
+    }
+
 
     // y-axis scale!    
     if (data[0].strat_column.depth == false)
@@ -41,10 +51,26 @@ $(document).on('turbolinks:load', function () {
     }
     else
     {
-      yRange = [0, height];
+      yRange = [0, height+=64*data.length];
     }    
     
-    var y = d3.scaleLinear().range(yRange);
+    var y = d3.scalePow().exponent(1).range(yRange);
+
+
+    // var height = 80 * Math.sqrt(thickness_h) + data.length*100 - margin.top - margin.bottom;
+    // if (height < 300) {
+    //   height = 300 + data.length*100;
+    // } else if (height > 2000)
+    // {
+    //   height = 2000 + data.length*100;
+    // }
+    
+    // Scaling down columns from original dimensions...
+    // width*=0.8;
+    // height*=0.8;
+
+    // x-axis scale!
+    var x = d3.scaleBand();
 
     // Selects the svg container and sets width attribute.  
     // NOTE: I'm using 100% to allow the svg to occupy the container's
@@ -56,10 +82,7 @@ $(document).on('turbolinks:load', function () {
 
     // For use inside the function.  This allows for the sum of successive thickness.
     var sumPrevThickness = 0;
-    // Just sums the thickness of all the datasets in the JSON.
-    var totalThickness = d3.sum(data, function (d) {
-      return parseFloat(d.thickness);
-    });
+
     // Sets upper domain to the max thickness.
     y.domain([0, totalThickness]);
     // Defines the previous function to store previous thickness value up next
@@ -95,8 +118,10 @@ $(document).on('turbolinks:load', function () {
       return 'translate(0,' + transSum + ')';
     });
 
+    // debugger;
+
     var x2 = x.copy();
-    x2.rangeRound([0, width]).domain(['Lithology']).padding(0.5).align(0.25);
+    x2.rangeRound([0, width]).domain(['Lithology']).padding(0.5).align(.11);
 
     // LITHOLOGY Color!
     // Append bar for texture 
@@ -241,7 +266,7 @@ $(document).on('turbolinks:load', function () {
 
     // GEOLOGIC AGE
     var x3 = x.copy();
-    x3.rangeRound([0, width / 2]).domain(['Geologic Age']).padding(0.5).align(0);
+    x3.rangeRound([0, width / 2]).domain(['Geologic Age']).padding(0.75).align(0);
 
     // Append bar for age 
     bar.append('rect').attr('class', 'age').attr('fill', function (d) {
@@ -279,10 +304,47 @@ $(document).on('turbolinks:load', function () {
     });
 
 
+
+    // FOSSIL CONTENT
+    var x4 = x.copy();
+    x4.rangeRound([0, width]).domain(['Fossil Content']).padding(0.30).align(1.25);
+
+    // FOSSIL CONTENT IMG APPEND
+
+    bar.each(function(d,i){
+      d3.select(this).selectAll('image').data(d.fossils).enter().append('image').attr('class', function(d){
+        // This assigment will allow me to select image container and assign the proper href
+        return d.name.replace(/\s+/g, '') + ' ' + 'fossil-content';
+      })
+      .attr('width', '32').attr('height','32').attr('x',function(d,i){return x4('Fossil Content') + i*40 })
+      .each( function(d){
+
+        // All right! Here I use .each which allows me to call a function for each of the 
+        // d.fossils objects.
+
+        var fossilName = d.name.replace(/\s+/g, '');
+        var fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilName}`;
+
+        // Here I can access the parameters of the fetch response
+        // object.  Params include ok, status, redirected etc...
+        // urlExists is defined in globalFunctions btw...
+        urlExists(fossilHTTP, function(exists){
+          if (exists.ok) {
+            d3.select(`.${fossilName}`).attr("xlink:href", fossilHTTP);
+          } else {
+            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg");            
+          }
+        });
+      });
+    });
+    
+    
     // x3-axis line and ticks
     var xAxis_1 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
     // x2-axis line and ticks
     var xAxis_2 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text').style('font', '12px Tahoma');
+    // x4-axis line and ticks
+    var xAxis_3 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x4).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
 
     // y-axis line and ticks
     if (data[0].strat_column.depth == false)

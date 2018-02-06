@@ -20,7 +20,8 @@ Furthermore, thanks to svg-crowbar.js, the user will also be able to download
 the column in SVG format and edit it using a SVG editor
 (ie: Inkscape, Illustrator...).
 
-Contact: *alex.aguirre0026@gmail.com*
+Note: This website's still in active development.  If you have any issues or
+suggestions please contact me at: *alex.aguirre0026@gmail.com*
 
 
 # Changelog
@@ -85,6 +86,7 @@ Moreover, I want to add a way to filter data and therefore, I need a place to in
 
 ---
 **About v0.3**
+
 Implemented the "collection" feature.  Now it's possible to group a number of columns and view their collective info/visualizations on a separate page.  
 
 Added many other 'small' features that should improve user experience such as legend in map view, index pagination, location based map centering etc...

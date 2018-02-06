@@ -18,6 +18,11 @@
 
 .table-container {
 	background-color: white;
-	width: 75%;
-	margin: 0 auto 20px auto;
+	margin: 0 10px 20px 10px;
+}
+
+.table-header {
+	padding: 5px 20px;
+	color: white;
+	background-color: var(--navBlack);
 }
