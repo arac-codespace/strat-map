@@ -332,7 +332,7 @@ $(document).on('turbolinks:load', function () {
           if (exists.ok) {
             d3.select(`.${fossilName}`).attr("xlink:href", fossilHTTP);
           } else {
-            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg");            
+            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg").attr("y","3");            
           }
         });
       });
@@ -362,7 +362,8 @@ $(document).on('turbolinks:load', function () {
 
     // Tooltip D3 settings
     var tooltip = d3.select('html').append('div').attr('class', 'tool').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
-    // Tooltip action
+    
+    // Tooltip action for lithology
     d3.selectAll('.hoverBar').on('mouseover', function (d) {
       
       if (d.description !== "")
@@ -379,6 +380,113 @@ $(document).on('turbolinks:load', function () {
     }).on('mouseout', function () {
       return tooltip.style('visibility', 'hidden');
     });
+
+    
+    // Tooltip action for fossils
+    d3.selectAll('.fossil-content').on('mouseover', function (d){
+
+      var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Frequency: </strong>' + d.frequency + '</br><strong>Notes: </strong>' + d.notes + '</br>';
+      var fossilName = d.name;
+      var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilName}&show=full`
+
+      var dict = {};
+      dict['header'] = `</br><strong>PBDB Additional Information</strong></br>`;
+
+      $.getJSON(fossilURL, function(data){
+        $.each(data.records[0], function(key, val){
+
+          switch(key){
+
+            case "jmo":
+              dict[key] = `${val}`;
+              break;
+            case "ext":
+              if (val) {
+                dict[key] = 'True';
+              } else {
+                dict[key] = 'False';
+              }
+              break;
+            case "tei":
+              dict[key]= `${val}`;
+              break;
+            case "tli":
+              dict[key]= `${val}`;
+              break;
+            case "phl":
+              dict[key]= `${val}`;
+              break;
+            case "cll":
+              dict[key]= `${val}`;
+              break;
+            case "odl":
+              dict[key]= `${val}`;
+              break;
+            case "fml":
+              dict[key]= `${val}`;
+              break;
+            case "gnl":
+              dict[key]= `${val}`;
+              break;
+            case "ttl":
+              dict[key]= `${val}`;
+              break;
+            case "jlh":
+              dict[key]= `${val}`;
+              break;
+            case "jvs":
+              dict[key]= `${val}`;
+              break;
+            case "jdt":
+              dict[key]= `${val}`;
+              break;
+            case "jco":
+              dict[key]= `${val}`;
+              break;
+            default:
+              ""
+          } // switch end
+        }) // .each end
+
+        // Create PBDB HTML to insert stuff
+        var pbdbHTML = 
+          ` </br>
+           <strong>PBDB Additional Information </strong> </br>
+           <strong>Phylum:</strong> ${dict["phl"]} </br>
+           <strong>Class:</strong> ${dict["cll"]} </br>
+           <strong>Order:</strong> ${dict["odl"]} </br>
+           <strong>Family:</strong> ${dict["fml"]} </br>
+           <strong>Genus:</strong> ${dict["gnl"]} </br>
+           <strong>Extant:</strong> ${dict["ext"]} </br>
+           <strong>Early Interval:</strong> ${dict["tei"]} </br>
+           <strong>Late Interval:</strong> ${dict["tli"]} </br> 
+           <strong>Type Taxon:</strong> ${dict["ttl"]} </br>
+           <strong>Taxon Environment:</strong> ${dict["jev"]} </br>
+           <strong>Motility:</strong> ${dict["jmo"]} </br>
+           <strong>Life Habit:</strong> ${dict["jlh"]} </br>
+           <strong>Vision:</strong> ${dict["jvs"]} </br>
+           <strong>Diet:</strong> ${dict["jdt"]} </br>          
+          `;
+
+
+
+        tooltip.html(localInfoHTML + pbdbHTML);
+      }).fail(function(){
+        tooltip.html(localInfoHTML);
+      }) 
+
+
+      return tooltip.style('visibility', 'visible');
+    }).on('mousemove', function() {
+      return tooltip.style('top', d3.event.pageY - 120 + 'px').style('left', d3.event.pageX + 15 + 'px');
+    }).on('mouseout', function() {
+      return tooltip.style('visibility', 'hidden');
+    });
+
+
+
+
+
 
     // INCORPORATE LEGEND
 
@@ -413,22 +521,6 @@ $(document).on('turbolinks:load', function () {
     condensedLegend(legendContainer, filteredData, ageFilteredData, width, lithologyFilteredData);    
 
 
-  // var svgChildren = d3.selectAll('.stratChart');
-   
-  // stratChart.append('g').attr('class','columnContainer');
-    // stratChart.call(d3.zoom().on("zoom", function () {
-    //     d3.select(".stratChart > g").attr("transform", d3.event.transform);
-    // }))
-    // .append("g");
-
-
-
-
-
-
-
-
-    // return $('svg').not('#logo-svg').appendTo('.stratChart');
   } // drawFunction end
   
   zoomColumn();
