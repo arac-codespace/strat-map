@@ -183,7 +183,7 @@ function condensedLegend(legendContainer, filteredData, ageFilteredData, width, 
     // Modifying bar position for the strat_column show column
     if ($('.strat_columns.show').length == 1)
     {
-      horz = width + 200;
+      horz = width + 125;
     }
 
     
@@ -269,7 +269,7 @@ function condensedLegend(legendContainer, filteredData, ageFilteredData, width, 
   // Modifying text position for the show legend...    
   if ($('.strat_columns.show').length == 1)
   {
-    d3.selectAll('.legendContainer').selectAll('text').attr('x','-20px');
+    d3.selectAll('.legendContainer').selectAll('text').attr('x','70px').style('text-anchor','start');
   }
 }
 
@@ -621,6 +621,10 @@ function zoomColumn(){
     {
       scaleNum += 0.1;
   	  d3.selectAll(".stratChart > g.columnContainer").style("transform", "scale(" + scaleNum + ")");
+      // Get height of columnContainer
+      var columnContainer = d3.select("g.columnContainer").node().getBoundingClientRect().height;
+      // Set stratChart Height to recalculated height...
+      d3.select(".stratChart").attr("height", columnContainer + 75);
     }
   });
   
@@ -629,6 +633,10 @@ function zoomColumn(){
     {
       scaleNum -= 0.1;
   	  d3.selectAll(".stratChart > g.columnContainer").style("transform", "scale(" + scaleNum + ")");
+      // Get height of columnContainer
+      var columnContainer = d3.select("g.columnContainer").node().getBoundingClientRect().height;
+      // Set stratChart Height to recalculated height...
+      d3.select(".stratChart").attr("height", columnContainer + 75);      
     }
   });  
 }

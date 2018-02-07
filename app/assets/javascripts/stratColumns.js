@@ -7,6 +7,13 @@ $(document).on('turbolinks:load', function () {
     return;
   }
 
+
+  // Hides Collection details and toggles glyphicon class
+  $("button#hide-details").on("click", function() {
+    $("div.right-column").toggle();
+    $("button#hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
+  });
+  
   function drawStratChart(data) {
 
     var margin = {
@@ -73,12 +80,9 @@ $(document).on('turbolinks:load', function () {
     var x = d3.scaleBand();
 
     // Selects the svg container and sets width attribute.  
-    // NOTE: I'm using 100% to allow the svg to occupy the container's
-    // full width.  For a more static approach you can use
-    // width + margin.left + margin.right which in the current settings
-    // will compute to 600px.  This is also the dimensions the x-scale
-    // is based on.
-    var stratChart = d3.select('.stratChart').attr('width', width + margin.left + margin.right + 300).attr('height', height + margin.top + margin.bottom).append('g').attr('class','columnContainer');
+    // NOTE: I'm using 1100 static to accommodate the legend to the right,
+    // and account for legend's variety of name width through overflow.
+    var stratChart = d3.select('.stratChart').attr('width', '1200').attr('height', height + margin.top + margin.bottom).append('g').attr('class','columnContainer');
 
     // For use inside the function.  This allows for the sum of successive thickness.
     var sumPrevThickness = 0;
@@ -316,8 +320,24 @@ $(document).on('turbolinks:load', function () {
         // This assigment will allow me to select image container and assign the proper href
         return d.name.replace(/\s+/g, '') + ' ' + 'fossil-content';
       })
-      .attr('width', '32').attr('height','32').attr('x',function(d,i){return x4('Fossil Content') + i*40 })
-      .each( function(d){
+      .attr('width', '32').attr('height','32').attr('x',function(d,i){
+
+        // Modulo basically allows only 7 images C wide to be side by side
+        return x4('Fossil Content') + i%7*40 
+
+      }).attr('y', function(d,i){
+
+        // Here we divide by the num of items we want by row
+        // and floor it to get the row num.
+        // Be aware that if you want to change items per
+        // row, you must change the 'x' attribute unless
+        // you want things to look funky.
+        var rowTracking = Math.floor(i/7);
+
+        return rowTracking*64;
+
+
+      }).each( function(d){
 
         // All right! Here I use .each which allows me to call a function for each of the 
         // d.fossils objects.
@@ -332,7 +352,7 @@ $(document).on('turbolinks:load', function () {
           if (exists.ok) {
             d3.select(`.${fossilName}`).attr("xlink:href", fossilHTTP);
           } else {
-            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg").attr("y","3");            
+            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg");            
           }
         });
       });
@@ -382,6 +402,10 @@ $(document).on('turbolinks:load', function () {
     });
 
     
+
+    // FossilTooltip
+    var fossilTooltip = d3.select('html').append('div').attr('class', 'tool fossil-tooltip').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
+
     // Tooltip action for fossils
     d3.selectAll('.fossil-content').on('mouseover', function (d){
 
@@ -470,22 +494,18 @@ $(document).on('turbolinks:load', function () {
 
 
 
-        tooltip.html(localInfoHTML + pbdbHTML);
+        fossilTooltip.html(localInfoHTML + pbdbHTML);
       }).fail(function(){
-        tooltip.html(localInfoHTML);
+        fossilTooltip.html(localInfoHTML);
       }) 
 
 
-      return tooltip.style('visibility', 'visible');
+      return fossilTooltip.style('visibility', 'visible');
     }).on('mousemove', function() {
-      return tooltip.style('top', d3.event.pageY - 120 + 'px').style('left', d3.event.pageX + 15 + 'px');
+      return fossilTooltip.style('top', d3.event.pageY - 60 + 'px').style('left', d3.event.pageX + 15 + 'px');
     }).on('mouseout', function() {
-      return tooltip.style('visibility', 'hidden');
+      return fossilTooltip.style('visibility', 'hidden');
     });
-
-
-
-
 
 
     // INCORPORATE LEGEND

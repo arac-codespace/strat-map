@@ -10,10 +10,10 @@ class Layer < ApplicationRecord
   
   validates :name, presence: true
   validates :timescale_name, presence: true
-  validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern'
-  validates_presence_of :timescale_id, message: '- Please select a valid geologic age'
+  validates_presence_of :lithology_id, message: '- Please select a valid lithology pattern.'
+  validates_presence_of :timescale_id, message: '- Please select a valid geologic age.'
   validates :contact_id, presence: true
-  validates :thickness, presence: true, numericality: { only_integer: false }
+  validates :thickness, presence: true, numericality: { only_integer: false, greater_than_or_equal_to: 0.1 }
   
   def timescale_name
     timescale.try(:interval_name)

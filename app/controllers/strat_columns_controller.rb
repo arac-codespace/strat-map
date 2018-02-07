@@ -14,7 +14,7 @@ class StratColumnsController < ApplicationController
     @strat_column = StratColumn.find(@id)
     
     # find layers of the strat table with id params
-    @layers = Layer.where(strat_column_id: @id).includes(:fossils)
+    @layers = Layer.where(strat_column_id: @id).includes(:fossils).order('id ASC')
 
 
     @textures_to_render = []
