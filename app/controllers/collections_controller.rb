@@ -5,7 +5,8 @@ class CollectionsController < ApplicationController
   def index
     @user_id = current_user.id
 
-    @collections = Collection.where(user_id: @user_id).paginate(:page => params[:page], :per_page => 10)
+    @q = Collection.where(user_id: @current_user.id).ransack(params[:q]) 
+    @collections = @q.result(distinct: true).paginate(page: params[:page], per_page: 10)
   end
   
   def new

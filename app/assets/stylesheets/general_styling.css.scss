@@ -276,3 +276,45 @@ ul.dropdown-menu {
     min-height: 445px;
   }  
 }
+
+
+.search-tools {
+  display: flex;
+  background-color: white;
+  padding: 6px;
+}
+/*Search form */
+.search-container {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.search-form {
+  display: flex;
+}
+
+.search-field {
+  flex-grow: 1;
+  > input {
+    border-radius: 0;
+  }
+}
+
+.search-btn {
+  flex-grow: 0;
+  > input {
+    border-radius: 0px 4px 4px 0px;
+  }
+}
+
+/*Sort css*/
+.sort-container {
+  display: flex;
+  flex: 1;
+  > a {
+    flex: 1;
+    text-align: center;
+    border: none;
+    margin: 0 5px;
+  }
+}

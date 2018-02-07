@@ -4,7 +4,28 @@
     <div class="index-header">
       <h3 class="text-center">Stratigraphic Column Index</h3>
     </div>
-    
+
+    <div class="search-tools">
+      <div class="search-container">
+        <%= search_form_for @q, html: {class: "search-form"} do |f| %>
+
+          <div class="search-field search-child">
+            <%= f.search_field :name_or_location_cont, placeholder: 'Column contains', class: 'form-control' %>
+          </div>
+          <div class="search-btn search-child">
+            <%= f.submit 'Go', class: 'btn btn-default' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class= "sort-container">
+        <%=sort_link(@q, :name, {default_order: :desc}, {class: "btn btn-default"}) %>
+        <%=sort_link(@q, :location, {default_order: :desc}, {class: "btn btn-default"}) %>
+        <%=sort_link(@q, :created_at, {default_order: :desc}, {class: "btn btn-default"}) %>
+        <%=sort_link(@q, :updated_at, {default_order: :desc}, {class: "btn btn-default"}) %>
+      </div>
+    </div>
+
     <% @strat_columns.each do |x| %>
       <div class ='info-wrapper'>
         <div class="index-title">

@@ -72,5 +72,8 @@ gem 'acts_as_list'
 # will_paginate for pagination
 gem 'will_paginate', '>3.0'
 
+# ransack for searching, filtering and pagination
+gem 'ransack'
+
 # windows directory monitor
 gem 'wdm', '>=0.1.0' if Gem.win_platform?
