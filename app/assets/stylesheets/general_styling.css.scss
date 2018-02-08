@@ -1,3 +1,17 @@
+/*All*/
+.the-separator {
+  border-bottom: 1px solid black;
+}
+
+ /*Hide btn style*/
+button.hide-details {
+  float: right;
+  margin-bottom: 6px;
+  margin-left: 12px;
+  margin-top: 3px;
+
+}
+
 // SHOW PAGE CSS
 
 .flex-container {
@@ -115,6 +129,8 @@ a.edit-full-column-btn {
 .index-description {
   padding: 20px 40px;  
   background-color: white;
+  overflow: hidden;
+  max-height: 200px;
 
 }
 
@@ -130,6 +146,18 @@ a.edit-full-column-btn {
   >h3 {
     font-weight: bold;
   }
+}
+
+.index-time {
+  text-align: right;
+  font-size: smaller;
+  margin: 0;
+}
+
+.time-container {
+  background-color: var(--navBlack);
+  color: white;
+  padding: 2px 10px;
 }
 
 // NEW CSS

@@ -183,7 +183,7 @@ function condensedLegend(legendContainer, filteredData, ageFilteredData, width, 
     // Modifying bar position for the strat_column show column
     if ($('.strat_columns.show').length == 1)
     {
-      horz = width + 125;
+      horz = width + 225;
     }
 
     

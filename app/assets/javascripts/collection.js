@@ -25,14 +25,13 @@ $(document).on('turbolinks:load', function () {
     zoomColumn();
 
     // Hides Collection details and toggles glyphicon class
-    $("button#hide-details").on("click", function() {
+    $("button.hide-details").on("click", function() {
       $("div.right-column-collection").toggle();
-      $("button#hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
+      $("button.hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
       // Fixes gray areas when resizing map div
       google.maps.event.trigger(map, "resize");
 
-    });
-    
+    });    
 
   
 }); // ready end

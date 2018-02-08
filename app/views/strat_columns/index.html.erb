@@ -10,7 +10,7 @@
         <%= search_form_for @q, html: {class: "search-form"} do |f| %>
 
           <div class="search-field search-child">
-            <%= f.search_field :name_or_location_cont, placeholder: 'Column contains', class: 'form-control' %>
+            <%= f.search_field :name_or_location_cont, placeholder: 'Search ccolumn details', class: 'form-control' %>
           </div>
           <div class="search-btn search-child">
             <%= f.submit 'Go', class: 'btn btn-default' %>
@@ -19,27 +19,42 @@
       </div>
 
       <div class= "sort-container">
-        <%=sort_link(@q, :name, {default_order: :desc}, {class: "btn btn-default"}) %>
-        <%=sort_link(@q, :location, {default_order: :desc}, {class: "btn btn-default"}) %>
+        <%=sort_link(@q, :name, {default_order: :asc}, {class: "btn btn-default"}) %>
+        <%=sort_link(@q, :location, {default_order: :asc}, {class: "btn btn-default"}) %>
         <%=sort_link(@q, :created_at, {default_order: :desc}, {class: "btn btn-default"}) %>
         <%=sort_link(@q, :updated_at, {default_order: :desc}, {class: "btn btn-default"}) %>
       </div>
     </div>
 
-    <% @strat_columns.each do |x| %>
+    <% @strat_columns.each_with_index do |x,i| %>
       <div class ='info-wrapper'>
         <div class="index-title">
           <%= link_to strat_column_path(x.id) do%>
             <h4><%= x.name %></h4>
           <% end %>
-          <p> Location: <%= x.location %> </p>
         </div>  
       
-        <div class ="index-description">
-          <p><%= x.description%></p>
+        <div class ="index-description" data-index-description=<%=i%>>
+          <p> <strong>Location:</strong> <%= x.location%></p>        
+          <p> <strong>Total Thickness:</strong> <%= x.total_thickness%> m</p>
+          <div class= "the-separator"></div>
+          </br>          
+          <p> <strong>Description:</strong> <%= x.description%></p>
+        </div>
+
+        <div class= "time-container">
+
+          <button type="button" class="btn btn-default btn-xs hide-details" title="Toggle Details" data-index-collapse= <%=i%>>        
+            <i class="glyphicon glyphicon-menu-down"></i>
+          </button>
+
+          <p class= "index-time"><%= x.created_at.strftime("Created on: %m/%d/%Y, %I:%M%p")%></p>
+          <p class= "index-time"><%= x.updated_at.strftime("Updated on: %m/%d/%Y, %I:%M%p") %></p>
         </div>
       </div>  
     <% end %>
+
+
     <%= will_paginate @strat_columns%>
     
   </div>

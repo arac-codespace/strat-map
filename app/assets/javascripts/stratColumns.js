@@ -9,9 +9,9 @@ $(document).on('turbolinks:load', function () {
 
 
   // Hides Collection details and toggles glyphicon class
-  $("button#hide-details").on("click", function() {
+  $("button.hide-details").on("click", function() {
     $("div.right-column").toggle();
-    $("button#hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
+    $("button.hide-details > i").toggleClass("glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left");
   });
   
   function drawStratChart(data) {
@@ -73,7 +73,7 @@ $(document).on('turbolinks:load', function () {
     // }
     
     // Scaling down columns from original dimensions...
-    // width*=0.8;
+    width*=0.9;
     // height*=0.8;
 
     // x-axis scale!
