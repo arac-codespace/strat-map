@@ -318,7 +318,7 @@ $(document).on('turbolinks:load', function () {
     bar.each(function(d,i){
       d3.select(this).selectAll('image').data(d.fossils).enter().append('image').attr('class', function(d){
         // This assigment will allow me to select image container and assign the proper href
-        return d.name.replace(/\s+/g, '') + ' ' + 'fossil-content';
+        return 'fossil-' + d.id + ' ' + 'fossil-content';
       })
       .attr('width', '32').attr('height','32').attr('x',function(d,i){
 
@@ -342,17 +342,32 @@ $(document).on('turbolinks:load', function () {
         // All right! Here I use .each which allows me to call a function for each of the 
         // d.fossils objects.
 
-        var fossilName = d.name.replace(/\s+/g, '');
-        var fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilName}`;
+        var fossilQuery = encodeURIComponent(d.name.trim());
+        var fossilClass = 'fossil-' + d.id;
+        var fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilQuery}`;
 
         // Here I can access the parameters of the fetch response
         // object.  Params include ok, status, redirected etc...
-        // urlExists is defined in globalFunctions btw...
+        // urlExists is defined in globalFunctions
+
         urlExists(fossilHTTP, function(exists){
           if (exists.ok) {
-            d3.select(`.${fossilName}`).attr("xlink:href", fossilHTTP);
+            d3.select(`.${fossilClass}`).attr("xlink:href", fossilHTTP).attr("data-query-succeed", fossilQuery);
+         
+          } else if (!exists.ok && d.query !== null && d.query !== '') {
+  
+            fossilQuery = encodeURIComponent(d.query.trim());
+            fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilQuery}`;
+            urlExists(fossilHTTP, function(exists) {
+              if (exists.ok){
+                d3.select(`.${fossilClass}`).attr("xlink:href", fossilHTTP).attr("data-query-succeed", fossilQuery);
+              } else {
+                d3.select(`.${fossilClass}`).attr("xlink:href", "/assets/qmark.svg");            
+              }
+            })
+            
           } else {
-            d3.select(`.${fossilName}`).attr("xlink:href", "/assets/qmark.svg");            
+            d3.select(`.${fossilClass}`).attr("xlink:href", "/assets/qmark.svg");            
           }
         });
       });
@@ -409,95 +424,17 @@ $(document).on('turbolinks:load', function () {
     // Tooltip action for fossils
     d3.selectAll('.fossil-content').on('mouseover', function (d){
 
-      var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Frequency: </strong>' + d.frequency + '</br><strong>Notes: </strong>' + d.notes + '</br>';
-      var fossilName = d.name;
-      var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilName}&show=full`
+      var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Abundance: </strong>' + d.abundance + '</br><strong>Notes: </strong>' + d.notes + '</br>';
+      
+      // The image append operation includes a part to attach data-query-succeed if it finds a 
+      // matching record.  Here I use the data attribute to compose the URL where the data is.
+      
+      var fossilQuery = d3.select(this).attr("data-query-succeed");
+ 
+      var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilQuery}&show=full`
 
-      var dict = {};
-      dict['header'] = `</br><strong>PBDB Additional Information</strong></br>`;
-
-      $.getJSON(fossilURL, function(data){
-        $.each(data.records[0], function(key, val){
-
-          switch(key){
-
-            case "jmo":
-              dict[key] = `${val}`;
-              break;
-            case "ext":
-              if (val) {
-                dict[key] = 'True';
-              } else {
-                dict[key] = 'False';
-              }
-              break;
-            case "tei":
-              dict[key]= `${val}`;
-              break;
-            case "tli":
-              dict[key]= `${val}`;
-              break;
-            case "phl":
-              dict[key]= `${val}`;
-              break;
-            case "cll":
-              dict[key]= `${val}`;
-              break;
-            case "odl":
-              dict[key]= `${val}`;
-              break;
-            case "fml":
-              dict[key]= `${val}`;
-              break;
-            case "gnl":
-              dict[key]= `${val}`;
-              break;
-            case "ttl":
-              dict[key]= `${val}`;
-              break;
-            case "jlh":
-              dict[key]= `${val}`;
-              break;
-            case "jvs":
-              dict[key]= `${val}`;
-              break;
-            case "jdt":
-              dict[key]= `${val}`;
-              break;
-            case "jco":
-              dict[key]= `${val}`;
-              break;
-            default:
-              ""
-          } // switch end
-        }) // .each end
-
-        // Create PBDB HTML to insert stuff
-        var pbdbHTML = 
-          ` </br>
-           <strong>PBDB Additional Information </strong> </br>
-           <strong>Phylum:</strong> ${dict["phl"]} </br>
-           <strong>Class:</strong> ${dict["cll"]} </br>
-           <strong>Order:</strong> ${dict["odl"]} </br>
-           <strong>Family:</strong> ${dict["fml"]} </br>
-           <strong>Genus:</strong> ${dict["gnl"]} </br>
-           <strong>Extant:</strong> ${dict["ext"]} </br>
-           <strong>Early Interval:</strong> ${dict["tei"]} </br>
-           <strong>Late Interval:</strong> ${dict["tli"]} </br> 
-           <strong>Type Taxon:</strong> ${dict["ttl"]} </br>
-           <strong>Taxon Environment:</strong> ${dict["jev"]} </br>
-           <strong>Motility:</strong> ${dict["jmo"]} </br>
-           <strong>Life Habit:</strong> ${dict["jlh"]} </br>
-           <strong>Vision:</strong> ${dict["jvs"]} </br>
-           <strong>Diet:</strong> ${dict["jdt"]} </br>          
-          `;
-
-
-
-        fossilTooltip.html(localInfoHTML + pbdbHTML);
-      }).fail(function(){
-        fossilTooltip.html(localInfoHTML);
-      }) 
+      // Defined in globalFunctions...
+      buildPBDBHtml(fossilURL, fossilTooltip, localInfoHTML);
 
 
       return fossilTooltip.style('visibility', 'visible');

@@ -346,5 +346,3 @@ timescale_list = [
 timescale_list.each do |x|
   Timescale.where(interval_name: x[:interval_name]).first_or_create.update(x)
 end
-
-

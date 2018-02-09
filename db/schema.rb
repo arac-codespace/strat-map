@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131015154) do
+ActiveRecord::Schema.define(version: 20180208221320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,11 @@ ActiveRecord::Schema.define(version: 20180131015154) do
   create_table "fossils", force: :cascade do |t|
     t.string "name"
     t.text "notes"
-    t.string "frequency"
+    t.string "abundance"
     t.integer "layer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "query"
   end
 
   create_table "layers", force: :cascade do |t|

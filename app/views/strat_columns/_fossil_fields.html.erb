@@ -2,8 +2,19 @@
 <div class = "fossil">
   <div class="infoFormFields fossilFields">
 
-    <%= f.input :name, label:"Taxon Name" %>
-    <%= f.input :frequency %>
+  	<div class="form-group">
+  		<%= f.label :name, label: 'Taxon Name' %>
+	    <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Primary PBDB query</span></span>   		
+    	<%= f.input_field :name, {class: "form-control"} %>
+  	</div>
+
+    <div class="form-group">
+	    <%= f.label :query, label: 'Fallback Query'%>
+	    <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Secondary PBDB query</span></span> 
+	    <%= f.input_field :query, { class: 'form-control'} %>
+		</div>
+
+    <%= f.input :abundance, label: 'Abundance', collection: ["Abundant", "Common", "Frequent", "Occasional", "Rare"] %>
     <%= f.input :notes%>
 
 

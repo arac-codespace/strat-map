@@ -9,6 +9,91 @@ function urlExists(url, callback) {
   })
 }
 
+function buildPBDBHtml(fossilURL, fossilTooltip, localInfoHTML) {
+
+  var dict = {};
+
+  $.getJSON(fossilURL, function(data){
+    $.each(data.records[0], function(key, val){
+        switch(key){
+          case "jmo":
+            dict[key] = `${val}`;
+            break;
+          case "ext":
+            if (val) {
+              dict[key] = 'True';
+            } else {
+              dict[key] = 'False';
+            }
+            break;
+          case "tei":
+            dict[key]= `${val}`;
+            break;
+          case "tli":
+            dict[key]= `${val}`;
+            break;
+          case "phl":
+            dict[key]= `${val}`;
+            break;
+          case "cll":
+            dict[key]= `${val}`;
+            break;
+          case "odl":
+            dict[key]= `${val}`;
+            break;
+          case "fml":
+            dict[key]= `${val}`;
+            break;
+          case "gnl":
+            dict[key]= `${val}`;
+            break;
+          case "ttl":
+            dict[key]= `${val}`;
+            break;
+          case "jlh":
+            dict[key]= `${val}`;
+            break;
+          case "jvs":
+            dict[key]= `${val}`;
+            break;
+          case "jdt":
+            dict[key]= `${val}`;
+            break;
+          case "jco":
+            dict[key]= `${val}`;
+            break;
+          default:
+            ""
+        } // switch end
+      }) // .each end
+
+      // Create PBDB HTML to insert stuff
+      var pbdbHTML = 
+        ` </br>
+         <strong>PBDB Additional Information </strong> </br>
+         <strong>Phylum:</strong> ${dict["phl"]} </br>
+         <strong>Class:</strong> ${dict["cll"]} </br>
+         <strong>Order:</strong> ${dict["odl"]} </br>
+         <strong>Family:</strong> ${dict["fml"]} </br>
+         <strong>Genus:</strong> ${dict["gnl"]} </br>
+         <strong>Extant:</strong> ${dict["ext"]} </br>
+         <strong>Early Interval:</strong> ${dict["tei"]} </br>
+         <strong>Late Interval:</strong> ${dict["tli"]} </br> 
+         <strong>Type Taxon:</strong> ${dict["ttl"]} </br>
+         <strong>Taxon Environment:</strong> ${dict["jev"]} </br>
+         <strong>Motility:</strong> ${dict["jmo"]} </br>
+         <strong>Life Habit:</strong> ${dict["jlh"]} </br>
+         <strong>Vision:</strong> ${dict["jvs"]} </br>
+         <strong>Diet:</strong> ${dict["jdt"]} </br>          
+        `;
+
+      fossilTooltip.html(localInfoHTML + pbdbHTML);
+  }).fail(function(){
+    fossilTooltip.html(localInfoHTML);
+  }) 
+
+} // function end
+
 
 
 // Map search bar fade in
