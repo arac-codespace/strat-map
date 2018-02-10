@@ -1,44 +1,44 @@
-<%= form_for @layer, remote: true, :html => { :multipart => true } do |f| %>
+<%= simple_form_for @layer, remote: true, :html => { :multipart => true } do |f| %>
   <div id="errors" class="bg-danger text-danger"></div>  
   
   <!-- Associations field-->
   <%= f.hidden_field :strat_column_id, value: @strat_column_id.id if @layer.new_record? %>   
   
-  <div class= "form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, required: :true, class: "form-control" %>
-  </div>   
+  <%= f.input :name, error: 'Layer name is required' %>
+
+  <%= f.input :lithology_name, label: "Select Lithology Pattern", placeholder: "Input name or FGDC Pattern Number",input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>
+
+  <%= f.input :formation %>
+
+  <%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}}, error: "Input a valid geologic age", placeholder: "Input name of Geologic Age" %>
+
+  <%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Select a type of contact" %>
+
+  <%= f.input :thickness, as: :string, placeholder: 'Must be in meters', error: "Can't be blank"%>
+
+  <%= f.input :description %>
   
-  <div class = "form-group" data-fieldname="lithology_name">
-    <%= f.label :lithology_name, "Select Lithology Pattern" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>See: FGDC Lithologic Patterns</span></span>
-    <%= f.text_field :lithology_name, required: :true, data: {autocomplete_source: lithologies_path}, class: "lithology_name form-control"%>    
-  </div>   
-  
-  <div class = "form-group">
-    <%= f.label :formation %>
-    <%= f.text_field :formation, class: "form-control" %>
+  <div class="fossil-label">
+    <h4 class="section-label"> <strong>Fossil Content</strong></h4> 
+    <div class="the-separator"></div>
+    <p><strong>Note:</strong> This application uses the optional fallback 
+      query if it doesn't find a record matching the taxon name provided. 
+    </p>
+    <!--_traversal chooses the closest node selection relative to the link -->
   </div>
-  
-  <div class = "form-group" data-fieldname="timescale_name">
-    <%= f.label :timescale_name,"Select Geologic Age" %> <span class="tooltips glyphicon glyphicon-question-sign"><span>Determines chart legend/color</span></span>
-    <%= f.text_field :timescale_name, required: :true, data: {autocomplete_source: timescales_path} ,class: "timescale_name form-control"%>    
+
+  <div class="fossil-container">
+
+    <%= f.simple_fields_for :fossils do |fossil|%>
+      <%= render 'fossil_fields', f: fossil %>
+    <% end %>     
   </div>
-  
-  <div class = "form-group" data-fieldname="contact_id">
-    <%= f.label :contact_id,"Select Contact Type (Upper Boundary)" %>
-    <%= f.collection_select(:contact_id, Contact.order(:name), :id, :name, {include_blank: "Select Contact Type"}, {required: true, class: "form-control"})%>    
-  </div>   
-  
-  <div class = "form-group" data-fieldname="thickness">
-  <%= f.label :thickness %>
-    <%= f.text_field :thickness, required: :true, placeholder: "Must be in meters", class: "form-control" %>
+
+  <div>
+    <%= link_to_add_association 'Add', f, :fossils, class: "add-fossil glyphicon glyphicon-plus btn btn-default btn-sm", title: 'Add fossil field' %> 
   </div>
-  
-  <div class = "form-group" data-fieldname="description">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control textarea_options" %>
-  </div>
-  
+
+
   <div class="modal-footer">
     <div class = "form-group">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

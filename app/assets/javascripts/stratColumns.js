@@ -23,7 +23,7 @@ $(document).on('turbolinks:load', function () {
       left: 50
     };
     var width = 600 - margin.left - margin.right;
-    var height = 1000 - margin.top - margin.bottom;
+    var height = 1200 - margin.top - margin.bottom;
 
 
     // The following is to find the proportion between the smallest layer
@@ -375,11 +375,10 @@ $(document).on('turbolinks:load', function () {
     
     
     // x3-axis line and ticks
-    var xAxis_1 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
-    // x2-axis line and ticks
-    var xAxis_2 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x2)).selectAll('.tick text').style('font', '12px Tahoma');
-    // x4-axis line and ticks
-    var xAxis_3 = stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x4).tickSizeOuter([0])).selectAll('.tick text').style('font', '12px Tahoma');
+
+    appendScaleAxis(stratChart, x2, height, 0);
+    appendScaleAxis(stratChart, x3, height, 0);
+    appendScaleAxis(stratChart, x4, height, 6);
 
     // y-axis line and ticks
     if (data[0].strat_column.depth == false)
@@ -481,6 +480,11 @@ $(document).on('turbolinks:load', function () {
   } // drawFunction end
   
   zoomColumn();
+
+  function appendScaleAxis(selector, scale, height, tickSize){
+    selector.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + 0 + ')').call(d3.axisTop(scale).tickSizeOuter([-tickSize])).selectAll('.tick text').style('font', '12px Tahoma');
+    selector.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(scale).tickSizeOuter([tickSize])).selectAll('.tick text').style('font', '12px Tahoma');
+  }  
 
   var url_id = $('.general-info').data('stratid');
   var data_url = url_id + '/data.json';

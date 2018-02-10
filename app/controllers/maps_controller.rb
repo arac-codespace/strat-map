@@ -8,8 +8,16 @@ before_action :authenticate_user!
     # Find all strat columns.  This is to render textures.
     @strat = StratColumn.where(user_id: @user_id)
     
+    # The following is used to scale columns...
+    # May want to consider a form of percentile
+    min_array = []
+    @strat.each do |column|
+      min_array << column.layers.minimum(:thickness)
+    end    
+    @avg_min_thickness = (min_array.sum/min_array.size).ceil   
+
+
     @textures_to_render = []
-    
     # Loop to find urls to render
     @strat.each do |column|
       @layers = Layer.joins(:strat_column).where(strat_columns: {id: column.id}).each do |layer|

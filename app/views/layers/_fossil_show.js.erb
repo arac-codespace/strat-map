@@ -1,0 +1,21 @@
+
+<div class = "table-container"> 
+  <table class="table table-condensed table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Abundance</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @layer.fossils.each do |y| %>
+        <tr>
+          <td><%= y.name%></td>
+          <td><%= y.abundance%></td>
+          <td><%= y.notes%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

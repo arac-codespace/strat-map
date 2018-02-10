@@ -51,6 +51,15 @@ class LayersController < ApplicationController
       format.html {redirect_to edit_strat_column_path(@strat_column_id)}
     end
   end  
+
+  def show
+
+    @layer = Layer.find_by(id: params[:id])
+    respond_to do |format|
+      format.js
+      format.html {redirect_to edit_strat_column_path(@strat_column_id)}
+    end
+  end
   
   
   def update
@@ -69,7 +78,7 @@ class LayersController < ApplicationController
   private
   
   def layer_params
-    params.require(:layer).permit(:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description )
+    params.require(:layer).permit(:lithology_name, :timescale_name, :interval_name ,:id, :strat_column_id, :lithology_id, :timescale_id, :contact_id, :epoch_age, :contact, :_destroy, :name, :name2, :name3, :formation, :thickness, :description, fossils_attributes: [:id, :name, :query, :notes, :abundance, :layer_id, :_destroy] )
   end
   
   

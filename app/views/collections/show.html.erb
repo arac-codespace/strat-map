@@ -50,8 +50,8 @@
           <% end %>
         </div>
         
-        <%= link_to collection_path(@collection.id), method: :delete, data: { confirm: 'Are you sure you want to delete this collection?'}, class: 'btn btn-default btn-xs' do %>
-          <i>Delete Collection</i>
+        <%= link_to collection_path(@collection.id), method: :delete, data: { confirm: 'Are you sure you want to delete this collection?'}, class: 'btn btn-danger btn-xs' do %>
+          <strong>Delete Collection</strong>
         <% end %>
         
         <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help_info">Help</button>

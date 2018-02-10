@@ -245,19 +245,34 @@ function drawMapColumn(data) {
 
   d3.select(divId).append("svg").attr("class", "stratChart").attr("id", stratId);
   
-  var thickness_h = d3.sum(data, function (d) {
+  var totalThickness = d3.sum(data, function (d) {
     return parseFloat(d.thickness);
   });
 
   var margin = { top: 20, right: 80, bottom: 40, left: 20 },
-      width = 225 - margin.left - margin.right,
-      //960
-  height = 35 * Math.sqrt(thickness_h) - margin.top - margin.bottom  + data.length*100; //500
-  if (height < 300) {
-    height = 300  + data.length*100;
-  } else if (height > 1500) {
-    height = 1500 + data.length*100;
+      width = 225 - margin.left - margin.right
+
+  var height = 1200 - margin.top - margin.bottom;
+
+
+  // To scale according to avg of all layers' min thickness
+  var avgMinThickness = $(".column-preview").data("avgminthickness");
+  var minMaxProportionality = avgMinThickness/totalThickness;
+
+  // Finds the pixel height of the minThickness layer.
+  var currentProportionality = minMaxProportionality*height;
+
+  // If the pixel height is less than C, calculate a new height
+  // that would result in the minThickness having a height of
+  // C
+  if (currentProportionality < 32) {
+    var dynHeight = 32/minMaxProportionality;
+
+    height = dynHeight;
   }
+
+
+
   // stratIdSelect is the id of the svg wherein the chart will be generated
   // The multiplication is just scaling things down for Map View.
   condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin);

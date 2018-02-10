@@ -1,6 +1,49 @@
 /* global $*/
 /* global d3 */
 
+// Repository for functions used repeatedly throughout the application
+
+
+//https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}  
+
+// Autocomplete js for forms...
+function fireAutoComplete() {
+  // Initial binding of autocomplete...
+  $('.timescale_name').autocomplete({
+    // Note that in html, autocomplete_source is converted to autocomplete-source
+    source: $('.timescale_name').data('autocomplete-source'),
+    minLength: 3
+  });
+  
+  $('.lithology_name').autocomplete({
+    source: $('.lithology_name').data('autocomplete-source'),
+    minLength: 3
+  });
+
+  // Jquery source takes a function as param
+  // request.term is what the user types
+  // response is the callback array
+  // to populate the autocompletion
+  $("input.taxon-name").autocomplete({
+    source: function (request, response) {
+      jQuery.get("https://paleobiodb.org/data1.2/taxa/auto.json", {
+        name: request.term
+      }, function (data) {
+        var array = [];
+        $.each(data.records, function(key, val) {
+          // debugger;
+          array.push(val.nam);
+        });
+        response(array);
+      });
+    },
+    minLength: 3
+  }); // taxon-name
+}
+
 // Simple function definition to check url...
 function urlExists(url, callback) {
   fetch(url)
@@ -265,10 +308,10 @@ function condensedLegend(legendContainer, filteredData, ageFilteredData, width, 
     var lHeight = legendRectSize + legendSpacing;
     var horz = width -100;
     
-    // Modifying bar position for the strat_column show column
+    // Modifying legend position for the strat_column show column
     if ($('.strat_columns.show').length == 1)
     {
-      horz = width + 225;
+      horz = width + 185;
     }
 
     

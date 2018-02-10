@@ -12,7 +12,7 @@ class CollectionsController < ApplicationController
   def new
     @collection = Collection.new
     @user_id = current_user.id
-    @user_columns = StratColumn.where(user_id: @user_id)
+    @user_columns = StratColumn.where(user_id: @user_id).order(:name)
   end
   
   def create
@@ -30,12 +30,15 @@ class CollectionsController < ApplicationController
   
   def show
     @collection = Collection.find(params[:id])
-    
-    
     @collection_columns = @collection.strat_columns
-    
+    # The following is used to scale columns...
+    min_array = []
+    @collection_columns.each do |column|
+      min_array << column.layers.minimum(:thickness)
+    end    
+    @min_thickness = min_array.min
+
     @textures_to_render = []
-    
     # Loop to find urls to render
     @collection_columns.each do |column|
       @layers = Layer.joins(:strat_column).where(strat_columns: {id: column.id}).each do |layer|
@@ -53,7 +56,7 @@ class CollectionsController < ApplicationController
   def edit
     @collection = Collection.find(params[:id])
     @user_id = current_user
-    @user_columns = StratColumn.where(user_id: @user_id)
+    @user_columns = StratColumn.where(user_id: @user_id).order(:name)
     
   end
   

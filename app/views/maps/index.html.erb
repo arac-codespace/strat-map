@@ -8,13 +8,18 @@
   <% end %>
 </div>
 
-<div class="column-preview text-center">
+<div class="column-preview text-center" data-avgminthickness = "<%= @avg_min_thickness%>">
   <p>Column Preview</p>
 
   <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help">Help</button>
   <div id="help" class="collapse help-prompt sort-help">
-    <p> Hover over the markers to view the data point's name.  Click a marker to display a simplified column of the corresponding data point. A maximum of eight columns can be displayed at the same time. </p>
-    <p> Scroll or use the left/right arrow keys to view the columns that extend offscreen. </p>
+    <p> Hover over the markers to view the data point's name, click it to display a simplified column 
+    	of the corresponding data point. A maximum of eight columns can be displayed at the same time. 
+    </p>
+    <p> Scroll or use the left/right arrow keys to view the columns that extend offscreen. 
+    	Be aware that the columns on this view are scaled based on the average of the smallest 
+    	layers(thickness) of all columns in your account.
+    </p>
   </div>  
 
 </div>
