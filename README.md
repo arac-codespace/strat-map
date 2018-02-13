@@ -27,7 +27,7 @@ suggestions please contact me at: *alex.aguirre0026@gmail.com*
 # Changelog
 stratMap v0.4.0 TBD
 + Fossil implementation
-  * The application makes use of the PBDB's web services to serve
+  * The application makes use of the PBDB's web services to
     load icons and provide additional information about the
     taxon specified.
 + General UI improvements

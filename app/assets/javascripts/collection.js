@@ -9,6 +9,104 @@ $(document).on('turbolinks:load', function () {
     return;
   }
 
+  // Hide overflowing elements
+
+  // Toggle fossil view...
+  $(".showFossils").on('click', function(){
+
+    d3.selectAll(".fossil-overflow").style("visibility","hidden");
+
+    if ($(".fWindow").length == 0) {
+
+      var columnContainers = d3.selectAll(".columnContainer");
+
+      // var fWindow = columnContainers.append("g").attr("class","fWindow");
+      columnContainers.each(function(){
+        var currentContainer = d3.select(this);
+        var getColumnId = d3.select(this.parentNode).attr("id");
+        // debugger;
+
+        var allTransformGs = currentContainer.selectAll(".gLayer");
+        var fWindow = currentContainer.append("g").attr("class","fWindow");
+
+        allTransformGs.each(function(){
+          var currentG = d3.select(this);
+          var translate = currentG.attr("transform")
+
+          var thisBar = currentG.select(".bar");
+          var boundingRect = thisBar.node().getBoundingClientRect();
+          var ageWidth = parseInt(currentG.select(".age").attr("width"));
+
+          var fossil = currentG.selectAll(".fossil-content");
+          var fossilSize = fossil.size()
+
+
+          var layerGrouping = fWindow.append("g").attr("transform", translate)
+          .attr("class", "copyGrouping" + " " + currentG.attr("id"));
+          // .style("visibility","hidden");
+
+          layerGrouping.append("rect").attr("height", 30*Math.ceil(fossilSize/3))
+          .attr("width", parseInt(thisBar.attr("width"))- ageWidth)
+          .style("fill","red").attr("top", boundingRect.top).attr("left",boundingRect.left)
+          .attr("x",ageWidth).attr("class","fBar" + " " + currentG.attr("id"))
+          .attr("data-cID",getColumnId)
+          .attr("visibility","hidden");
+
+          fossil.each(function(){
+            thisFossil = d3.select(this);
+            thisFossil.attr("data-cID", getColumnId)
+            var fossilId = thisFossil.attr("id");
+            layerGrouping.append("use").attr("xlink:href", "#" + thisFossil.attr("id"))
+            .attr("data-cID",getColumnId)
+            .attr("class", currentG.attr("id"))
+          });
+        });
+      })
+    };
+
+    // I need to aim for fossil-content?  Or use which is not visible by default...?
+    // Use overflow class?
+
+    // Explode behaviour...
+    d3.selectAll("use").on('mouseenter', function(){
+      console.log("It's visible?")
+      // debugger;
+      var thisElement = d3.select(this);
+      console.log(thisElement.attr("href"));
+      var eleParent = d3.select(this.parentNode);
+
+      eleParent.raise();
+
+      d3.selectAll(`#${thisElement.attr("class")} > .fossil-overflow`).style("visibility","visible");
+
+      var rect = d3.selectAll(`rect.${thisElement.attr("class")}`).style("visibility", "visible");
+
+    });
+
+    d3.selectAll(".copyGrouping").on('mouseleave', function(){
+      console.log("I'm leaving?")
+
+      var thisElement = d3.select(this);
+      d3.selectAll(".fossil-overflow").style("visibility","hidden");
+      d3.selectAll(".fBar").style("visibility","hidden");
+
+    });
+
+    // ternary operator, if fshow's off, turn it on, else, turn it off...
+    $(this).attr("data-fshow", function(i, val){
+      return val === "off" ? "on" : "off" ;
+    });
+    $(".fossil-content").toggle();
+
+    var onVSOff = $(this).attr("data-fshow");
+
+    if (onVSOff == "off") {
+      d3.selectAll(".lithTexture, .unconformity-color, .unconformity, .hoverBar").style("display","inline");
+    } else {
+      d3.selectAll(".lithTexture, .unconformity-color, .unconformity, .hoverBar").style("display","none");
+    }
+  });
+
 
     // Make collection columns sortable!
     $(function() {
@@ -229,7 +327,7 @@ function drawCollectionChart(data) {
   var stratId = "strat_" + stratColumnId;
   var stratIdSelect = "#" + stratId;
 
-  d3.select(divId).append("svg").attr("class", "stratChart").attr("id", stratId);
+  d3.select(divId).append("svg").attr("class", "stratChart condensedChart").attr("id", stratId);
 
 
   var totalThickness = d3.sum(data, function (d) {

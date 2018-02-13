@@ -437,7 +437,12 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   }
 
   // Bar data bind and transformation
-  var bar = stratChart.selectAll("g").data(data).enter().append("g").attr("transform", function (d, i) {
+  var bar = stratChart.selectAll("g").data(data).enter().append("g")
+  .attr("id",function(d){
+    return "layerGrouping_" + d.id;
+  })
+  .attr("class","gLayer")
+  .attr("transform", function (d, i) {
     // Note that i refers to the number of objects!
     // Empty var to store previous thickness
     var prevThickness;
@@ -470,7 +475,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   var x2 = x.copy();
   x2.rangeRound([0, width]).domain(['Lithology']).padding(0).align(0.25);
 
-  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+  bar.append('rect').attr('class', 'bar toggleFossil').attr('fill', function (d) {
     if ($('.interbedded-carbonate').length >= 1) {
       $('.interbedded-carbonate').attr('fill', '#6caad5');
     }
@@ -493,7 +498,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   });
 
   // LITHOLOGY Texture 
-  bar.append('rect').attr('class', 'bar').attr('fill', function (d) {
+  bar.append('rect').attr('class', 'bar toggleFossil lithTexture').attr('fill', function (d) {
     // Here I can just return the url stored in the lithology json object!
     var patternSelect = d.lithology.url;
 
@@ -533,7 +538,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   // UNCONFORMITY COLOR
 
   // If user indicates an unconformity... 
-  bar.append('rect').attr('class', 'unconformity-color').attr('fill', function (d, i) {
+  bar.append('rect').attr('class', 'unconformity-color toggleFossil').attr('fill', function (d, i) {
     var contact_type = d.contact.contact_type;
 
     if (contact_type === 'Depositional') {
@@ -573,7 +578,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
 
   // UNCONFORMITIES Textures
   // If user indicates an unconformity... 
-  bar.append('rect').attr('class', 'unconformity').attr('fill', function (d, i) {
+  bar.append('rect').attr('class', 'unconformity toggleFossil').attr('fill', function (d, i) {
     var contact_type = d.contact.contact_type;
 
     if (contact_type === 'Depositional') {
@@ -616,7 +621,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   }).attr('stroke', 'transparent');
 
   // HOVER RECT
-  bar.append('rect').attr('class', 'hoverBar').attr('fill', 'transparent'
+  bar.append('rect').attr('class', 'hoverBar toggleFossil').attr('fill', 'transparent'
   ).attr('width', function (d) {
     return x2.bandwidth();
   }).attr('height', function (d) {
@@ -653,6 +658,80 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   }).attr('x', function (d) {
     return x3('Age');
   });
+
+
+  // Fossil append...
+
+  var x4 = x.copy();
+  x4.rangeRound([0, width]).domain(['Fossil Content']).padding(0.30).align(0.45);  
+  
+    bar.each(function(d,i){
+      d3.select(this).selectAll('image').data(d.fossils).enter().append('image').attr('class', function(d, i){
+        // This assigment will allow me to select image container and assign the proper href
+        if (i>2){
+          return 'fossil-content' + ' ' + 'fossil-overflow' ;
+        }
+        return 'fossil-content';
+      })
+      .attr("id", function(d,i){
+        return 'fossil-' + d.id;
+      })
+      .style("display","none")
+      .attr('width', '24').attr('height','24').attr('x',function(d,i){
+
+        // Modulo basically allows only 7 images C wide to be side by side
+        return x4('Fossil Content') + i%3*26 
+
+      }).attr('y', function(d,i){
+
+        // Here we divide by the num of items we want by row
+        // and floor it to get the row num.
+        // Be aware that if you want to change items per
+        // row, you must change the 'x' attribute unless
+        // you want things to look funky.
+        var rowTracking = Math.floor(i/3);
+
+        return rowTracking*32;
+
+      }).each( function(d){
+
+        // All right! Here I use .each which allows me to call a function for each of the 
+        // d.fossils objects.
+
+        var fossilQuery = encodeURIComponent(d.name.trim());
+        var fossilID = 'fossil-' + d.id;
+        var fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilQuery}`;
+
+        // Here I can access the parameters of the fetch response
+        // object.  Params include ok, status, redirected etc...
+        // urlExists is defined in globalFunctions
+
+        urlExists(fossilHTTP, function(exists){
+          if (exists.ok) {
+            d3.select(`#${fossilID}`).attr("xlink:href", fossilHTTP).attr("data-query-succeed", fossilQuery);
+         
+          } else if (!exists.ok && d.query !== null && d.query !== '') {
+
+            fossilQuery = encodeURIComponent(d.query.trim());
+            fossilHTTP = `https://paleobiodb.org/data1.2/taxa/thumb.png?name=${fossilQuery}`;
+            urlExists(fossilHTTP, function(exists) {
+              if (exists.ok){
+                d3.select(`#${fossilID}`).attr("xlink:href", fossilHTTP).attr("data-query-succeed", fossilQuery);
+              } else {
+                d3.select(`#${fossilID}`).attr("xlink:href", "/assets/qmark.svg");            
+              }
+            })
+            
+          } else {
+            d3.select(`#${fossilID}`).attr("xlink:href", "/assets/qmark.svg");            
+          }
+        });
+      });
+    });
+    
+
+
+
 
   // x3-axis geologic age line and ticks
   stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
@@ -710,6 +789,34 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   }).on("mouseout", function () {
     return tooltip.style("visibility", "hidden");
   });  
+
+
+  // FossilTooltip
+  var fossilTooltip = d3.select('html').append('div').attr('class', 'tool fossil-tooltip').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
+
+  // Tooltip action for fossils
+  d3.selectAll('.fossil-content').on('mouseover', function (d){
+
+    var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Abundance: </strong>' + d.abundance + '</br><strong>Notes: </strong>' + d.notes + '</br>';
+    
+    // The image append operation includes a part to attach data-query-succeed if it finds a 
+    // matching record.  Here I use the data attribute to compose the URL where the data is.
+    
+    var fossilQuery = d3.select(this).attr("data-query-succeed");
+
+    var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilQuery}&show=full`
+
+    // Defined in globalFunctions...
+    buildPBDBHtml(fossilURL, fossilTooltip, localInfoHTML);
+
+
+    return fossilTooltip.style('visibility', 'visible');
+  }).on('mousemove', function() {
+    return fossilTooltip.style('top', d3.event.pageY - 60 + 'px').style('left', d3.event.pageX + 15 + 'px');
+  }).on('mouseout', function() {
+    return fossilTooltip.style('visibility', 'hidden');
+  });
+  
 }
 
 // Restricts bound pan

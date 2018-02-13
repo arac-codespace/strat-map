@@ -33,3 +33,8 @@ $(document).ajaxError(function(event,xhr,options,exc) {
     $("#errors").html(er);
        
 });
+
+// Loads bootstrap's table.js and makes it work with turbolinks...
+document.addEventListener("turbolinks:load", function () {
+    $('[data-toggle="table"]').bootstrapTable();
+});

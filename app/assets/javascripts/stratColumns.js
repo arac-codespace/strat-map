@@ -95,7 +95,7 @@ $(document).on('turbolinks:load', function () {
     }
 
     // Bar data bind and transformation
-    var bar = stratChart.selectAll('g').data(data).enter().append('g').attr('transform', function (d, i) {
+    var bar = stratChart.selectAll('g').data(data).enter().append('g').attr("class","gLayer").attr('transform', function (d, i) {
       // Note that i refers to the number of objects!
       // Empty var to store previous thickness
       var prevThickness = undefined;
