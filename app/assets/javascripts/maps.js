@@ -259,9 +259,17 @@ function drawMapColumn(data) {
   var avgMinThickness = $(".column-preview").data("avgminthickness");
   var minMaxProportionality = avgMinThickness/totalThickness;
 
-  var dynHeight = 32/minMaxProportionality;
+  // Finds the pixel height of the minThickness layer.
+  var currentProportionality = minMaxProportionality*height;
 
-  height = dynHeight;
+  // If the pixel height is less than C, calculate a new height
+  // that would result in the minThickness having a height of
+  // C
+  if (currentProportionality < 32) {
+    var dynHeight = 32/minMaxProportionality;
+
+    height = dynHeight;
+  }  
 
   // stratIdSelect is the id of the svg wherein the chart will be generated
   // The multiplication is just scaling things down for Map View.
