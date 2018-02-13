@@ -401,7 +401,7 @@ function condensedLegend(legendContainer, filteredData, ageFilteredData, width, 
   }
 }
 
-function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
+function condensedColumnGenerator(data, height, width, stratIdSelect, margin,fossilBool) {
   
   // x-axis scale!
   var x = d3.scaleBand();
@@ -661,10 +661,10 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
 
 
   // Fossil append...
-
-  var x4 = x.copy();
-  x4.rangeRound([0, width]).domain(['Fossil Content']).padding(0.30).align(0.45);  
-  
+  if (fossilBool) {   
+    var x4 = x.copy();
+    x4.rangeRound([0, width]).domain(['Fossil Content']).padding(0.30).align(0.45);  
+    
     bar.each(function(d,i){
       d3.select(this).selectAll('image').data(d.fossils).enter().append('image').attr('class', function(d, i){
         // This assigment will allow me to select image container and assign the proper href
@@ -728,10 +728,8 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
         });
       });
     });
-    
-
-
-
+  }
+  
 
   // x3-axis geologic age line and ticks
   stratChart.append('g').attr('class', 'axis axis--x').attr('transform', 'translate(0,' + height + ')').call(d3.axisBottom(x3).tickSizeOuter([0])).selectAll('.tick text');
@@ -791,31 +789,33 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin) {
   });  
 
 
-  // FossilTooltip
-  var fossilTooltip = d3.select('html').append('div').attr('class', 'tool fossil-tooltip').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
+  if (fossilBool){  
+    // FossilTooltip
+    var fossilTooltip = d3.select('html').append('div').attr('class', 'tool fossil-tooltip').style('background-color', 'white').style('color','black').style('border', '1px solid black').style('padding', '6px').style('border-radius', '8px').style('position', 'absolute').style('z-index', '10').style('visibility', 'hidden').style('font-size', '12px').style('font-family', 'Tahoma').style('max-width','350px');
 
-  // Tooltip action for fossils
-  d3.selectAll('.fossil-content').on('mouseover', function (d){
+    // Tooltip action for fossils
+    d3.selectAll('.fossil-content').on('mouseover', function (d){
 
-    var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Abundance: </strong>' + d.abundance + '</br><strong>Notes: </strong>' + d.notes + '</br>';
-    
-    // The image append operation includes a part to attach data-query-succeed if it finds a 
-    // matching record.  Here I use the data attribute to compose the URL where the data is.
-    
-    var fossilQuery = d3.select(this).attr("data-query-succeed");
+      var localInfoHTML = '<strong>Name: </strong>' + d.name + '</br><strong>Abundance: </strong>' + d.abundance + '</br><strong>Notes: </strong>' + d.notes + '</br>';
+      
+      // The image append operation includes a part to attach data-query-succeed if it finds a 
+      // matching record.  Here I use the data attribute to compose the URL where the data is.
+      
+      var fossilQuery = d3.select(this).attr("data-query-succeed");
 
-    var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilQuery}&show=full`
+      var fossilURL = `https://paleobiodb.org/data1.2/taxa/single.json?name=${fossilQuery}&show=full`
 
-    // Defined in globalFunctions...
-    buildPBDBHtml(fossilURL, fossilTooltip, localInfoHTML);
+      // Defined in globalFunctions...
+      buildPBDBHtml(fossilURL, fossilTooltip, localInfoHTML);
 
 
-    return fossilTooltip.style('visibility', 'visible');
-  }).on('mousemove', function() {
-    return fossilTooltip.style('top', d3.event.pageY - 60 + 'px').style('left', d3.event.pageX + 15 + 'px');
-  }).on('mouseout', function() {
-    return fossilTooltip.style('visibility', 'hidden');
-  });
+      return fossilTooltip.style('visibility', 'visible');
+    }).on('mousemove', function() {
+      return fossilTooltip.style('top', d3.event.pageY - 60 + 'px').style('left', d3.event.pageX + 15 + 'px');
+    }).on('mouseout', function() {
+      return fossilTooltip.style('visibility', 'hidden');
+    });
+  }
   
 }
 

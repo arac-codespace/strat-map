@@ -243,7 +243,7 @@ function drawMapColumn(data) {
   var stratId = "strat_" + stratColumnId;
   var stratIdSelect = "#" + stratId;
 
-  d3.select(divId).append("svg").attr("class", "stratChart").attr("id", stratId);
+  d3.select(divId).append("svg").attr("class", "stratChart condensedChart").attr("id", stratId);
   
   var totalThickness = d3.sum(data, function (d) {
     return parseFloat(d.thickness);
@@ -259,23 +259,13 @@ function drawMapColumn(data) {
   var avgMinThickness = $(".column-preview").data("avgminthickness");
   var minMaxProportionality = avgMinThickness/totalThickness;
 
-  // Finds the pixel height of the minThickness layer.
-  var currentProportionality = minMaxProportionality*height;
+  var dynHeight = 32/minMaxProportionality;
 
-  // If the pixel height is less than C, calculate a new height
-  // that would result in the minThickness having a height of
-  // C
-  if (currentProportionality < 32) {
-    var dynHeight = 32/minMaxProportionality;
-
-    height = dynHeight;
-  }
-
-
+  height = dynHeight;
 
   // stratIdSelect is the id of the svg wherein the chart will be generated
   // The multiplication is just scaling things down for Map View.
-  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin);
+  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin, false);
   
   // INCORPORATE LEGEND
   // Gets rid of duplicates by grouping... 

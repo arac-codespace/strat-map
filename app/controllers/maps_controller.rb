@@ -15,6 +15,7 @@ before_action :authenticate_user!
       min_array << column.layers.minimum(:thickness)
     end    
     @avg_min_thickness = (min_array.sum/min_array.size).ceil   
+    # @avg_min_thickness = min_array.min
 
 
     @textures_to_render = []

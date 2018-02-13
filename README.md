@@ -5,27 +5,23 @@ Video overview: https://www.youtube.com/watch?v=d8-UVMCnNUg
 
 # Introduction
 
-The purpose of this application is to automatically generate a stratigraphic 
-column based on the information the user provides using 
-Mike Bostock's Data-Driven-Documents Javascript Library (D3.js).  
+The purpose of this application is to automatically generate a stratigraphic column based on the information the user provides using Mike Bostock's Data-Driven-Documents Javascript Library (D3.js).  
 
 
-Thanks to Google Map's wonderful API, the user will also be able to see the 
-location of each of those columns on a map in the form of markers if proper 
-coordinates are provided when creating a column.  Clicking the markers will open 
-an info window with a simplified version of the stratigraphic column.  
+The application uses the Paleobiology Database (PBDB) to automatically look for icons and additional taxon information based on what the user inputs.
 
 
-Furthermore, thanks to svg-crowbar.js, the user will also be able to download 
-the column in SVG format and edit it using a SVG editor
-(ie: Inkscape, Illustrator...).
+Thanks to Google Map's wonderful API, the user will also be able to see the location of each of those columns plotted on a map in the form of markers if proper coordinates are provided when creating a column.  Clicking the markers will open an info window with a simplified version of the stratigraphic column.
 
-Note: This website's still in active development.  If you have any issues or
-suggestions please contact me at: *alex.aguirre0026@gmail.com*
+
+Furthermore, svg-crowbar.js allows users to download the column in SVG format and edit it using a SVG editor (ie: Inkscape, Illustrator...).
+
+Note: This website is in **active** development.  If you have any issues or suggestions please contact me at: *alex.aguirre0026@gmail.com*
 
 
 # Changelog
-stratMap v0.4.0 TBD
+stratMap v0.4.0 
+2/13/2018
 + Fossil implementation
   * The application makes use of the PBDB's web services to
     load icons and provide additional information about the
@@ -39,7 +35,8 @@ stratMap v0.4.0 TBD
 + Bug fixed
   * Records on index and show pages no longer ordered on update time.
 
-stratMap v0.3.1 1/30/2018
+stratMap v0.3.1 
+1/30/2018
 + More improvements to Map View.
    * Columns are now generated through JS.  This fixes the unexpected 
       behaviour of the columns when closing/opening multiple visualizations.
@@ -55,7 +52,8 @@ stratMap v0.3.1 1/30/2018
 + Reinstalled bcrypt gem to fix compatibiliy issues with Windows OS
 
 
-stratMap v0.3 August 17, 2017
+stratMap v0.3 
+August 17, 2017
 + Created a collection/grouping model so user can associate multiple columns
 + Created a collection index/show page where user will be able to access 
   info about the multiple columns associated.
@@ -72,7 +70,8 @@ stratMap v0.3 August 17, 2017
 + Improved CSS (WIP)
 
 
-stratMap v0.2 August 17, 2017
+stratMap v0.2 
+August 17, 2017
 + Improved legend
 + Added Height vs Depth option
 + Fixed bar highlighting
@@ -112,9 +111,11 @@ Moreover, I want to add a way to filter data and therefore, I need a place to in
 
 # TODO (v0.4)
 
-Next up, statistics and pretty graphs.  Hopefully.
+Next up, I'll be going over my code and organizing/ cleaning things up before I even think about adding anything else.  The application has gotten a bit unwieldy, and I want to mess around with SublimeText's lint plugin.  Should be fun.
 
-Afterwards, I plan to implement a way to search/filter/sort data in Map View.  
+After that, statistics and pretty graphs.
+
+And after that, I plan to implement a way to search/filter/sort data in Map View. 
 
 
 # Credits / References

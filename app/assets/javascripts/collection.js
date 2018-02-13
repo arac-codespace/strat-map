@@ -47,7 +47,7 @@ $(document).on('turbolinks:load', function () {
 
           layerGrouping.append("rect").attr("height", 30*Math.ceil(fossilSize/3))
           .attr("width", parseInt(thisBar.attr("width"))- ageWidth)
-          .style("fill","red").attr("top", boundingRect.top).attr("left",boundingRect.left)
+          .style("fill","rgba(255, 255, 255, 0.85)").attr("top", boundingRect.top).attr("left",boundingRect.left)
           .attr("x",ageWidth).attr("class","fBar" + " " + currentG.attr("id"))
           .attr("data-cID",getColumnId)
           .attr("visibility","hidden");
@@ -356,7 +356,7 @@ function drawCollectionChart(data) {
   }  
     
   // stratIdSelect is the id of the svg wherein the chart will be generated
-  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin);
+  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin, true);
   
   // INCORPORATE LEGEND
   // Gets rid of duplicates by grouping... 

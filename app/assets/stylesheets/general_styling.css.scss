@@ -121,6 +121,7 @@ a.edit-full-column-btn {
   padding: 5px 20px;  
   color: white;
   > a {
+    display: inline-block;
     color: white;
   }
   
@@ -349,5 +350,10 @@ ul.dropdown-menu {
 
 // Condensed chart
 .condensedChart {
-  padding-left: 55px !important;
+  padding-left: 65px !important;
+}
+
+// Tooltip for charts...
+.tool {
+  pointer-events: none;
 }

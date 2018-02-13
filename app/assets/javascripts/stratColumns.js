@@ -308,36 +308,32 @@ $(document).on('turbolinks:load', function () {
     });
 
 
-
     // FOSSIL CONTENT
     var x4 = x.copy();
     x4.rangeRound([0, width]).domain(['Fossil Content']).padding(0.30).align(1.25);
 
     // FOSSIL CONTENT IMG APPEND
 
-    bar.each(function(d,i){
+    bar.append("g").attr("class","fossilGroup").attr("transform", function(d){
+      var translateY = y(d.thickness)*.15;
+      var translateX = x4("Fossil Content");
+
+      return `translate(${translateX},${translateY})`
+    })
+    .each(function(d,i){
+      d3.select(this).append("rect");
       d3.select(this).selectAll('image').data(d.fossils).enter().append('image').attr('class', function(d){
         // This assigment will allow me to select image container and assign the proper href
         return 'fossil-' + d.id + ' ' + 'fossil-content';
       })
-      .attr('width', '32').attr('height','32').attr('x',function(d,i){
+      .attr('width', '32').attr('height','32')
+      .attr('x',function(d,i){
 
         // Modulo basically allows only 7 images C wide to be side by side
-        return x4('Fossil Content') + i%7*40 
+        return i%10*40 
 
-      }).attr('y', function(d,i){
-
-        // Here we divide by the num of items we want by row
-        // and floor it to get the row num.
-        // Be aware that if you want to change items per
-        // row, you must change the 'x' attribute unless
-        // you want things to look funky.
-        var rowTracking = Math.floor(i/7);
-
-        return rowTracking*64;
-
-
-      }).each( function(d){
+      })
+      .each( function(d){
 
         // All right! Here I use .each which allows me to call a function for each of the 
         // d.fossils objects.
