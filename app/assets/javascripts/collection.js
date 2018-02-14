@@ -69,10 +69,8 @@ $(document).on('turbolinks:load', function () {
 
     // Explode behaviour...
     d3.selectAll("use").on('mouseenter', function(){
-      console.log("It's visible?")
       // debugger;
       var thisElement = d3.select(this);
-      console.log(thisElement.attr("href"));
       var eleParent = d3.select(this.parentNode);
 
       eleParent.raise();
@@ -84,7 +82,6 @@ $(document).on('turbolinks:load', function () {
     });
 
     d3.selectAll(".copyGrouping").on('mouseleave', function(){
-      console.log("I'm leaving?")
 
       var thisElement = d3.select(this);
       d3.selectAll(".fossil-overflow").style("visibility","hidden");

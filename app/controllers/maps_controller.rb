@@ -13,9 +13,13 @@ before_action :authenticate_user!
     min_array = []
     @strat.each do |column|
       min_array << column.layers.minimum(:thickness)
-    end    
-    @avg_min_thickness = (min_array.sum/min_array.size).ceil   
-    # @avg_min_thickness = min_array.min
+    end  
+
+    if min_array.size == 0
+      @avg_min_thickness = 0
+    else
+      @avg_min_thickness = (min_array.sum/min_array.size).ceil
+    end   
 
 
     @textures_to_render = []
