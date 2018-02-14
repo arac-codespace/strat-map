@@ -100,7 +100,8 @@ The basic fossil functionality has been implemented.  The application will look 
 
 I've also implemented basic search and sorting for the index pages, fixed some bugs and improved how certain things look.  Page's starting to look a bit better.  I just need to take some time to change all the default bootstrap looking stuff, and maybe go easier on the padding.
 
-Update:
+**Update:**
+
 There were issues with how scaling works in map view, so a temporary fix was implemented.  The crux of the matter is that it doesn't seem possible to scale things linearly without messing something up when an outlier is added into the mix.  The idea of map view is to present all the columns the user has recorded on a map with their appropiate visualization.  The problem is that if a user adds a .1cm layer into a 500 meters column and I scale up based on the smallest measurement (ie; .1cm == 32px), the resulting column will be immense.  Similarly if I try to scale based on an average then a column composed of measurements that are below the average will have issues with being way too small.  
 
 There are a few possible solutions that I've thought about so far.  The first one is using a non-linear scale, which I would like to avoid because of the visual distortion.  The second one is to scale based on the columns the user is viewing.  That'll probably involve recording measurement info on the dom when a user interacts with a marker and having js redraw the columns based on the marker info.  The problem with this approach is that it will still be affected by outliers.  The third is not to scale things at all.  Map view is meant to be a sort of preview/browsing data tool while collection is the "study room".  I'd prefer if I found a way to scale things properly however.  So I guess I'll test things out on development and come up with an answer next update.
