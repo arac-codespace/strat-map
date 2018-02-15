@@ -346,11 +346,11 @@ function drawCollectionChart(data) {
   // If the pixel height is less than C, calculate a new height
   // that would result in the minThickness having a height of
   // C
-  // if (currentProportionality < 32) {
+  if (currentProportionality < 32) {
     var dynHeight = 32/minMaxProportionality;
 
     height = dynHeight;
-  // }  
+  }  
     
   // stratIdSelect is the id of the svg wherein the chart will be generated
   condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin, true);

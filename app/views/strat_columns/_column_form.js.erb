@@ -1,43 +1,21 @@
-<%= form_for @strat_column, remote: true, :html => { :multipart => true } do |f| %>
+<%= simple_form_for @strat_column, remote: true, :html => { :multipart => true } do |f| %>
   <div id="errors" class="bg-danger text-danger"></div>  
   
-    <div class="infoFormFields">
-
-      <div class = "form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, required: :true, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :location %>
-        <%= f.text_field :location, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :lat, "Latitude" %>
-        <%= f.text_field :lat, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :lng, "Longitude" %>
-        <%= f.text_field :lng, class: "form-control" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :description %>
-        <%= f.text_area :description, class: "form-control textarea_options" %>
-      </div>
-      
-      <div class = "form-group">
-        <%= f.label :depth, "Height vs Depth" %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
-        </br>
-        <%= f.label :depth, "Height", :value => "false" %>
-        <%= f.radio_button :depth, false, :checked => true %>
-        <%= f.label :depth, "Depth", :value => "true"  %>
-        <%= f.radio_button :depth, true %>
-      </div>
-      
-    </div>  
+  <div class="infoFormFields">
+    <%= f.input :name, error: 'Column name is required' %>
+  
+    <%= f.input :location %>
+  
+    <%= f.input :lat, as: :string, placeholder: 'Use decimal degrees' %>
+  
+    <%= f.input :lng, as: :string, placeholder: 'Use decimal degrees' %>
+  
+    <%= f.input :description %>
+    
+    <%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
+    
+    <%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
+  </div>  
 
   <div class="modal-footer">
     <div class = "form-group">
@@ -45,5 +23,5 @@
       <%= f.submit "Submit", class: 'btn btn-primary' %>
     </div>
   </div>  
-  
+
 <% end %>

@@ -2,21 +2,19 @@
   <%= simple_form_for @strat_column do |f| %>
     <div class="generalInfoForm">
       <h3>Stratigraphic Column Information</h3>
-      <div class="infoFormFields">
-        <%= f.hidden_field :user_id, value: @id if @strat_column.new_record?%>   
+      <div class="infoFormFields">      
+        <%= f.input :name, error: 'Column name is required' %>
       
-          <%= f.input :name, error: 'Column name is required' %>
+        <%= f.input :location %>
+      
+        <%= f.input :lat, as: :string, placeholder: 'Use decimal degrees' %>
+      
+        <%= f.input :lng, as: :string, placeholder: 'Use decimal degrees' %>
+      
+        <%= f.input :description %>
         
-          <%= f.input :location %>
-        
-          <%= f.input :lat, as: :string, placeholder: 'Use decimal degrees' %>
-        
-          <%= f.input :lng, as: :string, placeholder: 'Use decimal degrees' %>
-        
-          <%= f.input :description %>
-          
-          <%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
-          <%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
+        <%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
+        <%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
 
       </div>  
     </div>
@@ -32,7 +30,6 @@
     <div class = "form-group footer">
       <%= f.submit "Submit", class: "btn btn-primary" %>
       <%= link_to_add_association 'Add Layer', f, :layers, class: "add-layer" %>
-      <!-- <span class = "btn btn-default add_btn"><i class='glyphicon glyphicon-plus'></i> Add a new Stratum </span> -->
     </div>
     
   <% end %>

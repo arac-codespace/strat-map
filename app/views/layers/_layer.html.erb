@@ -19,9 +19,9 @@
       <p>Upper Contact: <%= layer.contact.name %></p>
       <p>Thickness(m): <%= layer.thickness %> </p>
       <p>Description: <%= layer.description %> </p>
-      <%= link_to 'Edit', edit_layer_path(layer.id), remote: true, :class => 'btn btn-xs btn-primary edit-layer-btn' %>
-      <%= link_to 'Fossils', layer_path(layer.id), remote: true, :class => 'btn btn-xs btn-info fossil-layer-btn' %>      
-      <%= link_to 'Delete', layer, remote: true, :method => :delete, data: {confirm: "Delete?"}, :class => 'btn btn-xs btn-danger' unless index == 0 %>
+      <%= link_to 'Edit', edit_strat_column_layer_path(layer.strat_column_id, layer.id), remote: true, :class => 'btn btn-xs btn-primary edit-layer-btn' %>
+      <%= link_to 'Fossils', strat_column_layer_path(layer.strat_column_id, layer.id), remote: true, :class => 'btn btn-xs btn-info fossil-layer-btn' %>      
+      <%= link_to 'Delete', strat_column_layer_path(layer.strat_column_id, layer.id), remote: true, :method => :delete, data: {confirm: "Delete?"}, :class => 'btn btn-xs btn-danger' unless @strat_column.layers.count <= 1 %>
     </div>
   </div> <!-- collapse panel end-->
   

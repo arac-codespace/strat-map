@@ -1,9 +1,7 @@
-<%= simple_form_for @layer, remote: true, :html => { :multipart => true } do |f| %>
+<%= simple_form_for [@strat_column, @layer], remote: true, :html => { :multipart => true } do |f| %>
   <div id="errors" class="bg-danger text-danger"></div>  
   
-  <!-- Associations field-->
-  <%= f.hidden_field :strat_column_id, value: @strat_column_id.id if @layer.new_record? %>   
-  
+  <!-- Associations field-->  
   <%= f.input :name, error: 'Layer name is required' %>
 
   <%= f.input :lithology_name, label: "Select Lithology Pattern", placeholder: "Input name or FGDC Pattern Number",input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>

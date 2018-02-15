@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   get '/lithologies', to: 'data#lithologies_data'
   resources :strat_columns do
     get '/data', to: 'data#data'
-    # resources :data, only: [:index]
+    resources :layers
   end
   
   resources :maps, only: [:index]
-  resources :layers
+  # resources :layers
   resources :collections do
     get '/collections', to: 'data#collections_data'
   end

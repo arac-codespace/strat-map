@@ -15,6 +15,11 @@ class Layer < ApplicationRecord
   validates :contact_id, presence: true
   validates :thickness, presence: true, numericality: { only_integer: false, greater_than_or_equal_to: 0.1 }
   
+
+  def self.join_columns(column_id)
+    self.joins(:strat_column).where(strat_columns: { id: column_id })
+  end
+
   def timescale_name
     timescale.try(:interval_name)
   end
