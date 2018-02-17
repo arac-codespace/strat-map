@@ -1,39 +1,20 @@
 <div class= "formContainer">
-  <%= form_for @collection do |f| %>
+  <%= simple_form_for @collection do |f| %>
     <div class="generalInfoForm">
       <h3>Collection Information</h3>
       <div class="infoFormFields">
 
-        <%= f.hidden_field :user_id, value: @user_id if @collection.new_record?%>   
+        <%= f.input :name, error: 'Collection name is required' %>
 
-        <div class = "form-group">
-          <%= f.label :name %>
-          <%= f.text_field :name, required: :true, class: "form-control" %>
-        </div>
-        
-        <div class = "form-group">
-          <%= f.label :description %>
-          <%= f.text_area :description, class: "form-control textarea_options" %>
-        </div>
-        
-        
-        <div class = "form-group">
-          <%= f.label :strat_column_ids, "Select columns to include in the collection" %> </br>
+        <%= f.input :description %>
+
+        <%= f.label :strat_columns, label: "Select columns to add to collection" %>
+        <span class="tooltips glyphicon glyphicon-question-sign">
+          <span class="depth-tooltip">Ctrl or Shift + click to select multiple </span>
+        </span> 
+
+        <%= f.association :strat_columns, collection: @user_columns.order(:name), label: false %>
           
-          <%= hidden_field_tag "collection[strat_column_ids][]" , nil %>
-          <div id="column_checkbox_container">
-            <% @user_columns.each do |x| %>
-              <li>
-                <%= check_box_tag "collection[strat_column_ids][]", x.id, @collection.strat_column_ids.include?(x.id), id: dom_id(x) %>
-                <%= label_tag dom_id(x), x.name, class: "column_checkbox_label" %> 
-                <% if x.lat.nil? || x.lng.nil? %> 
-                  <p class="invalid-coords"> (<strong>Warning:</strong> <%= x.name %> coordinates are empty or invalid.) </p>
-                <% end %></br>
-              </li>
-            <% end %>
-          </div>
-        </div>
-        
       </div>  
     </div>
     

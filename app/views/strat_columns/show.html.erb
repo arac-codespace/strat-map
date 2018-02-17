@@ -89,7 +89,7 @@
     <div class="layer-info-wrapper">
       <div class= "layer-heading">
         <h3 class="layer-title-info"><b>Strata Information</b></h3>
-        <%= link_to new_layer_path(:id => @strat_column.id), remote: true, class: "btn btn-default btn-xs new-layer-btn" do %>
+        <%= link_to new_strat_column_layer_path(strat_column_id: @strat_column.id), remote: true, class: "btn btn-default btn-xs new-layer-btn" do %>
           <i class='glyphicon glyphicon-plus'></i>
           New Stratum
         <% end %>
@@ -110,8 +110,6 @@
 
 </div> <!--flex container-->
 
-<!-- <div class = "table-container"> -->
   <%= render partial: 'fossil_table', locals: {layer: @layers}%>
-<!-- </div> -->
 
-</div>
+

@@ -6,8 +6,8 @@ class DataController < ApplicationController
 
   # /strat_column/:strat_column_id/data
   def data
-    strat_column_id = params[:strat_column_id]
-    layers = Layer.where(strat_column_id: strat_column_id).order('created_at DESC')
+    user_columns = current_user.strat_columns.find(params[:strat_column_id])
+    layers = user_columns.layers.order('created_at DESC')
     except_attr = %i[created_at updated_at]
     except = { except: except_attr }
     only = { only: %i[interval_name color abbrev] }
@@ -19,9 +19,10 @@ class DataController < ApplicationController
     )
   end
 
+  # root/data
   def all_data
     user_id = current_user.id
-    strat_columns = StratColumn.where(user_id: user_id).where.not(lat: nil).where.not(lng: nil)
+    strat_columns = current_user.strat_columns.where(user_id: user_id).where.not(lat: nil).where.not(lng: nil)
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
     render json: strat_columns, except: %i[created_at updated_at]
   end
@@ -38,8 +39,7 @@ class DataController < ApplicationController
   end
 
   def collections_data
-    collections_id = params[:collection_id]
-    collection_columns = Collection.find(collections_id).strat_columns
+    collection_columns = current_user.collections.find(params[:collection_id]).strat_columns
     # https://stackoverflow.com/questions/17730121/include-associated-model-when-rendering-json-in-rails
     exceptions = %i[created_at updated_at]
     render(json: collection_columns, except: exceptions, methods: [:total_thickness])

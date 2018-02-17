@@ -33,3 +33,13 @@
 .text-overlay > text {
   font-size: 12px;
 }
+
+// Condensed chart
+.condensedChart {
+  padding-left: 65px !important;
+}
+
+// Tooltip for charts...
+.tool {
+  pointer-events: none;
+}

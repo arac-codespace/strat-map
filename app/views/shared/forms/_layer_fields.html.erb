@@ -1,0 +1,13 @@
+<%= f.input :name, error: 'Layer name is required' %>
+
+<%= f.input :lithology_name, label: "Select Lithology Pattern", placeholder: "Input name or FGDC Pattern Number",input_html: {class: 'lithology_name', data: {autocomplete_source: lithologies_path}}, error: "Input a valid lithology pattern" %>
+
+<%= f.input :formation %>
+
+<%= f.input :timescale_name, label: 'Select Geologic Age', input_html: {class: 'timescale_name', data: {autocomplete_source: timescales_path}}, error: "Input a valid geologic age", placeholder: "Input name of Geologic Age" %>
+
+<%= f.input :contact_id, collection: Contact.order(:name), label_method: :name, value_method: :id, label: "Select Contact Type (Upper Boundary)", prompt: "Select Contact", error: "Select a type of contact" %>
+
+<%= f.input :thickness, as: :string, placeholder: 'Must be in meters', error: "Can't be blank"%>
+
+<%= f.input :description %>

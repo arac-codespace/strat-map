@@ -1,0 +1,14 @@
+
+<%= f.input :name, error: 'Column name is required' %>
+
+<%= f.input :location %>
+
+<%= f.input :lat, as: :string, placeholder: 'Use decimal degrees' %>
+
+<%= f.input :lng, as: :string, placeholder: 'Use decimal degrees' %>
+
+<%= f.input :description %>
+
+<%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
+<%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
+
