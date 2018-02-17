@@ -334,26 +334,34 @@ function drawCollectionChart(data) {
   var margin = { top: 20, right: 80, bottom: 40, left: 20 },
       width = 225 - margin.left - margin.right
 
-  var height = 1200 - margin.top - margin.bottom;
-
-  // To scale according to min thickness
+  // To scale according to min thickness and max height if necessary...
   var minThickness = $(".general-info").data("minthickness");
+  var maxTotalThickness = $(".general-info").data("maxtotalthickness");
+  // Using 32px for minLayerHeight due to fossil thumbnail size
+  var minLayerHeight = 32;
+  // Arbitrary min height
+  var minColumnHeight = 1000;
+ 
+
+  // minThickness:totalThickness = minLayerHeight:Height
   var minMaxProportionality = minThickness/totalThickness;
+  var height = (minLayerHeight/minMaxProportionality);
 
-  // Finds the pixel height of the minThickness layer.
-  var currentProportionality = minMaxProportionality*height;
+  // Calculates in advance the max height if the current proportion
+  // is maintained
+  var maxHeight = minLayerHeight/(minThickness/maxTotalThickness);
 
-  // If the pixel height is less than C, calculate a new height
-  // that would result in the minThickness having a height of
-  // C
-  if (currentProportionality < 32) {
-    var dynHeight = 32/minMaxProportionality;
-
-    height = dynHeight;
-  }  
+  // If maxHeight < desiredHeight, look for the scaling factor and
+  // use that scale maxHeight to desiredHeight and to maintain the
+  // scaling across columns
+  if (maxHeight < minColumnHeight) {
+    var scalingFactor = minColumnHeight/maxHeight;
+    console.log(`Scaling by ${scalingFactor}`)
+    height*=scalingFactor;
+  }
     
   // stratIdSelect is the id of the svg wherein the chart will be generated
-  condensedColumnGenerator(data, height*0.8, width*0.8, stratIdSelect, margin, true);
+  condensedColumnGenerator(data, height, width*0.8, stratIdSelect, margin, true);
   
   // INCORPORATE LEGEND
   // Gets rid of duplicates by grouping... 

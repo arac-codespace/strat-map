@@ -34,11 +34,15 @@ class CollectionsController < ApplicationController
   def show
     @collection_columns = @collection.strat_columns
     # The following is used to scale columns...
-    min_array = []
+    min_thickness_array = []
+    max_total_thicknes_array = []
     @collection_columns.each do |column|
-      min_array << column.layers.minimum(:thickness)
+      min_thickness_array << column.layers.minimum(:thickness)
+      max_total_thicknes_array << column.total_thickness
     end
-    @min_thickness = min_array.min
+
+    @min_thickness = min_thickness_array.min
+    @max_total_thickness = max_total_thicknes_array.max
 
     @textures_to_render = []
     # Loop to find urls to render

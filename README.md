@@ -20,6 +20,10 @@ Note: This website is in **active** development.  If you have any issues or sugg
 
 
 # Changelog
+Patch 2/17/2018
++ Fixed collections scaling. See about v0.4.0.
++ Controllers refactored.
+
 stratMap v0.4.0 
 2/13/2018
 + Fossil implementation
@@ -28,7 +32,7 @@ stratMap v0.4.0
     taxon specified.
 + General UI improvements
   * Index pages now have sort and search capabilities.
-  * Columns in collections now share the same scale.
+  * ~~Columns in collections now share the same scale.~~
   * ~~Columns in map view now share the same scale.~~
   * Changed scaling of the visualization in the main column 
     info page.
@@ -96,15 +100,17 @@ stratMap v0.1 is live! August 2, 2017
 
 So, what's new with -- somewhat arbitrarly assigned version number 0.4.0?
 
-The basic fossil functionality has been implemented.  The application will look up the taxon name or query fallback provided on the Paleobiology Database and extract info/thumbnail images from it.  Somewhat related, I also had to change how the columns are scaled.  The application will now scale according to the smallest layer ~~or the average of a group~~ if necessary.  Columns in the collection and map view sections now share the same scale between visualizations.  This means that 100m in one column WILL be 100m in another.  
+The basic fossil functionality has been implemented.  The application will look up the taxon name or query fallback provided on the Paleobiology Database and extract info/thumbnail images from it.  Somewhat related, I also had to change how the columns are scaled.  The application will now scale according to the smallest layer ~~or the average of a group~~ if necessary.  Columns in the collection and ~~map view~~ sections now share the same scale between visualizations.  This means that 100m in one column WILL be 100m in another.  
 
 I've also implemented basic search and sorting for the index pages, fixed some bugs and improved how certain things look.  Page's starting to look a bit better.  I just need to take some time to change all the default bootstrap looking stuff, and maybe go easier on the padding.
 
 **Update:**
 
-There were issues with how scaling works in map view, so a temporary fix was implemented.  The crux of the matter is that it doesn't seem possible to scale things linearly without messing something up when an outlier is added into the mix.  The idea of map view is to present all the columns the user has recorded on a map with their appropiate visualization.  The problem is that if a user adds a .1cm layer into a 500 meters column and I scale up based on the smallest measurement (ie; .1cm == 32px), the resulting column will be immense.  Similarly if I try to scale based on an average then a column composed of measurements that are below the average will have issues with being way too small.  
+Scaling in collections has been readdressed.  Collections will now scale based on the smallest thickness recorded in the collection; minThickness = 32px. If the max height of the largest column is less than 1000px(arbitrary), the columns will be scaled again so that the largest column will have a minimum height of 1000px.  This new scaling prevents columns from being far too small, which is something I overlooked when I released v0.4.0.  Of course, here I'm making the assumption that users will create a collection of columns of compareable dimensions.  If a user tries to compare a 0.1m column with a 500m one... well, the resulting visualization will naturally be immense.  Collections is meant to be the "analysis toolshed" of the website, and I believe scaling between visualizations is essential.  So this is a compromise that I'm willing to take for now.
 
-There are a few possible solutions that I've thought about so far.  The first one is using a non-linear scale, which I would like to avoid because of the visual distortion.  The second one is to scale based on the columns the user is viewing.  That'll probably involve recording measurement info on the dom when a user interacts with a marker and having js redraw the columns based on the marker info.  The problem with this approach is that it will still be affected by outliers.  The third is not to scale things at all.  Map view is meant to be a sort of preview/browsing data tool while collection is the "study room".  I'd prefer if I found a way to scale things properly however.  So I guess I'll test things out on development and come up with an answer next update.
+There were issues with how scaling works in map view too, so a temporary fix was implemented.  The crux of the matter is that it doesn't seem possible to scale things linearly without messing something up when an outlier is added into the mix.  The idea of map view is to present all the columns the user has recorded on a map with their appropiate visualization, so outliers are almost inevitable. 
+
+There are a few possible solutions that I've thought about so far.  The first one is using a non-linear scale, which I would like to avoid because of the visual distortion.  The second one is to scale based on the columns the user is viewing.  That'll probably involve recording measurement info on the dom when a user interacts with a marker and having js redraw the columns based on the marker info.  The problem with this approach is that it will still be affected by outliers if the user opens two columns with disparate dimensions.  The third is to not scale between different visualizations.  Map view is meant to be a sort of preview/data browsing tool, so I don't think it's unreasnable to not have the columns share a scale.  I'll test things out in development and come up with a solution next update.
 
 ---
 **About v0.3.1**

@@ -1,0 +1,46 @@
+<div class="layer-container" class="panel-group">
+
+  <div class="panel panel-default layer">
+
+    <div class= "header panel-heading">
+      <h3 class="section-label"> 
+         <% if @strat_column.new_record? %>
+          <a data-toggle="collapse" href="#<%=f.index %>"> <b>New Stratum </b></a> 
+        <% else %>
+          <a data-toggle="collapse" href="#<%= f.index %>"> <b>Edit Stratum</b></a> 
+        <% end %>
+      </h3> 
+      <span class="tooltips glyphicon glyphicon-question-sign"><span>Click to collapse/expand!</span></span>
+      <% if f.index != 0 %>
+        <%= link_to_remove_association('', f, {wrapper_class: 'layer', class: 'remove-layer glyphicon glyphicon-remove btn btn-default btn-xs', title: "Remove"}) %>
+      <% end %>    
+
+    </div>
+
+
+    <div id="<%=f.index %>" class="infoFormFields layerFields panel-collapse collapse in">
+
+      <%= render 'shared/forms/layer_fields', f: f %>
+
+      <div class="fossil-label">
+        <h3 class="section-label"> <strong>Fossil Content</strong></h3> 
+        <p><strong>Note:</strong> This application uses the optional fallback 
+          query if it doesn't find a record matching the taxon name provided. 
+        </p>
+        <!--_traversal chooses the closest node selection relative to the link -->
+      </div>
+
+      <div class="fossil-container">
+
+        <%= f.simple_fields_for :fossils do |fossil|%>
+          <%= render 'shared/forms/fossil_fields', f: fossil %>
+        <% end %>     
+      </div>
+
+      <div>
+        <%= link_to_add_association 'Add', f, :fossils, partial: 'shared/forms/fossil_fields', class: "add-fossil glyphicon glyphicon-plus btn btn-default btn-sm", title: 'Add fossil field' %> 
+      </div>
+
+    </div>
+  </div>
+</div>

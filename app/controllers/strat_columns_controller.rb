@@ -22,6 +22,10 @@ class StratColumnsController < ApplicationController
 
   def new
     @strat_column = StratColumn.new
+    # layers.build will instantiate a layers association object
+    # which results in the appropiate form rendering when user
+    # hits the new page
+    @strat_column.layers.build
   end
 
   def create

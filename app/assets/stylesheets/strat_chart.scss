@@ -1,0 +1,45 @@
+.stratChart text {
+  font: 11.5px sans-serif;
+  text-anchor: end;
+}
+
+.stratChart {
+  padding: 30px 0px;
+  // padding: 25px;  
+  padding-left: 80px;
+  stroke: black;
+  background-color: white;
+  // Required in FF to make y-axis visible...
+  overflow: visible !important;
+}
+
+.axis {
+  stroke: black;
+}
+
+// Centers the x labels after calling the wrap function
+.axis--x > g > text {
+  text-anchor: inherit;  
+}
+
+.axis--x2 > g > text {
+  text-anchor: inherit;  
+}
+
+.hoverBar:hover {
+  fill: rgba(255, 255, 255, .30);
+}
+
+.text-overlay > text {
+  font-size: 12px;
+}
+
+// Condensed chart
+.condensedChart {
+  padding-left: 65px !important;
+}
+
+// Tooltip for charts...
+.tool {
+  pointer-events: none;
+}
