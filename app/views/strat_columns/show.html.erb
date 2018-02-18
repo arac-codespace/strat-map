@@ -61,10 +61,10 @@
           <% end %>
         </div>
         
+
         <!--https://stackoverflow.com/questions/18492617/button-to-download-inpage-svg-code-as-an-svg-file-->
-        <a class="btn btn-default btn-xs" href="javascript:(function () { var e = document.createElement('script'); if (window.location.protocol === 'https:') { e.setAttribute('src', 'https://rawgit.com/NYTimes/svg-crowbar/gh-pages/svg-crowbar.js'); } else { e.setAttribute('src', 'http://nytimes.github.com/svg-crowbar/svg-crowbar.js'); } e.setAttribute('class', 'svg-crowbar'); document.body.appendChild(e); })();">
-          ⇩ Download SVG
-        </a>   
+        <!-- https://nytimes.github.io/svg-crowbar/ Using v2 of SVG Crowbar -->
+        <a class="btn btn-default btn-xs" href="javascript:javascript: (function () { var e = document.createElement('script'); e.setAttribute('src', 'https://nytimes.github.io/svg-crowbar/svg-crowbar-2.js'); e.setAttribute('class', 'svg-crowbar'); document.body.appendChild(e); })();">⇩ Download SVG</a>
  
         <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#help">Help</button>
         <div id="help" class="collapse help-prompt">
@@ -75,7 +75,7 @@
           <p> A tip; you can modify the column using a browser's developer tools before downloading the SVG image.  Changes done to the column before
               downloading the image will be reflected on the downloaded SVG file!  
           </p>
-          <p> To get out of the download prompt, please refresh the page.</p>
+          <p> This application uses the the second version of svg-crowbar, which may take a few minutes to load depending on how large/complex the column is. To get out of the download prompt, please refresh the page. For more info about svg-crowbar visit: <a href="https://nytimes.github.io/svg-crowbar"> the project page.</a></p>
         </div>
 
         <%= link_to strat_column_path(@strat_column.id), method: :delete, data: { confirm: 'Are you sure you want to delete this column?'}, class: 'btn btn-danger btn-xs' do %>
