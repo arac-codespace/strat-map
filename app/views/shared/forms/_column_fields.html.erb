@@ -10,5 +10,5 @@
 <%= f.input :description %>
 
 <%= f.label :depth, label: 'Height vs Depth' %> <span class="tooltips glyphicon glyphicon-question-sign"><span class="depth-tooltip">Determines y-axis range/ starting point</span></span> 
-<%= f.input_field :depth, collection: [['Height', true] ,['Depth', false]], as: :radio_buttons, checked: true %>
+<%= f.input_field :depth, collection: [['Height', false] ,['Depth', true]], as: :radio_buttons %>
 

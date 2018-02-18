@@ -748,7 +748,7 @@ function condensedColumnGenerator(data, height, width, stratIdSelect, margin,fos
       yAxisText = "DEPTH (m)";
     }  
     
-  stratChart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(data.length*2)).append("text").attr("transform", "rotate(-90)").attr("y", -45).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
+  stratChart.append("g").attr("class", "axis axis--y").call(d3.axisLeft(y).ticks(data.length*2)).append("text").attr("transform", "rotate(-90)").attr("y", -55).attr("x", '-15%').attr("dy", "0.71em").text(yAxisText);
 
   // In maps.js, you must remove the previous tooltip to erase the
   // binded data and get the binded data when new windows are opened

@@ -14,6 +14,7 @@ class StratColumn < ApplicationRecord
   validates :user_id, presence: true
   validates :lat, numericality: { only_integer: false, allow_nil: true }
   validates :lng, numericality: { only_integer: false, allow_nil: true }
+  validates_inclusion_of :depth, in: [true, false], message: "vs Height -- Choose an option."
 
   def total_thickness
     layers.sum(:thickness)

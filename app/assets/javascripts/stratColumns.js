@@ -386,7 +386,7 @@ $(document).on('turbolinks:load', function () {
       yAxisText = "DEPTH (m)";
     }
 
-    var yAxis = stratChart.append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -45).attr('x', function () {
+    var yAxis = stratChart.append('g').attr('class', 'axis axis--y').call(d3.axisLeft(y).ticks(data.length*2)).append('text').attr('transform', 'rotate(-90)').attr('y', -60).attr('x', function () {
       return "-" + height*0.15;
     }).attr('dy', '0.71em').text(yAxisText).style('font', '12px Tahoma');
 

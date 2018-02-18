@@ -12,7 +12,7 @@
       <span class="depth-tooltip">Ctrl or Shift + click to select multiple </span>
     </span> 
 
-    <%= f.association :strat_columns, collection: @user_columns.order(:name), label: false %>
+    <%= f.association :strat_columns, collection: @user_columns.order(:name), label: false, input_html: {class: "column_collection"} %>
       
   </div> 
 
