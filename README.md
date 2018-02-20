@@ -20,7 +20,8 @@ Note: This website is in **active** development.  If you have any issues or sugg
 
 
 # Changelog
-Patch 2/17/2018
+Patch 2/19/2018
++ Fixed fossil positioning in strat_column info page
 + Fixed collections scaling. See about v0.4.0.
 + Controllers refactored.
 
