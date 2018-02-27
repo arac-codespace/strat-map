@@ -14,15 +14,13 @@ $(document).on('turbolinks:load', function() {
     return;
   }
 
-  console.log('This is .strat_columns.show');
-
-
   // Hides Collection details and toggles glyphicon class
   $('button.hide-details').on('click', function() {
     $('div.right-column').toggle();
     $('button.hide-details > i').toggleClass(
       'glyphicon glyphicon-menu-right glyphicon glyphicon-menu-left');
   });
+
   function drawStratChart(data) {
 
     var margin = {
