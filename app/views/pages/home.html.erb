@@ -16,30 +16,32 @@
    <p>For information about version changes, visit the <a href="https://github.com/arac-codespace/strat-map">Github repository</a>.</p>
    </br>
    <p style="text-align: initial"><strong>Note</strong>: This website is still in active development and constantly changing!  If you have any issues or suggestions, please contact me at: alex.aguirre0026@gmail.com</p> 
-   </br>
-   <div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://www.youtube.com/embed/d8-UVMCnNUg?ecver=2" width="640" height="360" frameborder="0" style="position:absolute;width:100%;height:100%;left:0" allowfullscreen></iframe></div>
+   </br> 
+
+  <div class="carousel-container">
+    <div id="carousel-stratmap-preview" class="carousel slide" data-ride="carousel" data-interval="false">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-stratmap-preview" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-stratmap-preview" data-slide-to="1"></li>
+        <li data-target="#carousel-stratmap-preview" data-slide-to="2"></li>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item slides active">
+          <div class="slide-1"></div>
+        </div>
+        <div class="item slides">
+          <div class="slide-2"></div>
+        </div>
+        <div class="item slides">
+          <div class="slide-3"></div>
+        </div>      
+      </div>
+    </div>
   </div>
   
-  <div class="home-get-started">
-   <h4> Get started! </h4>
-  </div>
-  
-  <div class="home-description">
-   <p> To get started, you must first <strong><%= link_to('Sign Up', new_user_registration_path) %></strong> and/or <strong><%= link_to('Login', new_user_session_path) %></strong>.  Once you're logged in, you'll
-   be able to access the Create, Index and View Map options on the navigation bar.</p>
-   </br>
-   <p> First, create a new stratigraphic column using the Create button.  Once
-   you've succesfully created the column, a new page will show you
-   the generated column along with all the information you've
-   provided. </p>
-   </br>
-   <p> You can now go to the Map View which should show you a marker where
-   the stratigraphic column is located.  Click on the marker to open an
-   information window where you'll be able to see a simplified version of the
-   associated stratigraphic column.  You may open up to four windows side by
-   side to view and interact with any other columns you've created. </p>
-   </br>
-   <p> Visit the Index page if you wish to see all the columns you've created. </p>
  </div>
  <div class="home-resources">
   <h4> Resources</h4>
@@ -71,8 +73,5 @@
   <p>For more information about this website, visit the <a href="https://github.com/arac-codespace/strat-map">Github repository</a>.</p>
   <p>For assistance, contact me at: <a>alex.aguirre0026@gmail.com</a></p>
   <p> I'm also open to new ideas or suggestions.</p>
- </div>
-  
-  
  </div>
 </div>

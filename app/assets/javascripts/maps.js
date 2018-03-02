@@ -178,7 +178,7 @@ function initMap() {
 } // iniMap end
 
 // Restricts bound pan
-//https://stackoverflow.com/questions/23580831/how-to-block-google-maps-api-v3-panning-in-the-gray-zone-over-north-pole-or-unde
+// https://stackoverflow.com/questions/23580831/how-to-block-google-maps-api-v3-panning-in-the-gray-zone-over-north-pole-or-unde
 
 // Note that place is a singular column's data!
 function addMarkerMapCustom(place) {

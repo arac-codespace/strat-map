@@ -248,7 +248,7 @@ function drawCollectionChart(data) {
   let minThickness = $('.general-info').data('minthickness');
   let maxTotalThickness = $('.general-info').data('maxtotalthickness');
   // Using 32px for minLayerHeight due to fossil thumbnail size
-  let minLayerHeight = 32;
+  let minLayerHeight = 22;
   // Arbitrary min height
   let minColumnHeight = 1000;
 
@@ -357,7 +357,7 @@ function showFossilHandler() {
           var fossil = currentG.selectAll('.fossil-content');
           var fossilSize = fossil.size();
           let fossilRowLimit = 3;
-          let minUnderlayHeight = 30;
+          let minUnderlayHeight = 22;
           // ceil division helps determine min ammount of rows
           // to fit x fossilRowLimit of minUnderlayHeight
           let layerUnderlaySize = minUnderlayHeight*Math
