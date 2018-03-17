@@ -5,7 +5,7 @@
 
 .home-welcome-wrapper {
   padding: 0px 20px;
-  width: 75%;
+  width: 70%;
   margin: auto;  
 }
 
@@ -32,63 +32,15 @@
   margin: 10px auto 0 auto;  
 }
 
-
-/*ol.carousel-indicators {
-  height: 18px;
-  width: 18px;
-}*/
 ol.carousel-indicators > li {
   background-color: var(--siteBGBlue);
   height: 16px;
   width: 16px;  
+  border: 1px solid var(--siteBGBlue);
 }
 
 ol.carousel-indicators > li.active {
   background-color: var(--headBlue);
   height: 16px;
   width: 16px;  
-}
-
-div.slides {
-  /*height: 768px;*/
-}
-
-div.slide-1 {
-  background-image: url("stratcolPreviewCrop.png");
-  /*background-position: center center;*/
-  background-repeat: no-repeat;
-  /*height: 50vh;*/
-  background-size:cover;
-}
-
-div.slide-2 {
-  background-image: url("mapViewPreviewCrop.png");
-  /*background-position: center center;*/
-  background-repeat: no-repeat;
-  /*height: 50vh;*/
-  background-size:cover;
-}
-div.slide-3 {
-  background-image: url("collectionPreviewCrop.png");
-  /*background-position: center center;*/
-  background-repeat: no-repeat;
-  /*height: 50vh;*/
-  background-size:cover;
-}
-
-@media (max-width: 767px) {
-  div.slide-1, div.slide-2, div.slide-3 {
-    height: 50vh;
-  }
-}
-@media (min-width: 768px) and (max-width: 1023px){
-    div.slide-1, div.slide-2, div.slide-3 { 
-      height: 75vh; 
-    }    
-}
-
-@media (min-width: 1024px){
-    div.slide-1, div.slide-2, div.slide-3 { 
-      height: 100vh; 
-    }    
 }
